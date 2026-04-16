@@ -708,9 +708,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 // 1. Catalog → Products → το product σου → Share → Copy Pay Link
 // 2. Βάλε το Pay Link παρακάτω
 
-const PADDLE_PAY_LINK = 'https://buy.paddle.com/product/REPLACE_WITH_YOUR_PAY_LINK';
-const PADDLE_PRICE_ID = 'pri_REPLACE_WITH_PRICE_ID'; // από Paddle dashboard
-const PADDLE_SELLER_ID = 0; // αριθμός π.χ. 12345
+const PADDLE_PAY_LINK = 'https://buy.paddle.com/product/pri_01kpc2kh7vk0hae88575j0svr2';
+const PADDLE_PRICE_ID = 'pri_01kpc2kh7vk0hae88575j0svr2'; // από Paddle dashboard
+const PADDLE_SELLER_ID = 318168; // αριθμός π.χ. 12345
 
 function openCheckout(plan) {
   const isConfigured = PADDLE_SELLER_ID > 0 && !PADDLE_PRICE_ID.includes('REPLACE');
