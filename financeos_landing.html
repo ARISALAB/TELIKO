@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>FinanceOS — Professional Business Management for Restaurants</title>
+<meta name="description" content="Track revenue, expenses, suppliers and payroll in one offline-first desktop app. Built for restaurants, cafes and hotels. One-time payment, no subscription."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & ROOT ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070810;--bg2:#0c0e1a;--bg3:#111428;
+  --surface:rgba(255,255,255,.04);--surface2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.07);--border-hi:rgba(255,255,255,.15);
+  --teal:#00d4aa;--teal2:#00b8ff;--teal-dim:rgba(0,212,170,.12);
+  --danger:#ff4d6d;--amber:#f59e0b;
+  --ink:#f0f3ff;--ink2:#8892b0;--ink3:#3d4466;
+  --font:'Outfit',sans-serif;--head:'Playfair Display',serif;--mono:'DM Mono',monospace;
+  --max:1160px;--r:10px;--rl:16px;--rxl:24px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);overflow-x:hidden;font-size:16px;line-height:1.6}
+
+/* ─── NOISE TEXTURE ─── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
+
+/* ─── AMBIENT GLOWS ─── */
+.glow-a,.glow-b,.glow-c{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.glow-a{width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,170,.14),transparent 70%);top:-200px;right:-100px}
+.glow-b{width:500px;height:500px;background:radial-gradient(circle,rgba(0,184,255,.1),transparent 70%);bottom:200px;left:-150px}
+.glow-c{width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,.07),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(7,8,16,.85);backdrop-filter:blur(24px)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.nav-logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--teal),var(--teal2));border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(0,212,170,.4)}
+.nav-logo-mark svg{width:18px;height:18px;fill:#000}
+.nav-logo-name{font-family:var(--head);font-size:16px;font-weight:700;letter-spacing:0;font-style:italic}
+.nav-links{display:flex;gap:8px}
+.nav-link{padding:6px 14px;border-radius:8px;font-size:14px;color:var(--ink2);cursor:pointer;text-decoration:none;transition:color .15s,background .15s}
+.nav-link:hover{color:var(--ink);background:var(--surface)}
+.nav-cta{padding:8px 20px;background:var(--teal);color:#000;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap}
+.nav-cta:hover{background:#00e8bc;box-shadow:0 0 20px rgba(0,212,170,.4)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ─── SECTIONS ─── */
+section{position:relative;z-index:1}
+.container{max-width:var(--max);margin:0 auto;padding:0 32px}
+@media(max-width:640px){.container{padding:0 20px}}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 0 60px}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:48px}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.2);border-radius:100px;padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--teal);margin-bottom:24px;letter-spacing:.3px}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-title{font-family:var(--head);font-size:clamp(38px,5vw,68px);font-weight:700;line-height:1.08;letter-spacing:-.3px;margin-bottom:24px}
+.hero-title .accent{background:linear-gradient(135deg,var(--teal),var(--teal2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:18px;color:var(--ink2);line-height:1.7;margin-bottom:36px;max-width:480px}
+.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,var(--teal),#00c49a);color:#000;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;font-family:var(--font);border:none;letter-spacing:-.2px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,170,.4)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:transparent;color:var(--ink2);border-radius:var(--r);font-size:15px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .15s;font-family:var(--font);border:1px solid var(--border-hi)}
+.btn-secondary:hover{color:var(--ink);border-color:rgba(255,255,255,.3);background:var(--surface)}
+.hero-note{font-size:13px;color:var(--ink3);margin-top:14px}
+.hero-note span{color:var(--teal)}
+
+/* ─── DASHBOARD MOCKUP ─── */
+.mockup-wrap{position:relative}
+.mockup-outer{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--rxl);overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05);animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.mockup-titlebar{height:36px;background:var(--bg3);display:flex;align-items:center;gap:7px;padding:0 14px;border-bottom:1px solid var(--border)}
+.dot{width:11px;height:11px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.mockup-body{padding:16px}
+.mockup-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.m-stat{background:var(--bg3);border-radius:8px;padding:10px 12px;border:1px solid var(--border)}
+.m-stat-label{font-size:9px;color:var(--ink3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.m-stat-val{font-family:var(--mono);font-size:14px;font-weight:600}
+.m-stat-val.green{color:var(--teal)}.m-stat-val.red{color:var(--danger)}.m-stat-val.blue{color:var(--teal2)}.m-stat-val.amber{color:var(--amber)}
+.mockup-chart{background:var(--bg3);border-radius:8px;padding:12px;border:1px solid var(--border);margin-bottom:10px}
+.chart-title-m{font-size:9px;color:var(--ink3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.bars{display:flex;align-items:flex-end;gap:4px;height:56px}
+.bar-pair{display:flex;gap:2px;align-items:flex-end;flex:1}
+.bar{border-radius:3px 3px 0 0;min-height:3px;animation:grow .8s ease forwards}
+@keyframes grow{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+.mockup-table{background:var(--bg3);border-radius:8px;border:1px solid var(--border);overflow:hidden}
+.m-table-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid var(--border);font-size:10px}
+.m-table-row:last-child{border-bottom:none}
+.m-badge{padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700}
+.m-badge.green{background:rgba(0,212,170,.12);color:var(--teal)}
+.m-badge.red{background:rgba(255,77,109,.12);color:var(--danger)}
+.m-badge.amber{background:rgba(245,158,11,.12);color:var(--amber)}
+/* floating cards */
+.float-card{position:absolute;background:rgba(13,14,26,.92);border:1px solid var(--border-hi);border-radius:12px;padding:10px 14px;backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.float-card-1{bottom:-24px;left:-32px;animation:float2 5s ease-in-out infinite 1s}
+.float-card-2{top:-20px;right:-28px;animation:float2 5s ease-in-out infinite .5s}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.fc-label{font-size:10px;color:var(--ink3);margin-bottom:4px;font-weight:600}
+.fc-value{font-family:var(--mono);font-size:16px;font-weight:700}
+.fc-change{font-size:11px;font-weight:600;margin-top:2px}
+
+/* ─── LOGOS ─── */
+.logos{padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.logos-inner{display:flex;align-items:center;gap:48px;justify-content:center;flex-wrap:wrap}
+.logo-item{font-family:var(--head);font-size:18px;font-weight:700;color:var(--ink3);letter-spacing:-.5px;opacity:.5;transition:opacity .2s}
+.logo-item:hover{opacity:.8}
+
+/* ─── FEATURES ─── */
+.features{padding:100px 0}
+.section-eyebrow{font-size:11.5px;font-weight:700;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:var(--head);font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-.3px;line-height:1.12;margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--ink2);max-width:520px;line-height:1.7}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
+@media(max-width:800px){.features-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.features-grid{grid-template-columns:1fr}}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rxl);padding:28px;transition:all .2s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;border-radius:inherit}
+.feature-card:hover{border-color:rgba(0,212,170,.25);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.feature-card:hover::before{opacity:1;background:radial-gradient(circle at 0% 0%,rgba(0,212,170,.06),transparent 60%)}
+.f-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
+.f-icon.teal{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.2)}
+.f-icon.blue{background:rgba(0,184,255,.1);border:1px solid rgba(0,184,255,.2)}
+.f-icon.amber{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2)}
+.f-icon.red{background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.2)}
+.f-icon.purple{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2)}
+.f-title{font-family:var(--head);font-size:16px;font-weight:600;margin-bottom:8px;letter-spacing:0}
+.f-desc{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ─── STATS BAND ─── */
+.stats-band{padding:80px 0;background:linear-gradient(135deg,rgba(0,212,170,.04),rgba(0,184,255,.04));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+@media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr;gap:28px}}
+.stat-num{font-family:var(--head);font-size:48px;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,var(--teal),var(--teal2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.stat-label{font-size:14px;color:var(--ink2);margin-top:8px}
+
+/* ─── HOW IT WORKS ─── */
+.how{padding:100px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px;position:relative}
+@media(max-width:700px){.steps{grid-template-columns:1fr;gap:24px}}
+.steps::before{content:'';position:absolute;top:32px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border-hi),var(--border-hi),transparent);pointer-events:none}
+@media(max-width:700px){.steps::before{display:none}}
+.step{text-align:center;padding:32px 24px}
+.step-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,rgba(0,212,170,.15),rgba(0,184,255,.1));border:1px solid rgba(0,212,170,.25);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:20px;font-weight:800;color:var(--teal);margin:0 auto 20px}
+.step-title{font-family:var(--head);font-size:17px;font-weight:600;margin-bottom:10px;letter-spacing:0}
+.step-desc{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ─── LANGUAGES ─── */
+.langs{padding:80px 0;text-align:center}
+.lang-flags{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.lang-chip{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surface);border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:500;transition:all .15s}
+.lang-chip:hover{border-color:rgba(0,212,170,.3);background:rgba(0,212,170,.05);color:var(--teal)}
+.lang-chip span{font-size:20px}
+
+/* ─── PRICING ─── */
+.pricing{padding:100px 0}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:780px;margin:64px auto 0}
+@media(max-width:600px){.pricing-grid{grid-template-columns:1fr}}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rxl);padding:36px;position:relative;overflow:hidden}
+.price-card.featured{border-color:rgba(0,212,170,.35);background:linear-gradient(135deg,rgba(0,212,170,.07),rgba(0,184,255,.04))}
+.price-card.featured::before{content:'Most Popular';position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--teal),var(--teal2));color:#000;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.5px}
+.price-name{font-family:var(--font);font-size:12px;font-weight:700;color:var(--ink2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.price-amount{font-family:var(--head);font-size:52px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.price-currency{font-size:20px;vertical-align:super;margin-right:2px;font-weight:600}
+.price-period{font-size:14px;color:var(--ink3);margin-top:6px}
+.price-divider{height:1px;background:var(--border);margin:24px 0}
+.price-feature{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;color:var(--ink2)}
+.price-feature svg{width:16px;height:16px;color:var(--teal);flex-shrink:0;margin-top:2px}
+.price-cta{display:block;width:100%;padding:14px;background:linear-gradient(135deg,var(--teal),#00c49a);color:#000;border-radius:var(--r);font-size:15px;font-weight:700;text-align:center;text-decoration:none;margin-top:28px;transition:all .2s;border:none;cursor:pointer;font-family:var(--font)}
+.price-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,170,.4)}
+.price-cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--border-hi)}
+.price-cta.ghost:hover{background:var(--surface2);box-shadow:none}
+.price-note{font-size:12px;color:var(--ink3);text-align:center;margin-top:12px}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials{padding:100px 0}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px}
+@media(max-width:800px){.testi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.testi-grid{grid-template-columns:1fr}}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rxl);padding:28px}
+.testi-stars{color:var(--amber);font-size:14px;letter-spacing:2px;margin-bottom:16px}
+.testi-text{font-size:15px;line-height:1.7;color:var(--ink2);margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:14px;font-weight:700;color:#000;flex-shrink:0}
+.testi-name{font-size:14px;font-weight:600}
+.testi-role{font-size:12px;color:var(--ink3);margin-top:1px}
+
+/* ─── FAQ ─── */
+.faq{padding:100px 0}
+.faq-list{max-width:720px;margin:64px auto 0;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.faq-q{padding:20px 24px;font-size:15px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .15s;user-select:none}
+.faq-q:hover{background:var(--surface2)}
+.faq-arrow{width:20px;height:20px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-arrow{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;font-size:14.5px;color:var(--ink2);line-height:1.7;padding:0 24px}
+.faq-item.open .faq-a{max-height:300px;padding:0 24px 20px}
+
+/* ─── CTA BOTTOM ─── */
+.cta-bottom{padding:120px 0;text-align:center}
+.cta-box{background:linear-gradient(135deg,rgba(0,212,170,.08),rgba(0,184,255,.06));border:1px solid rgba(0,212,170,.2);border-radius:32px;padding:80px 48px;position:relative;overflow:hidden}
+.cta-box::after{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,.12),transparent 70%);border-radius:50%;pointer-events:none}
+.cta-title{font-family:var(--head);font-size:clamp(28px,4vw,52px);font-weight:800;letter-spacing:-.3px;line-height:1.12;margin-bottom:16px;position:relative;z-index:1}
+.cta-sub{font-size:17px;color:var(--ink2);margin-bottom:36px;position:relative;z-index:1}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* ─── FOOTER ─── */
+footer{padding:48px 0 32px;border-top:1px solid var(--border)}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:700px){.footer-inner{grid-template-columns:1fr 1fr;gap:32px}}
+.footer-brand p{font-size:13.5px;color:var(--ink3);margin-top:12px;line-height:1.6;max-width:220px}
+.footer-col-title{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
+.footer-link{display:block;font-size:14px;color:var(--ink2);text-decoration:none;margin-bottom:10px;transition:color .15s}
+.footer-link:hover{color:var(--teal)}
+.footer-bottom{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.footer-bottom p{font-size:13px;color:var(--ink3)}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+</style>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  // TODO: Replace with your actual Paddle Seller ID after signing up at paddle.com
+  // Paddle.Setup({ seller: YOUR_SELLER_ID });
+</script>
+</head>
+<body>
+
+<div class="glow-a"></div>
+<div class="glow-b"></div>
+<div class="glow-c"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark"><svg viewBox="0 0 20 20"><path d="M2 4h16v2H2V4zm0 5h12v2H2V9zm0 5h14v2H2v-2z"/></svg></div>
+    <div class="nav-logo-name">FinanceOS</div>
+  </a>
+  <div class="nav-links">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+  </div>
+  <a href="#pricing" class="nav-cta">Buy Now →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge"><div class="hero-badge-dot"></div> Built for Restaurants & Cafes</div>
+        <h1 class="hero-title">Run your<br>restaurant<br><span class="accent" style="font-style:italic">finances.</span></h1>
+        <p class="hero-sub">Track revenue, expenses, suppliers and payroll in one offline-first desktop app. No subscription. No cloud required. Just open and work.</p>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+            Get FinanceOS
+          </a>
+          <a href="#features" class="btn-secondary">See Features</a>
+        </div>
+        <p class="hero-note">Try free · 3 entries · <span>€69 one-time</span> to unlock everything</p>
+      </div>
+
+      <!-- DASHBOARD MOCKUP -->
+      <div class="mockup-wrap">
+        <div class="mockup-outer">
+          <div class="mockup-titlebar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+          </div>
+          <div class="mockup-body">
+            <div class="mockup-stats">
+              <div class="m-stat"><div class="m-stat-label">Revenue</div><div class="m-stat-val green">€2,840</div></div>
+              <div class="m-stat"><div class="m-stat-label">Expenses</div><div class="m-stat-val red">€1,120</div></div>
+              <div class="m-stat"><div class="m-stat-label">Balance</div><div class="m-stat-val blue">€4,231</div></div>
+              <div class="m-stat"><div class="m-stat-label">FC%</div><div class="m-stat-val amber">28.4%</div></div>
+            </div>
+            <div class="mockup-chart">
+              <div class="chart-title-m">Revenue & Expenses — This Month</div>
+              <div class="bars" id="hero-bars"></div>
+            </div>
+            <div class="mockup-table">
+              <div class="m-table-row"><span style="color:#8892b0;font-size:9px">TODAY</span><span style="color:#8892b0;font-size:9px">CATEGORY</span><span style="color:#8892b0;font-size:9px">AMOUNT</span></div>
+              <div class="m-table-row"><span>09:14</span><span class="m-badge green">Dine-In</span><span style="color:#00d4aa;font-family:'DM Mono',monospace;font-size:11px">+€340</span></div>
+              <div class="m-table-row"><span>11:22</span><span class="m-badge amber">Delivery</span><span style="color:#00d4aa;font-family:'DM Mono',monospace;font-size:11px">+€180</span></div>
+              <div class="m-table-row"><span>14:05</span><span class="m-badge red">Food Cost</span><span style="color:#ff4d6d;font-family:'DM Mono',monospace;font-size:11px">-€220</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating cards -->
+        <div class="float-card float-card-1">
+          <div class="fc-label">Monthly Profit</div>
+          <div class="fc-value" style="color:#00d4aa">€1,720</div>
+          <div class="fc-change" style="color:#00d4aa">▲ +18% vs last month</div>
+        </div>
+        <div class="float-card float-card-2">
+          <div class="fc-label">Food Cost Alert</div>
+          <div class="fc-value" style="color:#f59e0b">28.4%</div>
+          <div class="fc-change" style="color:#00d4aa">✓ Under 32% target</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS / USED BY -->
+<section class="logos">
+  <div class="container">
+    <div class="logos-inner">
+      <div class="logo-item">🍽 Restaurants</div>
+      <div class="logo-item">☕ Cafes & Bars</div>
+      <div class="logo-item">🏨 Hotels</div>
+      <div class="logo-item">🚚 Delivery</div>
+      <div class="logo-item">🎪 Catering</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">Everything you need</div>
+      <h2 class="section-title">Built for the way<br>restaurants actually work</h2>
+      <p class="section-sub">No bloat. No complex accounting. Just the features a restaurant owner needs every day.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="f-icon teal">📊</div>
+        <div class="f-title">Daily Revenue Tracking</div>
+        <div class="f-desc">Enter total register + card POS. Cash is calculated automatically. Track by category: Dine-In, Delivery, Take Away, Bar, Events.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="f-icon red">💸</div>
+        <div class="f-title">Expense Management</div>
+        <div class="f-desc">Log expenses by supplier, category and payment method. Track Food Cost %, operational costs, energy, salaries and more.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="f-icon blue">👥</div>
+        <div class="f-title">Supplier Management</div>
+        <div class="f-desc">Full supplier directory with transaction history, outstanding credit balances, and one-click PDF reports per supplier.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="f-icon amber">💰</div>
+        <div class="f-title">Payroll</div>
+        <div class="f-desc">Daily wage entry per employee. Automatic weekly payroll calculation. Supports daily and hourly rate modes.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="f-icon purple">📈</div>
+        <div class="f-title">Reports & Analytics</div>
+        <div class="f-desc">Daily, weekly, monthly and annual reports with balance ledger, Food Cost analysis and period comparisons.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="f-icon teal">🎯</div>
+        <div class="f-title">Goals & Alerts</div>
+        <div class="f-desc">Set monthly revenue targets and Food Cost limits. Get instant dashboard alerts when targets are at risk.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="f-icon blue">📄</div>
+        <div class="f-title">PDF & Excel Export</div>
+        <div class="f-desc">Professional PDF reports with real tables (supports all languages). Full Excel export with running balance per day.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="f-icon amber">⚖️</div>
+        <div class="f-title">Period Comparison</div>
+        <div class="f-desc">Compare any two months, weeks, years or custom date ranges side by side with visual charts and percentage differences.</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="f-icon red">🔒</div>
+        <div class="f-title">Offline-First & Secure</div>
+        <div class="f-desc">Works completely offline. Your data stays on your device. License protection prevents sharing between businesses.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<section class="stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="reveal">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Languages supported</div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Monthly fees — ever</div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Works offline</div>
+      </div>
+      <div class="reveal reveal-delay-3">
+        <div class="stat-num" style="font-size:36px">€69</div>
+        <div class="stat-label">One-time price</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="section-eyebrow">Simple by design</div>
+      <h2 class="section-title">Up and running in minutes</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">1</div>
+        <div class="step-title">Download & Open</div>
+        <div class="step-desc">Download the single HTML file. Open it in Chrome or Edge. No installation, no setup, no account required.</div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">2</div>
+        <div class="step-title">Activate License</div>
+        <div class="step-desc">Enter your license key once. Set your business name, currency and language. The app is ready in under 2 minutes.</div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">3</div>
+        <div class="step-title">Start Recording</div>
+        <div class="step-desc">Enter daily revenue and expenses. Reports, balance ledger and analytics update in real time automatically.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="langs">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">International</div>
+      <h2 class="section-title">Available in 6 languages</h2>
+      <p class="section-sub" style="margin:12px auto 0">The entire interface — menus, reports, PDF exports — switches instantly to your language.</p>
+    </div>
+    <div class="lang-flags">
+      <div class="lang-chip"><span>🇬🇷</span> Ελληνικά</div>
+      <div class="lang-chip"><span>🇬🇧</span> English</div>
+      <div class="lang-chip"><span>🇪🇸</span> Español</div>
+      <div class="lang-chip"><span>🇮🇹</span> Italiano</div>
+      <div class="lang-chip"><span>🇫🇷</span> Français</div>
+      <div class="lang-chip"><span>🇩🇪</span> Deutsch</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="section-eyebrow">Simple pricing</div>
+      <h2 class="section-title">Try free. Pay when ready.</h2>
+      <p class="section-sub" style="margin:12px auto 0">Download the app, try it for free with up to 3 entries. When you're ready, unlock everything for a one-time payment.</p>
+    </div>
+
+    <!-- 2-column: Free trial + Full license -->
+    <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:24px;max-width:720px;margin:64px auto 0">
+      <!-- Free -->
+      <div class="price-card reveal" style="display:flex;flex-direction:column">
+        <div class="price-name">Free Trial</div>
+        <div class="price-amount"><span class="price-currency" style="font-size:16px"></span>Free</div>
+        <div class="price-period">no credit card · no sign-up</div>
+        <div class="price-divider"></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Full app access</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All features visible</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--ink3)">Limited to 3 entries</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--ink3)">No exports</span></div>
+        <div style="flex:1"></div>
+        <a href="https://www.mycashierarakron.gr/app/" target="_blank" class="price-cta ghost" style="margin-top:28px">Open App Free →</a>
+        <p class="price-note">Opens in Chrome or Edge · No install</p>
+      </div>
+
+      <!-- Full License -->
+      <div class="price-card featured reveal reveal-delay-1" style="display:flex;flex-direction:column">
+        <div class="price-name">Full License</div>
+        <div class="price-amount"><span class="price-currency">€</span>69</div>
+        <div class="price-period">one-time payment · 1 device · yours forever</div>
+        <div class="price-divider"></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited entries</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>PDF & Excel exports</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All reports & analytics</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All 6 languages</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Free updates for 1 year</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Email support</div>
+        <div style="flex:1"></div>
+        <button class="price-cta" onclick="openCheckout('full')" style="margin-top:28px">Get Full License →</button>
+        <p class="price-note">License key sent within 2h · No subscription ever</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;font-size:14px;color:var(--ink3)">
+      Need licenses for multiple locations? <a href="mailto:info@mycashierarakron.gr" style="color:var(--teal);text-decoration:none">Contact us for group pricing →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="section-eyebrow">What owners say</div>
+      <h2 class="section-title">Trusted by restaurants</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Finally an app that doesn't require an accounting degree. I close my daily cashier in 3 minutes and the reports go straight to my accountant."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#00d4aa,#00b8ff)">MK</div>
+          <div><div class="testi-name">Michalis K.</div><div class="testi-role">Restaurant Owner · Athens</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The Food Cost tracking alone saved me €400/month. I had no idea my FC was at 38% until I started using this. Now it's at 29%."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#f59e0b,#ff4d6d)">SR</div>
+          <div><div class="testi-name">Sofia R.</div><div class="testi-role">Cafe Owner · Thessaloniki</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Works offline — this was the dealbreaker for me. My internet is unreliable and every other app requires cloud. This one just works."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#a855f7,#ec4899)">DL</div>
+          <div><div class="testi-name">Dimitris L.</div><div class="testi-role">Taverna Owner · Crete</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD / TRY FREE -->
+<section id="download" style="padding:80px 0;text-align:center">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">Try before you buy</div>
+      <h2 class="section-title">Try it free — right now</h2>
+      <p class="section-sub" style="margin:12px auto 24px">No sign-up. No credit card. Open the file in Chrome or Edge and start exploring. When you hit 3 entries, you'll see the upgrade prompt.</p>
+      <a href="https://www.mycashierarakron.gr/app/" target="_blank" class="btn-primary" style="font-size:16px;padding:16px 32px;display:inline-flex">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-right:8px"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        Try FinanceOS Free — No sign-up
+      </a>
+      <p style="margin-top:14px;font-size:13px;color:var(--ink3)">Opens instantly in your browser · Opens instantly · No install required</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="section-eyebrow">Questions</div>
+      <h2 class="section-title">Frequently asked</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Does it work without internet?
+          <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Yes, completely. FinanceOS is a single HTML file that runs in your browser. After the initial license activation (requires internet once), it works 100% offline. Your data is stored locally on your device.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What happens to my data if I reinstall or change computers?
+          <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Use the built-in Backup feature to export your data as a JSON file before changing computers. When you set up on the new machine, use Restore to import everything back. For license transfers, contact us and we'll issue a new key within a few hours.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I use it on multiple devices?
+          <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Each license is for one device. If you need multiple devices or locations, contact us for group pricing — we offer discounts for 3+ licenses.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is it compatible with my accountant's software?
+          <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">FinanceOS exports professional Excel files (.xlsx) with all data organized in sheets — Revenue, Expenses, Payroll, Suppliers and Monthly Summary. Any accountant can work with these files directly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do I need to pay again for updates?
+          <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Standard includes 1 year of free updates. Professional includes 2 years. After that, updates are optional — your current version continues to work forever, you just won't get new features.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Which browser do I need?
+          <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Google Chrome or Microsoft Edge are recommended (any recent version). The app works on Windows, macOS and Linux. It is not designed for mobile browsers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BOTTOM -->
+<section class="cta-bottom">
+  <div class="container">
+    <div class="cta-box reveal">
+      <h2 class="cta-title">Ready to take control<br>of your finances?</h2>
+      <p class="cta-sub">Join restaurant owners across Europe who track their business with FinanceOS.</p>
+      <div class="cta-actions">
+        <button onclick="openCheckout('full')" class="btn-primary" style="font-size:16px;padding:16px 32px;border:none;cursor:pointer">
+          Get Full License — €69
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:info@mycashierarakron.gr" class="btn-secondary" style="font-size:16px;padding:15px 28px">Ask a question</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="nav-logo" href="#" style="margin-bottom:12px;display:inline-flex">
+          <div class="nav-logo-mark"><svg viewBox="0 0 20 20"><path d="M2 4h16v2H2V4zm0 5h12v2H2V9zm0 5h14v2H2v-2z"/></svg></div>
+          <div class="nav-logo-name">FinanceOS</div>
+        </a>
+        <p>Professional business management for restaurants, cafes and hotels. Built to be simple, powerful and offline-first.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <a href="#features" class="footer-link">Features</a>
+        <a href="#pricing" class="footer-link">Pricing</a>
+        <a href="#how" class="footer-link">How it works</a>
+        <a href="#faq" class="footer-link">FAQ</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Languages</div>
+        <a href="#" class="footer-link">🇬🇷 Ελληνικά</a>
+        <a href="#" class="footer-link">🇬🇧 English</a>
+        <a href="#" class="footer-link">🇪🇸 Español</a>
+        <a href="#" class="footer-link">🇮🇹 Italiano</a>
+        <a href="#" class="footer-link">🇫🇷 Français</a>
+        <a href="#" class="footer-link">🇩🇪 Deutsch</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <a href="mailto:info@mycashierarakron.gr" class="footer-link">info@mycashierarakron.gr</a>
+        <a href="#" class="footer-link">Support</a>
+        <a href="#" class="footer-link">License Transfer</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 MyCashier Arakron. All rights reserved.</p>
+      <p>Made with ♥ for the hospitality industry</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── HERO BARS ──
+const barsEl=document.getElementById('hero-bars');
+const data=[
+  [42,28],[55,30],[38,22],[60,35],[48,28],[72,40],[65,38],
+  [80,42],[58,32],[75,44],[90,48],[70,38],[85,50],[78,42],
+  [92,52],[68,36],[82,46],[74,40],[88,48],[95,54],[72,38],
+  [86,50],[78,44],[90,52],[82,46],[96,56],[88,50],[94,54],
+  [86,48],[100,58],
+];
+const today=new Date().getDate();
+barsEl.innerHTML=data.slice(0,today).map((d,i)=>{
+  const isToday=i===today-1;
+  return`<div class="bar-pair">
+    <div class="bar" style="height:${d[0]*0.56}px;background:${isToday?'rgba(0,212,170,1)':'rgba(0,212,170,.55)'};animation-delay:${i*0.02}s"></div>
+    <div class="bar" style="height:${d[1]*0.56}px;background:${isToday?'rgba(255,77,109,1)':'rgba(255,77,109,.45)'};animation-delay:${i*0.02+0.01}s"></div>
+  </div>`;
+}).join('');
+
+// ── SCROLL REVEAL ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── FAQ ──
+function toggleFaq(el){
+  const item=el.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.borderBottomColor=
+    window.scrollY>50?'rgba(255,255,255,.1)':'rgba(255,255,255,.07)';
+});
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    if(id==='#')return;
+    e.preventDefault();
+    document.querySelector(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+
+<script>
+// ── PADDLE CHECKOUT ──
+// SETUP INSTRUCTIONS:
+// 1. Sign up at paddle.com
+// 2. Create two products: Standard (€149) and Professional (€199)
+// 3. Copy the Price IDs from Paddle dashboard
+// 4. Replace the values below with your real IDs
+// 5. Uncomment Paddle.Setup() above with your Seller ID
+
+const PADDLE_PRICES = {
+  full: 'pri_REPLACE_WITH_YOUR_PRICE_ID',  // €69 — replace after creating product in Paddle
+};
+
+function openCheckout(plan) {
+  // Check if Paddle is configured
+  if (!window.Paddle) {
+    alert('Paddle not configured yet. Please contact us at info@mycashierarakron.gr to purchase.');
+    return;
+  }
+  const priceId = PADDLE_PRICES[plan] || PADDLE_PRICES['full'];
+  if (priceId.includes('REPLACE_WITH')) {
+    // Not configured yet — fallback to email
+    window.location.href = 'mailto:info@mycashierarakron.gr?subject=FinanceOS ' + ('Full') + ' License Purchase';
+    return;
+  }
+  Paddle.Checkout.open({
+    items: [{ priceId, quantity: 1 }],
+    settings: {
+      displayMode: 'overlay',
+      theme: 'dark',
+      locale: 'en',
+      successUrl: window.location.href + '?purchase=success',
+    },
+    customData: {
+      plan: plan,
+    }
+  });
+}
+
+// Show success message if redirected back after purchase
+if (window.location.search.includes('purchase=success')) {
+  setTimeout(() => {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#00d4aa;color:#000;padding:16px 28px;border-radius:12px;font-weight:700;font-size:15px;z-index:9999;box-shadow:0 8px 32px rgba(0,212,170,.4)';
+    el.textContent = '🎉 Purchase complete! Check your email for your license key within 2 hours.';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 8000);
+  }, 500);
+}
+</script>
+</body>
+</html>
