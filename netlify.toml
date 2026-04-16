@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Redirect /app to the FinanceOS app
+[[redirects]]
+  from = "/app"
+  to = "/app/index.html"
+  status = 200
+
+# Paddle webhook endpoint
+[[redirects]]
+  from = "/api/paddle-webhook"
+  to = "/.netlify/functions/paddle-webhook"
+  status = 200
