@@ -223,6 +223,110 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 .reveal-delay-1{transition-delay:.1s}
 .reveal-delay-2{transition-delay:.2s}
 .reveal-delay-3{transition-delay:.3s}
+
+/* ══════════════════════════════════
+   MOBILE OPTIMIZATIONS
+   ══════════════════════════════════ */
+
+/* ─── General Mobile ─── */
+@media(max-width:640px){
+  /* Nav */
+  nav{padding:0 16px;height:56px}
+  .nav-cta{padding:7px 14px;font-size:13px}
+
+  /* Hero */
+  .hero{padding:80px 0 48px;min-height:auto}
+  .hero-title{font-size:36px;letter-spacing:-.5px;line-height:1.1}
+  .hero-sub{font-size:16px;margin-bottom:28px}
+  .hero-actions{flex-direction:column;gap:10px}
+  .hero-actions .btn-primary,.hero-actions .btn-secondary{width:100%;justify-content:center;text-align:center}
+  .hero-note{font-size:12px;text-align:center}
+
+  /* Hide mockup on mobile - too complex */
+  .mockup-wrap{display:none}
+
+  /* Features */
+  .features{padding:64px 0}
+  .features-grid{grid-template-columns:1fr;gap:14px}
+  .feature-card{padding:22px 20px}
+
+  /* Stats */
+  .stats-band{padding:48px 0}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:20px}
+  .stat-num{font-size:36px}
+  .stat-label{font-size:13px}
+
+  /* How it works */
+  .how{padding:64px 0}
+  .steps{grid-template-columns:1fr;gap:8px}
+  .step{padding:24px 16px}
+
+  /* Languages */
+  .langs{padding:48px 0}
+  .lang-flags{gap:10px}
+  .lang-chip{padding:8px 14px;font-size:13px}
+
+  /* Pricing */
+  .pricing{padding:64px 0}
+  .pricing-grid{grid-template-columns:1fr;max-width:100%}
+  .price-card{padding:28px 24px}
+  .price-amount{font-size:44px}
+  .price-card.featured::before{font-size:9px;padding:3px 8px}
+
+  /* Testimonials */
+  .testimonials{padding:64px 0}
+  .testi-grid{grid-template-columns:1fr}
+
+  /* FAQ */
+  .faq{padding:64px 0}
+  .faq-q{font-size:14px;padding:16px 18px}
+  .faq-a{padding:0 18px}
+  .faq-item.open .faq-a{padding:0 18px 16px}
+
+  /* CTA Bottom */
+  .cta-bottom{padding:64px 0}
+  .cta-box{padding:48px 24px;border-radius:20px}
+  .cta-title{font-size:28px}
+  .cta-sub{font-size:15px}
+  .cta-actions{flex-direction:column;gap:10px}
+  .cta-actions .btn-primary,.cta-actions .btn-secondary{width:100%;justify-content:center}
+
+  /* Footer */
+  footer{padding:40px 0 24px}
+  .footer-inner{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px}
+
+  /* Section headers */
+  .section-title{font-size:28px}
+  .section-sub{font-size:15px}
+
+  /* Sections padding */
+  .features,.how,.testimonials,.faq,.pricing,.langs{padding-left:0;padding-right:0}
+}
+
+/* ─── Tablet (641px - 900px) ─── */
+@media(min-width:641px) and (max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .mockup-wrap{max-width:500px;margin:0 auto}
+  .float-card-1,.float-card-2{display:none}
+  .hero-title{font-size:48px}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .pricing-grid{max-width:600px}
+  .footer-inner{grid-template-columns:1fr 1fr}
+}
+
+/* ─── Touch devices - larger tap targets ─── */
+@media(hover:none){
+  .btn-primary,.btn-secondary,.price-cta,.nav-cta{
+    min-height:48px;
+  }
+  .faq-q{min-height:52px}
+  .nav-link{padding:10px 14px}
+  .lang-chip{padding:10px 16px}
+}
+
+.mobile-hero-stats{display:none}
+@media(max-width:640px){.mobile-hero-stats{display:grid}}
 </style>
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
@@ -266,10 +370,29 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
           <a href="#features" class="btn-secondary">See Features</a>
         </div>
         <p class="hero-note">Try free · no sign-up · <span>€69 one-time</span> to unlock everything</p>
+      <!-- Mobile stats strip (visible only on mobile) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px" class="mobile-hero-stats">
+        <div style="background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.15);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:#00d4aa">€69</div>
+          <div style="font-size:11px;color:#8892b0;margin-top:3px">One-time only</div>
+        </div>
+        <div style="background:rgba(0,184,255,.08);border:1px solid rgba(0,184,255,.15);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-family:'DM Mono',monospace;font-size:18px;font-weight:700;color:#00b8ff">6</div>
+          <div style="font-size:11px;color:#8892b0;margin-top:3px">Languages</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:18px;font-weight:700">100%</div>
+          <div style="font-size:11px;color:#8892b0;margin-top:3px">Works offline</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px;text-align:center">
+          <div style="font-size:18px;font-weight:700">∞</div>
+          <div style="font-size:11px;color:#8892b0;margin-top:3px">No monthly fees</div>
+        </div>
+      </div>
       </div>
 
       <!-- DASHBOARD MOCKUP -->
-      <div class="mockup-wrap">
+      <div class="mockup-wrap" style="position:relative">
         <div class="mockup-outer">
           <div class="mockup-titlebar">
             <div class="dot dot-r"></div>
@@ -689,6 +812,20 @@ window.addEventListener('scroll',()=>{
     window.scrollY>50?'rgba(255,255,255,.1)':'rgba(255,255,255,.07)';
 });
 
+
+// Mobile sticky bar
+function initMobileSticky() {
+  const bar = document.getElementById('mobile-sticky');
+  if (!bar) return;
+  if (window.innerWidth <= 640) {
+    bar.style.display = 'flex';
+    // Add padding to body so content not hidden behind bar
+    document.body.style.paddingBottom = '80px';
+  }
+}
+window.addEventListener('load', initMobileSticky);
+window.addEventListener('resize', initMobileSticky);
+
 // ── SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
@@ -742,5 +879,11 @@ if (window.location.search.includes('purchase=success')) {
   }, 500);
 }
 </script>
+
+<!-- MOBILE STICKY CTA BAR -->
+<div id="mobile-sticky" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;padding:12px 16px;background:rgba(7,8,16,.95);border-top:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px);gap:10px">
+  <a href="https://getfinanceos.netlify.app/app/" target="_blank" style="flex:1;padding:13px;background:rgba(255,255,255,.07);color:#f0f3ff;border-radius:10px;font-size:14px;font-weight:600;text-align:center;text-decoration:none;border:1px solid rgba(255,255,255,.1)">Try Free</a>
+  <button onclick="openCheckout('full')" style="flex:1.5;padding:13px;background:linear-gradient(135deg,#00d4aa,#00c49a);color:#000;border-radius:10px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:inherit">Get License — €69</button>
+</div>
 </body>
 </html>
