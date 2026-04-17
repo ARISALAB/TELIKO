@@ -1377,40 +1377,7 @@ footer a{color:var(--accent);text-decoration:none}
   <div id="qs-home-placeholder"></div>
 
   <!-- BACKUP REMINDER -->
-  <div id="backup-reminder" style="margin-bottom:24px;display:none">
-    <div id="backup-reminder-inner" style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px 18px">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-        <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:22px">💾</span>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--ink)">Αποθήκευσε τα δεδομένα σου</div>
-            <div style="font-size:11px;color:var(--ink3)" id="backup-last-label">Τελευταία αποθήκευση: —</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-primary btn-sm" onclick="quickBackup()" style="gap:6px">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            Αποθήκευσε τώρα
-          </button>
-          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('restore-input').click()" style="gap:6px">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12a9 9 0 109 9"/><polyline points="3 3 3 9 9 9"/></svg>
-            Επαναφορά δεδομένων
-          </button>
-        </div>
-      </div>
-      <!-- Simple instructions -->
-      <div style="background:var(--bg3);border-radius:var(--radius-lg);padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div>
-          <div style="font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:4px">💾 Πώς αποθηκεύεις:</div>
-          <div style="font-size:11px;color:var(--ink3);line-height:1.6">Πάτα <strong style="color:var(--ink2)">"Αποθήκευσε τώρα"</strong> και το αρχείο κατεβαίνει αυτόματα στον φάκελο <strong style="color:var(--ink2)">Downloads</strong> του υπολογιστή σου.</div>
-        </div>
-        <div style="border-left:1px solid var(--border);padding-left:12px">
-          <div style="font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:4px">🔄 Πώς επαναφέρεις:</div>
-          <div style="font-size:11px;color:var(--ink3);line-height:1.6">Πάτα <strong style="color:var(--ink2)">"Επαναφορά"</strong>, βρες το αρχείο στο <strong style="color:var(--ink2)">Downloads</strong> και επίλεξέ το. Τα δεδομένα σου επιστρέφουν αμέσως.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div id="backup-reminder" style="margin-bottom:24px;display:none"></div>
 
   <!-- GOALS ALERTS (shown when targets are at risk) -->
   <div id="home-goals-alerts" style="display:none;flex-direction:column;gap:8px"></div>
@@ -1419,7 +1386,7 @@ footer a{color:var(--accent);text-decoration:none}
   <div id="home-credit-alert" style="display:none;margin-bottom:24px">
     <div class="alert alert-warning" style="cursor:pointer" onclick="nav('credit')">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span>You have outstanding credit balances: <strong id="home-credit-total"></strong> — <u>View On Credit →</u></span>
+      <span id="home-credit-alert-text"></span>
     </div>
   </div>
 
@@ -2709,6 +2676,7 @@ function applyTranslations(){
   if(currentPage==='expenses'){renderExpenseTable();renderExpenseSummary();}
   if(currentPage==='suppliers')renderSuppliers();
   if(currentPage==='payroll')renderEmployees();
+  if(currentPage==='home'){updateHomeStats();updateBackupReminder();}
   // Re-render help if open
   if(document.getElementById('modal-help')?.classList.contains('open'))renderHelpModal();
   // Re-render quick start steps
@@ -2724,6 +2692,7 @@ const DB={
   expenses(){return this.get('fos_expenses')||[]},saveExpenses(d){this.set('fos_expenses',d)},
   suppliers(){return this.get('fos_suppliers')||[]},saveSuppliers(d){this.set('fos_suppliers',d)},
   employees(){return this.get('fos_employees')||[]},saveEmployees(d){this.set('fos_employees',d)},
+  payroll(){return this.get('fos_payroll')||[]},savePayroll(d){this.set('fos_payroll',d)},
   creditPayments(){return this.get('fos_credit_payments')||[]},
   saveCreditPayments(d){this.set('fos_credit_payments',d)},
 };
@@ -2885,7 +2854,13 @@ function updateHomeStats(){
       const settled=DB.creditPayments().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
       totalCreditBal+=Math.max(0,creditTotal-settled);
     });
-    if(totalCreditBal>0){alertEl.style.display='block';document.getElementById('home-credit-total').textContent=fmtE(totalCreditBal);}
+    if(totalCreditBal>0){
+      alertEl.style.display='block';
+      const creditTxt={el:'Έχεις ανεξόφλητα υπόλοιπα',en:'You have outstanding credit balances',es:'Tienes saldos pendientes',it:'Hai saldi in sospeso',fr:'Vous avez des soldes impayés',de:'Sie haben ausstehende Salden'};
+      const viewTxt={el:'Δες On Credit →',en:'View On Credit →',es:'Ver Crédito →',it:'Vedi Crediti →',fr:'Voir Crédits →',de:'Kredit ansehen →'};
+      const alertTextEl=document.getElementById('home-credit-alert-text');
+      if(alertTextEl)alertTextEl.innerHTML=`${creditTxt[lang]||creditTxt.en}: <strong>${fmtE(totalCreditBal)}</strong> — <u>${viewTxt[lang]||viewTxt.en}</u>`;
+    }
     else alertEl.style.display='none';
   }
   renderDashboardChart();
@@ -6048,33 +6023,78 @@ function quickBackup(){
 function updateBackupReminder(){
   const last=localStorage.getItem('fos_last_backup');
   const reminder=document.getElementById('backup-reminder');
-  const label=document.getElementById('backup-last-label');
   if(!reminder)return;
 
+  const isEl=lang==='el';
+  const title_lbl={el:'Αποθήκευσε τα δεδομένα σου',en:'Save your data',es:'Guarda tus datos',it:'Salva i tuoi dati',fr:'Sauvegardez vos données',de:'Daten speichern'};
+  const save_btn={el:'Αποθήκευσε τώρα',en:'Save now',es:'Guardar ahora',it:'Salva ora',fr:'Sauvegarder',de:'Jetzt speichern'};
+  const restore_btn={el:'Επαναφορά δεδομένων',en:'Restore data',es:'Restaurar datos',it:'Ripristina dati',fr:'Restaurer données',de:'Daten wiederherstellen'};
+  const how_save={el:'Πώς αποθηκεύεις:',en:'How to save:',es:'Cómo guardar:',it:'Come salvare:',fr:'Comment sauvegarder:',de:'So speichern:'};
+  const how_rest={el:'Πώς επαναφέρεις:',en:'How to restore:',es:'Cómo restaurar:',it:'Come ripristinare:',fr:'Comment restaurer:',de:'So wiederherstellen:'};
+  const save_desc={el:`Πάτα <strong>"${save_btn[lang]||save_btn.en}"</strong> και το αρχείο κατεβαίνει αυτόματα στον φάκελο <strong>Downloads</strong> του υπολογιστή σου.`,
+    en:`Press <strong>"${save_btn.en}"</strong> and the file downloads automatically to your <strong>Downloads</strong> folder.`,
+    es:`Pulsa <strong>"${save_btn.es}"</strong> y el archivo se descarga automáticamente en tu carpeta <strong>Downloads</strong>.`,
+    it:`Premi <strong>"${save_btn.it}"</strong> e il file viene scaricato automaticamente nella cartella <strong>Download</strong>.`,
+    fr:`Cliquez <strong>"${save_btn.fr}"</strong> et le fichier se télécharge automatiquement dans votre dossier <strong>Téléchargements</strong>.`,
+    de:`Drücke <strong>"${save_btn.de}"</strong> und die Datei wird automatisch in deinen <strong>Downloads</strong>-Ordner heruntergeladen.`};
+  const rest_desc={el:`Πάτα <strong>"Επαναφορά"</strong>, βρες το αρχείο στο <strong>Downloads</strong> και επίλεξέ το. Τα δεδομένα σου επιστρέφουν αμέσως.`,
+    en:`Press <strong>"Restore"</strong>, find the file in <strong>Downloads</strong> and select it. Your data returns immediately.`,
+    es:`Pulsa <strong>"Restaurar"</strong>, encuentra el archivo en <strong>Downloads</strong> y selecciónalo. Tus datos vuelven de inmediato.`,
+    it:`Premi <strong>"Ripristina"</strong>, trova il file in <strong>Download</strong> e selezionalo. I tuoi dati tornano immediatamente.`,
+    fr:`Cliquez <strong>"Restaurer"</strong>, trouvez le fichier dans <strong>Téléchargements</strong> et sélectionnez-le. Vos données reviennent immédiatement.`,
+    de:`Drücke <strong>"Wiederherstellen"</strong>, finde die Datei in <strong>Downloads</strong> und wähle sie aus. Deine Daten kommen sofort zurück.`};
+
+  let statusLabel='';
+  let showReminder=false;
+  let urgent=false;
+
   if(!last){
-    reminder.style.display='block';
-    label.textContent=lang==='el'?'Δεν έχεις αποθηκεύσει ποτέ!':'You have never saved a backup!';
-    return;
-  }
-
-  const lastDate=new Date(last);
-  const now=new Date();
-  const diffDays=Math.floor((now-lastDate)/(1000*60*60*24));
-
-  if(diffDays===0){
-    reminder.style.display='none'; // saved today — no reminder
-  } else if(diffDays===1){
-    reminder.style.display='block';
-    label.textContent=lang==='el'?'Τελευταία αποθήκευση: χθες':'Last saved: yesterday';
+    showReminder=true;urgent=true;
+    statusLabel={el:'Δεν έχεις αποθηκεύσει ποτέ!',en:'You have never saved a backup!',es:'¡Nunca has guardado una copia!',it:'Non hai mai salvato un backup!',fr:'Vous n\'avez jamais sauvegardé!',de:'Du hast noch nie gespeichert!'}[lang]||'You have never saved a backup!';
   } else {
-    reminder.style.display='block';
-    label.textContent=lang==='el'?`Τελευταία αποθήκευση: ${diffDays} μέρες πριν`:`Last saved: ${diffDays} days ago`;
-    // Urgent color if more than 3 days
-    if(diffDays>3){
-      reminder.querySelector('div').style.borderColor='rgba(255,77,109,.3)';
-      reminder.querySelector('div').style.background='rgba(255,77,109,.05)';
-    }
+    const lastDate=new Date(last);
+    const diffDays=Math.floor((new Date()-lastDate)/(1000*60*60*24));
+    if(diffDays===0){showReminder=false;}
+    else if(diffDays===1){showReminder=true;
+      statusLabel={el:'Τελευταία αποθήκευση: χθες',en:'Last saved: yesterday',es:'Último guardado: ayer',it:'Ultimo salvataggio: ieri',fr:'Dernière sauvegarde: hier',de:'Zuletzt gespeichert: gestern'}[lang]||'Last saved: yesterday';}
+    else{showReminder=true;urgent=diffDays>3;
+      statusLabel={el:`Τελευταία αποθήκευση: ${diffDays} μέρες πριν`,en:`Last saved: ${diffDays} days ago`,es:`Último guardado: hace ${diffDays} días`,it:`Ultimo salvataggio: ${diffDays} giorni fa`,fr:`Dernière sauvegarde: il y a ${diffDays} jours`,de:`Zuletzt gespeichert: vor ${diffDays} Tagen`}[lang]||`Last saved: ${diffDays} days ago`;}
   }
+
+  if(!showReminder){reminder.style.display='none';return;}
+  reminder.style.display='block';
+
+  reminder.innerHTML=`<div style="background:var(--surface2);border:1px solid ${urgent?'rgba(255,77,109,.3)':'var(--border)'};border-radius:var(--radius-xl);padding:16px 18px;${urgent?'background:rgba(255,77,109,.04)':''}">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:22px">💾</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink)">${title_lbl[lang]||title_lbl.en}</div>
+          <div style="font-size:11px;color:${urgent?'var(--danger)':'var(--ink3)'}">${statusLabel}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="quickBackup()" style="gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          ${save_btn[lang]||save_btn.en}
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('restore-input').click()" style="gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12a9 9 0 109 9"/><polyline points="3 3 3 9 9 9"/></svg>
+          ${restore_btn[lang]||restore_btn.en}
+        </button>
+      </div>
+    </div>
+    <div style="background:var(--bg3);border-radius:var(--radius-lg);padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:4px">💾 ${how_save[lang]||how_save.en}</div>
+        <div style="font-size:11px;color:var(--ink3);line-height:1.6">${save_desc[lang]||save_desc.en}</div>
+      </div>
+      <div style="border-left:1px solid var(--border);padding-left:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:4px">🔄 ${how_rest[lang]||how_rest.en}</div>
+        <div style="font-size:11px;color:var(--ink3);line-height:1.6">${rest_desc[lang]||rest_desc.en}</div>
+      </div>
+    </div>
+  </div>`;
 }
 
 // ── GOALS & ALERTS ──
