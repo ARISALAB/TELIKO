@@ -1238,6 +1238,41 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </div>
 
+<!-- MODAL: ΕΞΟΦΛΗΣΗ ΤΙΜΟΛΟΓΙΟΥ -->
+<div class="modal-overlay" id="modal-settle">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-title">
+      <span>💳 Εξόφληση Τιμολογίου</span>
+      <button class="modal-close" onclick="closeModal('modal-settle')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+    <div id="settle-supplier-info" style="background:var(--bg3);border-radius:var(--radius-lg);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--ink2)"></div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Ημερομηνία Εξόφλησης</label>
+        <input type="date" id="settle-date"/>
+      </div>
+      <div class="form-group">
+        <label>Τρόπος Πληρωμής</label>
+        <select id="settle-pay">
+          <option value="Μετρητά">💵 Μετρητά</option>
+          <option value="Κάρτα" selected>🏦 Τράπεζα</option>
+        </select>
+      </div>
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Ποσό Εξόφλησης</label>
+        <input type="number" id="settle-amount" step="0.01" min="0" placeholder="0.00" style="font-size:20px;padding:14px;font-weight:700"/>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('modal-settle')">Άκυρο</button>
+      <button class="btn btn-primary" onclick="confirmSettle()" style="gap:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Εξόφληση
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== PAGES ===== -->
 <main>
 
@@ -1341,6 +1376,42 @@ footer a{color:var(--accent);text-decoration:none}
   <!-- QUICK START (shown only when no data yet) -->
   <div id="qs-home-placeholder"></div>
 
+  <!-- BACKUP REMINDER -->
+  <div id="backup-reminder" style="margin-bottom:24px;display:none">
+    <div id="backup-reminder-inner" style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px 18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:22px">💾</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink)">Αποθήκευσε τα δεδομένα σου</div>
+            <div style="font-size:11px;color:var(--ink3)" id="backup-last-label">Τελευταία αποθήκευση: —</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="quickBackup()" style="gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Αποθήκευσε τώρα
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('restore-input').click()" style="gap:6px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12a9 9 0 109 9"/><polyline points="3 3 3 9 9 9"/></svg>
+            Επαναφορά δεδομένων
+          </button>
+        </div>
+      </div>
+      <!-- Simple instructions -->
+      <div style="background:var(--bg3);border-radius:var(--radius-lg);padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:4px">💾 Πώς αποθηκεύεις:</div>
+          <div style="font-size:11px;color:var(--ink3);line-height:1.6">Πάτα <strong style="color:var(--ink2)">"Αποθήκευσε τώρα"</strong> και το αρχείο κατεβαίνει αυτόματα στον φάκελο <strong style="color:var(--ink2)">Downloads</strong> του υπολογιστή σου.</div>
+        </div>
+        <div style="border-left:1px solid var(--border);padding-left:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--ink2);margin-bottom:4px">🔄 Πώς επαναφέρεις:</div>
+          <div style="font-size:11px;color:var(--ink3);line-height:1.6">Πάτα <strong style="color:var(--ink2)">"Επαναφορά"</strong>, βρες το αρχείο στο <strong style="color:var(--ink2)">Downloads</strong> και επίλεξέ το. Τα δεδομένα σου επιστρέφουν αμέσως.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- GOALS ALERTS (shown when targets are at risk) -->
   <div id="home-goals-alerts" style="display:none;flex-direction:column;gap:8px"></div>
 
@@ -1363,7 +1434,7 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="card">
       <div class="card-title" data-el="card-new-entry">New Entry</div>
       <div class="form-grid">
-        <div class="form-group"><label data-el="lbl-date">Date</label><input type="date" id="inc-date"/></div>
+        <div class="form-group"><label data-el="lbl-date">Date</label><input type="date" id="inc-date" onchange="onIncDateChange()"/></div>
         <div class="form-group">
           <label data-el="lbl-inc-category">Category</label>
           <select id="inc-category">
@@ -1417,15 +1488,14 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
     <div class="card">
       <div class="card-title" data-el="card-day-summary">Day Summary</div>
+      <!-- Live Balance Panel -->
+      <div id="inc-balance-panel" style="margin-bottom:16px;display:none"></div>
       <div id="inc-summary"><div class="empty"><svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg><p data-el="empty-select-date">Select a date</p></div></div>
     </div>
   </div>
   <div class="section" style="margin-top:24px">
     <div class="section-header">
       <div class="section-title" data-el="section-entries">Entries</div>
-      <div class="flex" style="gap:8px;align-items:center">
-        <input type="date" id="inc-filter-date" onchange="renderIncomeTable()" style="width:auto"/>
-      </div>
     </div>
     <div class="table-wrap">
       <table id="income-table">
@@ -2654,7 +2724,8 @@ const DB={
   expenses(){return this.get('fos_expenses')||[]},saveExpenses(d){this.set('fos_expenses',d)},
   suppliers(){return this.get('fos_suppliers')||[]},saveSuppliers(d){this.set('fos_suppliers',d)},
   employees(){return this.get('fos_employees')||[]},saveEmployees(d){this.set('fos_employees',d)},
-  payroll(){return this.get('fos_payroll')||[]},savePayroll(d){this.set('fos_payroll',d)},
+  creditPayments(){return this.get('fos_credit_payments')||[]},
+  saveCreditPayments(d){this.set('fos_credit_payments',d)},
 };
 
 // ── CURRENCY ──
@@ -2676,6 +2747,7 @@ function saveCurrency(){
   if(currentPage==='income'){renderIncomeTable();renderIncomeSummary();}
   if(currentPage==='expenses'){renderExpenseTable();renderExpenseSummary();}
   if(currentPage==='home')updateHomeStats();
+  if(currentPage==='home')updateBackupReminder();
 }
 function updateCurrencyUI(){
   const btn = document.getElementById('btn-currency');
@@ -2752,10 +2824,10 @@ function nav(page){
 function onPageEnter(page){
   const d=today();
   if(page==='home')updateHomeStats();
+  if(page==='home')updateBackupReminder();
   if(page==='income'){
     if(!document.getElementById('inc-date').value)document.getElementById('inc-date').value=d;
-    if(!document.getElementById('inc-filter-date').value)document.getElementById('inc-filter-date').value=d;
-    renderIncomeTable();renderIncomeSummary();
+    onIncDateChange();
   }
   if(page==='expenses'){
     if(!document.getElementById('exp-date').value)document.getElementById('exp-date').value=d;
@@ -2788,8 +2860,13 @@ function updateHomeStats(){
   const income=DB.income().filter(x=>x.date===d);const expenses=DB.expenses().filter(x=>x.date===d);
   const totalInc=income.reduce((s,x)=>s+x.cash+x.card,0);const totalExp=expenses.reduce((s,x)=>s+x.amount,0);
   const allIncome=DB.income();const allExpenses=DB.expenses();
-  const totalCash=allIncome.reduce((s,x)=>s+x.cash,0)-allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
-  const totalCard=allIncome.reduce((s,x)=>s+x.card,0)-allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const allSettlements=DB.creditPayments();
+  const totalCash=allIncome.reduce((s,x)=>s+x.cash,0)
+    -allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0)
+    -allSettlements.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const totalCard=allIncome.reduce((s,x)=>s+x.card,0)
+    -allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0)
+    -allSettlements.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
   document.getElementById('hs-income').textContent=fmtE(totalInc);
   document.getElementById('hs-expense').textContent=fmtE(totalExp);
   document.getElementById('hs-cash').textContent=fmtE(totalCash+totalCard);
@@ -2799,18 +2876,14 @@ function updateHomeStats(){
   // Business name in hero
   const bizDisplay=document.getElementById('hero-biz-display');
   if(BIZ.name&&bizDisplay){bizDisplay.textContent=BIZ.name;bizDisplay.style.display='block';}
-  // Credit alert
-  const creditTotal=DB.expenses().filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
-  const paidCredit=DB.expenses().filter(x=>x.pay!=='Επί Πιστώσει'&&DB.expenses().some(y=>y.pay==='Επί Πιστώσει'&&y.supplier===x.supplier)).reduce((s,x)=>s+x.amount,0);
+  // Credit alert — use creditPayments for correct balance
   const alertEl=document.getElementById('home-credit-alert');
   if(alertEl){
-    // Compute actual credit balance per supplier
     let totalCreditBal=0;
     DB.suppliers().forEach(s=>{
-      const exp=DB.expenses().filter(x=>x.supplier===s.name);
-      const tot=exp.reduce((a,x)=>a+x.amount,0);
-      const paid=exp.filter(x=>x.pay!=='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
-      totalCreditBal+=tot-paid;
+      const creditTotal=DB.expenses().filter(x=>x.supplier===s.name&&x.pay==='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
+      const settled=DB.creditPayments().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
+      totalCreditBal+=Math.max(0,creditTotal-settled);
     });
     if(totalCreditBal>0){alertEl.style.display='block';document.getElementById('home-credit-total').textContent=fmtE(totalCreditBal);}
     else alertEl.style.display='none';
@@ -2818,6 +2891,104 @@ function updateHomeStats(){
   renderDashboardChart();
   updateGoalsAlerts();
   renderQuickStart();
+}
+
+// ── INCOME DATE BALANCE ──
+function onIncDateChange(){
+  renderIncomeTable();
+  renderIncomeSummary();
+  updateIncDateBalance();
+}
+
+function updateIncDateBalance(){
+  const d=document.getElementById('inc-date').value;
+  const panel=document.getElementById('inc-balance-panel');
+  if(!d){panel.style.display='none';return;}
+  panel.style.display='block';
+
+  const{cashBefore,cardBefore}=getBalanceBefore(d);
+  const income=DB.income().filter(x=>x.date===d);
+  const expenses=DB.expenses().filter(x=>x.date===d);
+  const settlements=DB.creditPayments().filter(x=>x.date===d);
+
+  const cashInc=income.reduce((s,x)=>s+x.cash,0);
+  const cashExp=expenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const settleCash=settlements.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const cardInc=income.reduce((s,x)=>s+x.card,0);
+  const cardExp=expenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const settleCard=settlements.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+
+  const cashClose=cashBefore+cashInc-cashExp-settleCash;
+  const cardClose=cardBefore+cardInc-cardExp-settleCard;
+  const totalClose=cashClose+cardClose;
+  const isToday=d===today();
+
+  document.getElementById('inc-balance-panel').innerHTML=`
+    <style>
+      @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+      @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+      .bal-card-wrap{animation:slideUp .35s ease forwards}
+      .live-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;animation:livePulse 1.8s ease-in-out infinite}
+    </style>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:7px">
+        <span class="live-dot"></span>
+        ${isToday?(lang==='el'?'Live Balance':'Live Balance'):(lang==='el'?'Balance':'Balance')} · ${d}
+      </div>
+    </div>
+
+    <!-- Total closing — hero number -->
+    <div class="bal-card-wrap" style="background:linear-gradient(135deg,rgba(0,212,170,.12),rgba(0,184,255,.08));border:1px solid rgba(0,212,170,.25);border-radius:var(--radius-xl);padding:18px 20px;margin-bottom:12px;text-align:center">
+      <div style="font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">
+        ${lang==='el'?'Συνολικό Υπόλοιπο':'Total Balance'}
+      </div>
+      <div style="font-family:var(--mono);font-size:32px;font-weight:800;color:${totalClose>=0?'var(--accent)':'var(--danger)'};letter-spacing:-1px;line-height:1">
+        ${fmtE(totalClose)}
+      </div>
+    </div>
+
+    <!-- Cash & Card grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px">
+        <div style="font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">💵 Cash</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:11px;color:var(--ink3)">Opening</span>
+          <span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink2)">${fmtE(cashBefore)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--border)">
+          <span style="font-size:11px;color:var(--ink3)">Closing</span>
+          <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:${cashClose>=0?'var(--accent)':'var(--danger)'}">${fmtE(cashClose)}</span>
+        </div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px">
+        <div style="font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">🏦 Bank</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:11px;color:var(--ink3)">Opening</span>
+          <span style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink2)">${fmtE(cardBefore)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--border)">
+          <span style="font-size:11px;color:var(--ink3)">Closing</span>
+          <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:${cardClose>=0?'var(--accent2)':'var(--danger)'}">${fmtE(cardClose)}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movement strip -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+      <div style="background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.15);border-radius:var(--radius-lg);padding:10px;text-align:center">
+        <div style="font-size:8px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">▲ Revenue</div>
+        <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent)">${fmtE(cashInc+cardInc)}</div>
+      </div>
+      <div style="background:rgba(255,77,109,.07);border:1px solid rgba(255,77,109,.15);border-radius:var(--radius-lg);padding:10px;text-align:center">
+        <div style="font-size:8px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">▼ Expenses</div>
+        <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--danger)">${fmtE(cashExp+cardExp+settleCash+settleCard)}</div>
+      </div>
+      <div style="background:rgba(0,184,255,.07);border:1px solid rgba(0,184,255,.15);border-radius:var(--radius-lg);padding:10px;text-align:center">
+        <div style="font-size:8px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">= Profit</div>
+        <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:${(cashInc+cardInc-cashExp-cardExp-settleCash-settleCard)>=0?'var(--accent2)':'var(--danger)'}">${fmtE(cashInc+cardInc-cashExp-cardExp-settleCash-settleCard)}</div>
+      </div>
+    </div>
+  `;
 }
 
 // ── INCOME ──
@@ -2861,14 +3032,14 @@ function addIncome(){
   document.getElementById('inc-cash-display').textContent='—';
   document.getElementById('inc-total-preview').textContent='—';
   document.getElementById('inc-breakdown').style.display='none';
-  document.getElementById('inc-filter-date').value=d;renderIncomeTable();renderIncomeSummary();notify(t('notify-income-added'));
+  document.getElementById('inc-date').value=d;renderIncomeTable();renderIncomeSummary();updateIncDateBalance();notify(t('notify-income-added'));
 }
 function deleteIncome(id){
   if(!confirm(t('confirm-delete')))return;
   DB.saveIncome(DB.income().filter(x=>x.id!==id));renderIncomeTable();renderIncomeSummary();notify(t('notify-deleted'),'danger');
 }
 function renderIncomeTable(){
-  const d=document.getElementById('inc-filter-date').value;
+  const d=document.getElementById('inc-date').value;
   const rows=DB.income().filter(x=>x.date===d).sort((a,b)=>a.time.localeCompare(b.time));
   const tb=document.getElementById('income-tbody');
   if(!rows.length){
@@ -2902,32 +3073,15 @@ function renderIncomeTable(){
   renderIncomeSummary();
 }
 function renderIncomeSummary(){
-  const d=document.getElementById('inc-filter-date').value||today();
+  const d=document.getElementById('inc-date').value||today();
   const rows=DB.income().filter(x=>x.date===d);
   const cash=rows.reduce((s,x)=>s+x.cash,0);const card=rows.reduce((s,x)=>s+x.card,0);
-  const{cashBefore,cardBefore}=getBalanceBefore(d);
-  // expenses for this day (cash/card only, not credit)
-  const expRows=DB.expenses().filter(x=>x.date===d);
-  const cashExp=expRows.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
-  const cardExp=expRows.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
-  const cashAfter=cashBefore+cash-cashExp;
-  const cardAfter=cardBefore+card-cardExp;
   document.getElementById('inc-summary').innerHTML=`
     <div class="summary-row"><span class="summary-key">Register (total)</span><span class="summary-val pos" style="font-size:22px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:-1px">${fmtE(cash+card)}</span></div>
     <div class="summary-row"><span class="summary-key">Card / POS</span><span class="summary-val" style="color:var(--accent2)">${fmtE(card)}</span></div>
     <div class="summary-row"><span class="summary-key" style="font-weight:700">Cash</span><span class="summary-val pos">${fmtE(cash)}</span></div>
-    <div style="margin-top:14px;font-size:12px;color:var(--ink3);margin-bottom:10px">${rows.length} ${lang==='en'?'entries':'καταχωρήσεις'}</div>
-    <div class="running-balance">
-      <div class="running-balance-title">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Running Balance
-      </div>
-      <div class="rb-row"><span class="rb-label">Cash opening</span><span class="rb-val ${cashBefore>=0?'amount-pos':'amount-neg'}">${fmtE(cashBefore)}</span></div>
-      <div class="rb-row"><span class="rb-label">Card opening</span><span class="rb-val ${cardBefore>=0?'amount-pos':'amount-neg'}">${fmtE(cardBefore)}</span></div>
-      <div class="rb-row"><span class="rb-label">Cash closing</span><span class="rb-val ${cashAfter>=0?'amount-pos':'amount-neg'}">${fmtE(cashAfter)}</span></div>
-      <div class="rb-row"><span class="rb-label">Card closing</span><span class="rb-val ${cardAfter>=0?'amount-pos':'amount-neg'}">${fmtE(cardAfter)}</span></div>
-      <div class="rb-row"><span class="rb-label" style="font-weight:700">Total closing</span><span class="rb-val ${(cashAfter+cardAfter)>=0?'amount-pos':'amount-neg'}" style="font-size:15px;font-weight:700">${fmtE(cashAfter+cardAfter)}</span></div>
-    </div>`;
+    <div style="margin-top:14px;font-size:12px;color:var(--ink3);margin-bottom:10px">${rows.length} ${lang==='en'?'entries':'καταχωρήσεις'}</div>`;
+  updateIncDateBalance();
 }
 
 // ── EXPENSES ──
@@ -3091,12 +3245,13 @@ function renderSuppliers(){
   if(!data.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><p>${t('empty-no-suppliers')}</p></div></td></tr>`;return;}
   tb.innerHTML=data.map(s=>{
     const exp=DB.expenses().filter(x=>x.supplier===s.name);
-    const total=exp.reduce((a,x)=>a+x.amount,0);const paid=exp.filter(x=>x.pay!=='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
-    const balance=total-paid;
+    const creditTotal=exp.filter(x=>x.pay==='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
+    const settled=DB.creditPayments().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
+    const balance=Math.max(0,creditTotal-settled);
     return `<tr>
       <td><strong>${s.name}</strong></td><td class="mono">${s.phone||'—'}</td><td class="mono">${s.afm||'—'}</td>
       <td><span class="badge badge-blue">${s.type||'—'}</span></td>
-      <td class="mono ${balance>0?'amount-neg':''}">${fmtE(balance)}</td>
+      <td class="mono ${balance>0?'amount-neg':'amount-pos'}">${balance>0?fmtE(balance):'✓ '+fmtE(0)}</td>
       <td style="display:flex;gap:6px">
         <button class="btn btn-secondary btn-sm" onclick="showSupplierTransactions('${s.id}')">${t('btn-transactions')}</button>
         <button class="btn-icon" onclick="deleteSupplier('${s.id}')"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 17 6"/><path d="M8 6V4h4v2M19 6l-1 12a2 2 0 01-2 2H4a2 2 0 01-2-2L1 6"/></svg></button>
@@ -3109,21 +3264,61 @@ function showSupplierTransactions(id){
   _currentSupplierPdfId=id;
   const s=DB.suppliers().find(x=>x.id===id);if(!s)return;
   document.getElementById('modal-supplier-name').textContent=(lang==='en'?'Transactions: ':'Συναλλαγές: ')+s.name;
-  const exp=DB.expenses().filter(x=>x.supplier===s.name).sort((a,b)=>a.date.localeCompare(b.date));
-  let balance=0;
-  const rows=exp.map(r=>{
-    const onCredit=r.pay==='Επί Πιστώσει';balance+=onCredit?r.amount:0;
-    const payBadge={'Μετρητά':'badge-gray','Κάρτα':'badge-blue','Επί Πιστώσει':'badge-amber'};
-    return `<tr><td>${r.date}</td><td class="mono">${r.time}</td><td><span class="badge ${payBadge[r.pay]||'badge-gray'}">${t(r.pay)}</span></td><td class="mono">${r.inv||'—'}</td><td class="mono">${fmtE(r.amount)}</td><td class="mono">${onCredit?fmtE(balance):'—'}</td></tr>`;
+
+  const exp=DB.expenses().filter(x=>x.supplier===s.name).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  const settlements=DB.creditPayments().filter(x=>x.supplier===s.name).sort((a,b)=>a.date.localeCompare(b.date));
+
+  // Build combined list
+  const allTxns=[
+    ...exp.map(r=>({...r,_type:'expense'})),
+    ...settlements.map(r=>({...r,_type:'settlement'}))
+  ].sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+
+  let creditBalance=0;
+  const payBadge={'Μετρητά':'badge-gray','Κάρτα':'badge-blue','Επί Πιστώσει':'badge-amber'};
+
+  const rows=allTxns.map(r=>{
+    if(r._type==='expense'){
+      const onCredit=r.pay==='Επί Πιστώσει';
+      if(onCredit)creditBalance+=r.amount;
+      return `<tr>
+        <td>${r.date}</td><td class="mono">${r.time}</td>
+        <td><span class="badge ${payBadge[r.pay]||'badge-gray'}">${t(r.pay)}</span></td>
+        <td class="mono">${r.inv||'—'}</td>
+        <td class="mono amount-neg">${fmtE(r.amount)}</td>
+        <td class="mono ${onCredit?'amount-neg':''}">${onCredit?fmtE(creditBalance):'—'}</td>
+      </tr>`;
+    } else {
+      // Settlement payment — reduces credit balance
+      creditBalance=Math.max(0,creditBalance-r.amount);
+      const payLabel=r.pay==='Κάρτα'?(lang==='el'?'Τράπεζα':'Bank'):(lang==='el'?'Μετρητά':'Cash');
+      return `<tr style="background:rgba(0,212,170,.05)">
+        <td>${r.date}</td><td class="mono">${r.time||'—'}</td>
+        <td><span class="badge badge-green">✓ ${payLabel}</span></td>
+        <td class="mono" style="color:var(--ink3)">${lang==='el'?'Εξόφληση':'Settlement'}</td>
+        <td class="mono amount-pos">-${fmtE(r.amount)}</td>
+        <td class="mono" style="color:${creditBalance>0?'var(--danger)':'var(--accent)'}">${fmtE(creditBalance)}</td>
+      </tr>`;
+    }
   }).join('');
-  const total=exp.reduce((s,x)=>s+x.amount,0);const creditTotal=exp.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+
+  const totalInvoiced=exp.reduce((s,x)=>s+x.amount,0);
+  const totalSettled=settlements.reduce((s,x)=>s+x.amount,0);
+  const totalCredit=exp.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+  const outstanding=Math.max(0,totalCredit-totalSettled);
+
   document.getElementById('modal-supplier-body').innerHTML=`
     <div class="table-wrap" style="margin-bottom:12px">
-      <table><thead><tr><th>${t('tbl-date')}</th><th>${t('tbl-time')}</th><th>${t('tbl-payment')}</th><th>${t('tbl-invoice')}</th><th>${t('tbl-amount')}</th><th>${t('tbl-balance')}</th></tr></thead>
+      <table><thead><tr>
+        <th>${t('tbl-date')}</th><th>${t('tbl-time')}</th>
+        <th>${t('tbl-payment')}</th><th>${t('tbl-invoice')}</th>
+        <th>${t('tbl-amount')}</th><th>${t('tbl-balance')}</th>
+      </tr></thead>
       <tbody>${rows||`<tr><td colspan="6"><div class="empty"><p>${t('empty-no-transactions')}</p></div></td></tr>`}</tbody>
       <tfoot>
-        <tr class="tfoot"><td colspan="4">${t('tbl-supplier-total')}</td><td>${fmtE(total)}</td><td></td></tr>
-        <tr class="tfoot"><td colspan="4">${t('tbl-credit-balance')}</td><td>${fmtE(creditTotal)}</td><td></td></tr>
+        <tr class="tfoot"><td colspan="4">${t('tbl-supplier-total')}</td><td>${fmtE(totalInvoiced)}</td><td></td></tr>
+        <tr class="tfoot"><td colspan="4">${lang==='el'?'Συνολικές Εξοφλήσεις':'Total Settlements'}</td><td style="color:var(--accent)">-${fmtE(totalSettled)}</td><td></td></tr>
+        <tr class="tfoot" style="font-size:14px"><td colspan="4"><strong>${lang==='el'?'Ανεξόφλητο Υπόλοιπο':'Outstanding Balance'}</strong></td><td colspan="2" style="color:${outstanding>0?'var(--danger)':'var(--accent)'}"><strong>${fmtE(outstanding)}</strong></td></tr>
       </tfoot></table>
     </div>`;
   openModal('modal-supplier');
@@ -3441,20 +3636,25 @@ function getDateRange(from,to){const dates=[];let d=new Date(from);const end=new
 function getBalanceBefore(date){
   const allIncome=DB.income().filter(x=>x.date<date);
   const allExpenses=DB.expenses().filter(x=>x.date<date);
-  const cashBefore=allIncome.reduce((s,x)=>s+x.cash,0)-allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
-  const cardBefore=allIncome.reduce((s,x)=>s+x.card,0)-allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const allSettlements=DB.creditPayments().filter(x=>x.date<date);
+  const cashBefore=allIncome.reduce((s,x)=>s+x.cash,0)
+    -allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0)
+    -allSettlements.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const cardBefore=allIncome.reduce((s,x)=>s+x.card,0)
+    -allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0)
+    -allSettlements.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
   return{cashBefore,cardBefore};
 }
 
-// Builds the balance ledger HTML block used in reports and summaries
 function balanceLedgerHTML(date,s){
   const{cashBefore,cardBefore}=getBalanceBefore(date);
-  const cashAfter=cashBefore+s.cashInc-s.cashExp;
-  const cardAfter=cardBefore+s.cardInc-s.cardExp;
-  const sym=CURRENCY.symbol;
-  const arrow=(v)=>v>=0
-    ?`<span style="color:var(--accent)">▲</span>`
-    :`<span style="color:var(--danger)">▼</span>`;
+  const cashAfter=cashBefore+s.cashInc-s.cashOut;
+  const cardAfter=cardBefore+s.cardInc-s.cardOut;
+  const arrow=(v)=>v>=0?`<span style="color:var(--accent)">▲</span>`:`<span style="color:var(--danger)">▼</span>`;
+  const settleRow=(label,val)=>val>0?`<div class="balance-row">
+    <span class="balance-label">− ${label}</span>
+    <span class="balance-amount neg">−${fmtE(val)}</span>
+  </div>`:'';
   return `<div class="report-section balance-ledger">
     <div class="card-title" style="margin-bottom:20px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:6px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -3464,20 +3664,12 @@ function balanceLedgerHTML(date,s){
       <div class="balance-col">
         <div class="balance-col-header">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
-          Cash
+          💵 Cash
         </div>
-        <div class="balance-row">
-          <span class="balance-label">Opening balance</span>
-          <span class="balance-amount ${cashBefore>=0?'pos':'neg'}">${fmtE(cashBefore)}</span>
-        </div>
-        <div class="balance-row">
-          <span class="balance-label">+ Revenue</span>
-          <span class="balance-amount pos">+${fmtE(s.cashInc)}</span>
-        </div>
-        <div class="balance-row">
-          <span class="balance-label">− Expenses</span>
-          <span class="balance-amount neg">−${fmtE(s.cashExp)}</span>
-        </div>
+        <div class="balance-row"><span class="balance-label">Opening balance</span><span class="balance-amount ${cashBefore>=0?'pos':'neg'}">${fmtE(cashBefore)}</span></div>
+        <div class="balance-row"><span class="balance-label">+ Revenue</span><span class="balance-amount pos">+${fmtE(s.cashInc)}</span></div>
+        <div class="balance-row"><span class="balance-label">− Expenses</span><span class="balance-amount neg">−${fmtE(s.cashExp)}</span></div>
+        ${settleRow(lang==='el'?'Εξοφλήσεις':'Settlements',s.settleCash||0)}
         <div class="balance-row balance-total">
           <span class="balance-label">Closing balance ${arrow(cashAfter)}</span>
           <span class="balance-amount ${cashAfter>=0?'pos':'neg'}" style="font-size:17px;font-weight:800">${fmtE(cashAfter)}</span>
@@ -3486,20 +3678,12 @@ function balanceLedgerHTML(date,s){
       <div class="balance-col">
         <div class="balance-col-header">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          Card / Bank
+          🏦 Card / Bank
         </div>
-        <div class="balance-row">
-          <span class="balance-label">Opening balance</span>
-          <span class="balance-amount ${cardBefore>=0?'pos':'neg'}">${fmtE(cardBefore)}</span>
-        </div>
-        <div class="balance-row">
-          <span class="balance-label">+ Revenue</span>
-          <span class="balance-amount pos">+${fmtE(s.cardInc)}</span>
-        </div>
-        <div class="balance-row">
-          <span class="balance-label">− Expenses</span>
-          <span class="balance-amount neg">−${fmtE(s.cardExp)}</span>
-        </div>
+        <div class="balance-row"><span class="balance-label">Opening balance</span><span class="balance-amount ${cardBefore>=0?'pos':'neg'}">${fmtE(cardBefore)}</span></div>
+        <div class="balance-row"><span class="balance-label">+ Revenue</span><span class="balance-amount pos">+${fmtE(s.cardInc)}</span></div>
+        <div class="balance-row"><span class="balance-label">− Expenses</span><span class="balance-amount neg">−${fmtE(s.cardExp)}</span></div>
+        ${settleRow(lang==='el'?'Εξοφλήσεις':'Settlements',s.settleCard||0)}
         <div class="balance-row balance-total">
           <span class="balance-label">Closing balance ${arrow(cardAfter)}</span>
           <span class="balance-amount ${cardAfter>=0?'pos':'neg'}" style="font-size:17px;font-weight:800">${fmtE(cardAfter)}</span>
@@ -3510,14 +3694,10 @@ function balanceLedgerHTML(date,s){
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
           Combined Total
         </div>
-        <div class="balance-row">
-          <span class="balance-label">Opening balance</span>
-          <span class="balance-amount ${(cashBefore+cardBefore)>=0?'pos':'neg'}">${fmtE(cashBefore+cardBefore)}</span>
-        </div>
-        <div class="balance-row">
-          <span class="balance-label">Net movement</span>
-          <span class="balance-amount ${s.totalBal>=0?'pos':'neg'}">${s.totalBal>=0?'+':''}${fmtE(s.totalBal)}</span>
-        </div>
+        <div class="balance-row"><span class="balance-label">Opening balance</span><span class="balance-amount ${(cashBefore+cardBefore)>=0?'pos':'neg'}">${fmtE(cashBefore+cardBefore)}</span></div>
+        <div class="balance-row"><span class="balance-label">+ Revenue</span><span class="balance-amount pos">+${fmtE(s.totalInc)}</span></div>
+        <div class="balance-row"><span class="balance-label">− Expenses</span><span class="balance-amount neg">−${fmtE(s.cashExp+s.cardExp)}</span></div>
+        ${(s.totalSettle||0)>0?`<div class="balance-row"><span class="balance-label">− ${lang==='el'?'Εξοφλήσεις':'Settlements'}</span><span class="balance-amount neg">−${fmtE(s.totalSettle)}</span></div>`:''}
         <div class="balance-row balance-total">
           <span class="balance-label">Closing balance ${arrow(cashAfter+cardAfter)}</span>
           <span class="balance-amount ${(cashAfter+cardAfter)>=0?'pos':'neg'}" style="font-size:20px;font-weight:800">${fmtE(cashAfter+cardAfter)}</span>
@@ -3527,24 +3707,67 @@ function balanceLedgerHTML(date,s){
   </div>`;
 }
 
-function reportSummaryHTML(income,expenses){
-  const cashInc=income.reduce((s,x)=>s+x.cash,0);const cardInc=income.reduce((s,x)=>s+x.card,0);const totalInc=cashInc+cardInc;
+function reportSummaryHTML(income,expenses,settlements=[]){
+  const cashInc=income.reduce((s,x)=>s+x.cash,0);
+  const cardInc=income.reduce((s,x)=>s+x.card,0);
+  const totalInc=cashInc+cardInc;
   const cashExp=expenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
   const cardExp=expenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
   const creditExp=expenses.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
-  const totalExp=cashExp+cardExp;const cashBal=cashInc-cashExp;const cardBal=cardInc-cardExp;const totalBal=cashBal+cardBal;
+  // Settlements paid in this period
+  const settleCash=settlements.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const settleCard=settlements.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const totalSettle=settleCash+settleCard;
+  // Total cash/card out including settlements
+  const cashOut=cashExp+settleCash;
+  const cardOut=cardExp+settleCard;
+  const totalExp=cashExp+cardExp+totalSettle;
+  const cashBal=cashInc-cashOut;
+  const cardBal=cardInc-cardOut;
+  const totalBal=cashBal+cardBal;
   const fc=expenses.filter(x=>x.type==='FC').reduce((s,x)=>s+x.amount,0);
   const fcPct=totalInc>0?(fc/totalInc*100).toFixed(1):0;
-  return{cashInc,cardInc,totalInc,cashExp,cardExp,creditExp,totalExp,cashBal,cardBal,totalBal,fc,fcPct};
+  return{cashInc,cardInc,totalInc,cashExp,cardExp,creditExp,settleCash,settleCard,totalSettle,cashOut,cardOut,totalExp,cashBal,cardBal,totalBal,fc,fcPct};
 }
 
 const chartColors={income:'rgba(0,212,170,0.8)',income2:'rgba(0,212,170,0.4)',expenses:'rgba(255,77,109,0.8)',expenses2:'rgba(255,77,109,0.4)'};
 const chartOpts=(extra={})=>({responsive:true,maintainAspectRatio:false,plugins:{...CHART_DEFAULTS.plugins,...(extra.plugins||{})},scales:{x:{grid:{color:CHART_DEFAULTS.grid},ticks:{color:CHART_DEFAULTS.color}},y:{grid:{color:CHART_DEFAULTS.grid},ticks:{color:CHART_DEFAULTS.color}}},...extra});
 
+function catBreakdownHTML(income){
+  const cats={};
+  const catEmojis={'Εσωτερικό':'🍽','Dine-In':'🍽','Delivery':'🛵','Take Away':'🥡','Catering':'🎪','Bar':'🍺','Events':'🎉','Άλλο':'📦','Other':'📦'};
+  income.forEach(r=>{
+    const c=r.category||r.desc||'Other';
+    cats[c]=(cats[c]||0)+(r.cash+r.card);
+  });
+  const total=Object.values(cats).reduce((s,v)=>s+v,0);
+  if(!total)return'';
+  const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  const colors=['rgba(0,212,170,.85)','rgba(0,184,255,.8)','rgba(168,85,247,.8)','rgba(245,158,11,.8)','rgba(255,77,109,.8)','rgba(52,211,153,.8)','rgba(251,146,60,.8)'];
+  return`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:16px">
+    ${sorted.map(([cat,val],i)=>{
+      const pct=(val/total*100);
+      const emoji=catEmojis[cat]||'📦';
+      return`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:700;color:var(--ink)">${emoji} ${cat}</span>
+          <span style="font-size:11px;font-weight:700;color:var(--ink3)">${pct.toFixed(1)}%</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--accent);margin-bottom:6px">${fmtE(val)}</div>
+        <div style="background:var(--border);border-radius:3px;height:4px;overflow:hidden">
+          <div style="height:100%;width:${pct.toFixed(1)}%;background:${colors[i%colors.length]};border-radius:3px;transition:width .5s"></div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
 function loadDailyReport(){
   const d=document.getElementById('dr-date').value;if(!d){notify(t('notify-sel-date'),'danger');return;}
-  const income=DB.income().filter(x=>x.date===d);const expenses=DB.expenses().filter(x=>x.date===d);
-  const s=reportSummaryHTML(income,expenses);
+  const income=DB.income().filter(x=>x.date===d);
+  const expenses=DB.expenses().filter(x=>x.date===d);
+  const settlements=DB.creditPayments().filter(x=>x.date===d);
+  const s=reportSummaryHTML(income,expenses,settlements);
 
   // ── Year-over-year comparison ──
   const lastYearDate=d.replace(/^(\d{4})/,(y)=>String(parseInt(y)-1));
@@ -3601,11 +3824,18 @@ function loadDailyReport(){
       <div class="chart-box"><div class="chart-title">${t('chart-income-analysis')}</div><div class="chart-wrap"><canvas id="dr-chart1"></canvas></div></div>
       <div class="chart-box"><div class="chart-title">${t('chart-income-vs-expenses')}</div><div class="chart-wrap"><canvas id="dr-chart2"></canvas></div></div>
     </div>
-    ${income.length||expenses.length?`<div class="report-section"><div class="card-title">${t('chart-detail')}</div>
+    ${income.length?`
+    <div class="report-section section">
+      <div class="card-title" style="margin-bottom:16px">📊 ${lang==='el'?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'}</div>
+      ${catBreakdownHTML(income)}
+    </div>`:''}
+    ${income.length||expenses.length||settlements.length?`<div class="report-section"><div class="card-title">${t('chart-detail')}</div>
       <div class="table-wrap"><table>
         <thead><tr><th>${t('tbl-time')}</th><th>${t('tbl-type')}</th><th>${t('tbl-desc-sup')}</th><th>${t('tbl-cash')}</th><th>${t('tbl-card')}</th><th>${t('col-total')}</th></tr></thead>
-        <tbody>${[...income.map(r=>`<tr><td class="mono">${r.time}</td><td><span class="badge badge-green">${t('income-badge')}</span></td><td>${r.desc}</td><td class="amount-pos mono">${fmt(r.cash)}</td><td class="amount-pos mono">${fmt(r.card)}</td><td class="amount-pos mono">${fmt(r.cash+r.card)}</td></tr>`),
-          ...expenses.map(r=>`<tr><td class="mono">${r.time}</td><td><span class="badge badge-red">${t('expense-badge')}</span></td><td>${r.supplier} (${r.type})</td><td class="amount-neg mono">${r.pay==='Μετρητά'?fmt(r.amount):'—'}</td><td class="amount-neg mono">${r.pay==='Κάρτα'?fmt(r.amount):'—'}</td><td class="amount-neg mono">${fmt(r.amount)}</td></tr>`)
+        <tbody>${[
+          ...income.map(r=>`<tr><td class="mono">${r.time}</td><td><span class="badge badge-green">${t('income-badge')}</span></td><td>${r.desc}</td><td class="amount-pos mono">${fmt(r.cash)}</td><td class="amount-pos mono">${fmt(r.card)}</td><td class="amount-pos mono">${fmt(r.cash+r.card)}</td></tr>`),
+          ...expenses.map(r=>`<tr><td class="mono">${r.time}</td><td><span class="badge badge-red">${t('expense-badge')}</span></td><td>${r.supplier} (${r.type})</td><td class="amount-neg mono">${r.pay==='Μετρητά'?fmt(r.amount):'—'}</td><td class="amount-neg mono">${r.pay==='Κάρτα'?fmt(r.amount):'—'}</td><td class="amount-neg mono">${fmt(r.amount)}</td></tr>`),
+          ...settlements.map(r=>`<tr style="background:rgba(0,212,170,.04)"><td class="mono">${r.time||'—'}</td><td><span class="badge badge-blue">✓ ${r.pay==='Κάρτα'?(lang==='el'?'Τράπεζα':'Bank'):(lang==='el'?'Μετρητά':'Cash')}</span></td><td>${r.supplier} — ${lang==='el'?'Εξόφληση':'Settlement'}</td><td class="amount-neg mono">${r.pay==='Μετρητά'?fmt(r.amount):'—'}</td><td class="amount-neg mono">${r.pay==='Κάρτα'?fmt(r.amount):'—'}</td><td class="amount-neg mono">${fmt(r.amount)}</td></tr>`)
         ].join('')}</tbody></table></div></div>`:''}`;
   setTimeout(()=>{
     const ctx1=document.getElementById('dr-chart1');if(chartInst['dr-chart1'])chartInst['dr-chart1'].destroy();
@@ -3624,9 +3854,14 @@ function loadWeeklyReport(){
   const dates=getDateRange(from,to);
   const income=DB.income().filter(x=>x.date>=from&&x.date<=to);
   const expenses=DB.expenses().filter(x=>x.date>=from&&x.date<=to);
-  const s=reportSummaryHTML(income,expenses);const days=t('days-labels');
+  const settlements=DB.creditPayments().filter(x=>x.date>=from&&x.date<=to);
+  const s=reportSummaryHTML(income,expenses,settlements);const days=t('days-labels');
   const dailyInc=dates.map(d=>DB.income().filter(x=>x.date===d).reduce((s,x)=>s+x.cash+x.card,0));
-  const dailyExp=dates.map(d=>DB.expenses().filter(x=>x.date===d&&x.pay!=='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0));
+  const dailyExp=dates.map(d=>{
+    const exp=DB.expenses().filter(x=>x.date===d&&x.pay!=='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+    const set=DB.creditPayments().filter(x=>x.date===d).reduce((s,x)=>s+x.amount,0);
+    return exp+set;
+  });
   const el=document.getElementById('weekly-report-content');
   el.innerHTML=`
     <div class="alert alert-info">${t('report-week-range')} <strong>${from}</strong> ${t('report-to')} <strong>${to}</strong></div>
@@ -3637,6 +3872,10 @@ function loadWeeklyReport(){
       <div class="stat amber"><div class="stat-glow"></div><div class="stat-label">${t('stat-food-cost')}</div><div class="stat-value">${s.fcPct}%</div></div>
     </div>
     ${balanceLedgerHTML(from,s)}
+    ${income.length?`<div class="report-section section" style="margin-top:20px">
+      <div class="card-title" style="margin-bottom:16px">📊 ${lang==='el'?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'}</div>
+      ${catBreakdownHTML(income)}
+    </div>`:''}
     <div class="chart-box section" style="margin-top:20px"><div class="chart-title">${t('chart-income-vs-expenses')}</div><div class="chart-wrap" style="height:240px"><canvas id="wr-chart"></canvas></div></div>`;
   setTimeout(()=>{
     const ctx=document.getElementById('wr-chart');if(chartInst['wr-chart'])chartInst['wr-chart'].destroy();
@@ -3653,11 +3892,13 @@ function loadMonthlyReport(){
   const to=m+'-'+String(last).padStart(2,'0');
   const income=DB.income().filter(x=>x.date>=from&&x.date<=to);
   const expenses=DB.expenses().filter(x=>x.date>=from&&x.date<=to);
-  const s=reportSummaryHTML(income,expenses);
+  const settlements=DB.creditPayments().filter(x=>x.date>=from&&x.date<=to);
+  const s=reportSummaryHTML(income,expenses,settlements);
   const weeks=Math.ceil(last/7);
   const weeklyInc=Array(weeks).fill(0);const weeklyExp=Array(weeks).fill(0);
   income.forEach(r=>{const day=parseInt(r.date.slice(8,10));const w=Math.min(Math.ceil(day/7)-1,weeks-1);weeklyInc[w]+=r.cash+r.card;});
   expenses.forEach(r=>{if(r.pay!=='Επί Πιστώσει'){const day=parseInt(r.date.slice(8,10));const w=Math.min(Math.ceil(day/7)-1,weeks-1);weeklyExp[w]+=r.amount;}});
+  settlements.forEach(r=>{const day=parseInt(r.date.slice(8,10));const w=Math.min(Math.ceil(day/7)-1,weeks-1);weeklyExp[w]+=r.amount;});
   const expByType={};expenses.forEach(r=>{expByType[r.type]=(expByType[r.type]||0)+r.amount;});
 
   // ── Month-over-month comparison ──
@@ -3734,21 +3975,13 @@ function loadMonthlyReport(){
       <div class="stat amber"><div class="stat-glow"></div><div class="stat-label">${t('stat-food-cost')}</div><div class="stat-value">${s.fcPct}%</div></div>
     </div>
     ${balanceLedgerHTML(from,s)}
+    ${income.length?`<div class="report-section section" style="margin-top:20px">
+      <div class="card-title" style="margin-bottom:16px">📊 ${lang==='el'?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'}</div>
+      ${catBreakdownHTML(income)}
+    </div>`:''}
     <div class="grid-2 section" style="margin-top:20px">
       <div class="chart-box"><div class="chart-title">${t('chart-weekly-trend')}</div><div class="chart-wrap"><canvas id="mr-chart1"></canvas></div></div>
-      <div class="chart-box"><div class="chart-title">Revenue by Category</div><div class="chart-wrap"><canvas id="mr-chart-cat"></canvas></div></div>
-    </div>
-    <div class="grid-2 section">
       <div class="chart-box"><div class="chart-title">${t('chart-expenses-by-cat')}</div><div class="chart-wrap"><canvas id="mr-chart2"></canvas></div></div>
-      <div class="report-section"><div class="card-title">Revenue by Category</div>
-        ${Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).map(([cat,amt])=>{
-          const pct=s.totalInc>0?(amt/s.totalInc*100).toFixed(1):0;
-          return`<div class="summary-row">
-            <span class="summary-key">${cat}</span>
-            <span class="summary-val pos">${fmtE(amt)} <span style="font-size:11px;color:var(--ink3)">${pct}%</span></span>
-          </div>`;
-        }).join('')}
-      </div>
     </div>
     <div class="report-section"><div class="card-title">${t('detailed-summary')}</div>
       <div class="grid-2">
@@ -3802,7 +4035,8 @@ function loadAnnualReport(){
   const yearFrom=yr+'-01-01';
   const allInc=DB.income().filter(x=>x.date.startsWith(yr));
   const allExp=DB.expenses().filter(x=>x.date.startsWith(yr));
-  const annualS=reportSummaryHTML(allInc,allExp);
+  const allSet=DB.creditPayments().filter(x=>x.date.startsWith(yr));
+  const annualS=reportSummaryHTML(allInc,allExp,allSet);
   el.innerHTML=`
     <div class="grid-4 section">
       <div class="stat green"><div class="stat-glow"></div><div class="stat-label">${t('annual-income')}</div><div class="stat-value green">${fmtE(totalInc)}</div></div>
@@ -3811,6 +4045,10 @@ function loadAnnualReport(){
       <div class="stat amber"><div class="stat-glow"></div><div class="stat-label">${t('stat-food-cost')}</div><div class="stat-value">${fcPct}%</div></div>
     </div>
     ${balanceLedgerHTML(yearFrom,annualS)}
+    ${allInc.length?`<div class="report-section section" style="margin-top:20px">
+      <div class="card-title" style="margin-bottom:16px">📊 ${lang==='el'?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'} ${yr}</div>
+      ${catBreakdownHTML(allInc)}
+    </div>`:''}
     <div class="chart-box section" style="margin-top:20px"><div class="chart-title">${t('chart-monthly-annual')} ${yr}</div><div class="chart-wrap" style="height:260px"><canvas id="ar-chart"></canvas></div></div>
     <div class="report-section"><div class="card-title">${t('monthly-summary')}</div>
       <div class="table-wrap"><table>
@@ -4129,28 +4367,30 @@ function generatePDF(){
 
   function ledgerHTML(date,s){
     const{cashBefore,cardBefore}=getBalanceBefore(date);
-    const cA=cashBefore+s.cashInc-s.cashExp;
-    const kA=cardBefore+s.cardInc-s.cardExp;
+    const cA=cashBefore+s.cashInc-s.cashOut;
+    const kA=cardBefore+s.cardInc-s.cardOut;
     const openLbl=isEl?'Υπόλοιπο Ανοίγματος':'Opening Balance';
     const incLbl=isEl?'+ Έσοδα':'+ Revenue';
     const expLbl=isEl?'− Έξοδα':'− Expenses';
+    const setLbl=isEl?'− Εξοφλήσεις':'− Settlements';
     const closeLbl=isEl?'Υπόλοιπο Κλεισίματος':'Closing Balance';
-    const cashLbl=isEl?'Μετρητά':'Cash';
-    const cardLbl=isEl?'Κάρτα / Τράπεζα':'Card / Bank';
+    const cashLbl=isEl?'💵 Μετρητά':'💵 Cash';
+    const cardLbl=isEl?'🏦 Κάρτα / Τράπεζα':'🏦 Card / Bank';
     const totLbl=isEl?'Σύνολο':'Combined';
-    const col=(header,cls,open,inc,exp,close,closeV)=>`
+    const col=(header,cls,open,inc,exp,settle,closeV)=>`
       <div class="ledger-col ${cls}">
         <div class="ledger-header">${header}</div>
         <div class="ledger-row"><span>${openLbl}</span><span class="${open>=0?'pos':'neg'}">${NE(open)}</span></div>
         <div class="ledger-row"><span>${incLbl}</span><span class="pos">+${NE(inc)}</span></div>
         <div class="ledger-row"><span>${expLbl}</span><span class="neg">−${NE(exp)}</span></div>
+        ${settle>0?`<div class="ledger-row"><span>${setLbl}</span><span class="neg">−${NE(settle)}</span></div>`:''}
         <div class="ledger-row"><span>${closeLbl}</span><span class="${closeV>=0?'pos':'neg'}" style="font-size:11pt">${NE(closeV)}</span></div>
       </div>`;
     return `<div class="section-title">${isEl?'Υπόλοιπο Ταμείου':'Balance Ledger'}</div>
     <div class="ledger">
-      ${col(cashLbl,'',cashBefore,s.cashInc,s.cashExp,closeLbl,cA)}
-      ${col(cardLbl,'',cardBefore,s.cardInc,s.cardExp,closeLbl,kA)}
-      ${col(totLbl,'combined',cashBefore+cardBefore,s.totalInc,s.totalExp,closeLbl,cA+kA)}
+      ${col(cashLbl,'',cashBefore,s.cashInc,s.cashExp,s.settleCash||0,cA)}
+      ${col(cardLbl,'',cardBefore,s.cardInc,s.cardExp,s.settleCard||0,kA)}
+      ${col(totLbl,'combined',cashBefore+cardBefore,s.totalInc,s.cashExp+s.cardExp,(s.totalSettle||0),cA+kA)}
     </div>`;
   }
 
@@ -4173,10 +4413,15 @@ function generatePDF(){
     const dLabel=new Date(d+'T00:00:00').toLocaleDateString(isEl?'el-GR':'en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     const inc=DB.income().filter(x=>x.date===d);
     const exp=DB.expenses().filter(x=>x.date===d);
-    const s=reportSummaryHTML(inc,exp);
+    const set=DB.creditPayments().filter(x=>x.date===d);
+    const s=reportSummaryHTML(inc,exp,set);
     title=isEl?'Ημερήσια Αναφορά':'Daily Report';
     sub=dLabel;fname=`FinanceOS_Daily_${d}`;
     const payL={Μετρητά:isEl?'Μετρητά':'Cash',Κάρτα:isEl?'Κάρτα':'Card','Επί Πιστώσει':isEl?'Επί Πιστώσει':'On Credit'};
+    // Category breakdown for PDF
+    const cats={};inc.forEach(r=>{const c=r.category||r.desc||'Other';cats[c]=(cats[c]||0)+(r.cash+r.card);});
+    const catTotal=Object.values(cats).reduce((s,v)=>s+v,0);
+    const catRows=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>[c,v,catTotal>0?(v/catTotal*100).toFixed(1)+'%':'—']);
     body=`
       <div class="kpis">
         <div class="kpi green"><div class="kpi-label">${isEl?'Σύνολο Εσόδων':'Total Revenue'}</div><div class="kpi-val">${NE(s.totalInc)}</div></div>
@@ -4185,13 +4430,18 @@ function generatePDF(){
         <div class="kpi amber"><div class="kpi-label">Food Cost %</div><div class="kpi-val">${s.fcPct}%</div></div>
       </div>
       ${ledgerHTML(d,s)}
+      ${catRows.length?`<div class="section-title">📊 ${isEl?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'}</div>
+      ${tableHTML([isEl?'Κανάλι':'Channel',isEl?'Ποσό':'Amount','%'],catRows,[1])}`:''}
       ${inc.length?`<div class="section-title">${isEl?'Έσοδα':'Revenue'}</div>
-      ${tableHTML([isEl?'Ώρα':'Time',isEl?'Περιγραφή':'Description',isEl?'Ταμείο':'Register',isEl?'Κάρτα':'Card',isEl?'Μετρητά':'Cash'],
-        inc.map(r=>[r.time,r.desc,r.total!=null?r.total:r.cash+r.card,r.card,r.cash]),[2,3,4])}`:''}
+      ${tableHTML([isEl?'Ώρα':'Time',isEl?'Κατηγορία':'Category',isEl?'Ταμείο':'Register',isEl?'Κάρτα':'Card',isEl?'Μετρητά':'Cash'],
+        inc.map(r=>[r.time,r.category||r.desc,r.total!=null?r.total:r.cash+r.card,r.card,r.cash]),[2,3,4])}`:''}
       ${exp.length?`<div class="section-title">${isEl?'Έξοδα':'Expenses'}</div>
       ${tableHTML([isEl?'Ώρα':'Time',isEl?'Προμηθευτής':'Supplier',isEl?'Τύπος':'Type',isEl?'Πληρωμή':'Payment',isEl?'Ποσό':'Amount'],
-        exp.map(r=>[r.time,r.supplier,r.type,payL[r.pay]||r.pay,r.amount]),[4])}`:''}`;
-  }
+        exp.map(r=>[r.time,r.supplier,r.type,payL[r.pay]||r.pay,r.amount]),[4])}`:''}
+      ${set.length?`<div class="section-title">✓ ${isEl?'Εξοφλήσεις Επί Πιστώσει':'Credit Settlements'}</div>
+      ${tableHTML([isEl?'Ώρα':'Time',isEl?'Προμηθευτής':'Supplier',isEl?'Τρόπος':'Method',isEl?'Ποσό':'Amount'],
+        set.map(r=>[r.time||'—',r.supplier,r.pay==='Κάρτα'?(isEl?'Τράπεζα':'Bank'):(isEl?'Μετρητά':'Cash'),r.amount]),[3])}`:''}
+    `;  }
 
   else if(type==='monthly'||type==='custom'){
     let from2,to2;
@@ -4209,7 +4459,12 @@ function generatePDF(){
     fname=`FinanceOS_${type==='monthly'?'Monthly':'Period'}_${from2}`;
     const inc=DB.income().filter(x=>x.date>=from2&&x.date<=to2);
     const exp=DB.expenses().filter(x=>x.date>=from2&&x.date<=to2);
-    const s=reportSummaryHTML(inc,exp);
+    const set=DB.creditPayments().filter(x=>x.date>=from2&&x.date<=to2);
+    const s=reportSummaryHTML(inc,exp,set);
+    // Category breakdown
+    const cats={};inc.forEach(r=>{const c=r.category||r.desc||'Other';cats[c]=(cats[c]||0)+(r.cash+r.card);});
+    const catTotal=Object.values(cats).reduce((s,v)=>s+v,0);
+    const catRows=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>[c,v,catTotal>0?(v/catTotal*100).toFixed(1)+'%':'—']);
     // day by day
     const dates=getDateRange(from2,to2);
     const{cashBefore,cardBefore}=getBalanceBefore(from2);
@@ -4217,9 +4472,10 @@ function generatePDF(){
     const dayRows=dates.map(d=>{
       const di=DB.income().filter(x=>x.date===d);
       const de=DB.expenses().filter(x=>x.date===d);
+      const ds=DB.creditPayments().filter(x=>x.date===d);
       const ci=di.reduce((s,x)=>s+x.cash,0),ki=di.reduce((s,x)=>s+x.card,0);
-      const ce=de.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
-      const ke=de.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+      const ce=de.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0)+ds.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+      const ke=de.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0)+ds.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
       rC+=ci-ce;rK+=ki-ke;
       return[d,ci+ki,ce+ke,ci+ki-(ce+ke),rC,rK,rC+rK];
     }).filter(r=>r[1]||r[2]);
@@ -4231,6 +4487,8 @@ function generatePDF(){
         <div class="kpi amber"><div class="kpi-label">Food Cost %</div><div class="kpi-val">${s.fcPct}%</div></div>
       </div>
       ${ledgerHTML(from2,s)}
+      ${catRows.length?`<div class="section-title">📊 ${isEl?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'}</div>
+      ${tableHTML([isEl?'Κανάλι':'Channel',isEl?'Ποσό':'Amount','%'],catRows,[1])}`:''}
       ${dayRows.length?`<div class="section-title">${isEl?'Ημερήσιο Υπόλοιπο':'Day-by-Day Balance'}</div>
       ${tableHTML([isEl?'Ημερομηνία':'Date',isEl?'Έσοδα':'Revenue',isEl?'Έξοδα':'Expenses',isEl?'Κέρδος':'Profit',isEl?'Υπ.Μετρ.':'Bal.Cash',isEl?'Υπ.Κάρτα':'Bal.Card',isEl?'Υπ.Σύνολο':'Bal.Total'],dayRows,[1,2,3,4,5,6])}`:''}`;
   }
@@ -4240,17 +4498,23 @@ function generatePDF(){
     title=isEl?'Ετήσια Αναφορά':'Annual Report';sub=yr;fname=`FinanceOS_Annual_${yr}`;
     const inc=DB.income().filter(x=>x.date.startsWith(yr));
     const exp=DB.expenses().filter(x=>x.date.startsWith(yr));
-    const s=reportSummaryHTML(inc,exp);
+    const set=DB.creditPayments().filter(x=>x.date.startsWith(yr));
+    const s=reportSummaryHTML(inc,exp,set);
+    // Category breakdown
+    const cats={};inc.forEach(r=>{const c=r.category||r.desc||'Other';cats[c]=(cats[c]||0)+(r.cash+r.card);});
+    const catTotal=Object.values(cats).reduce((s,v)=>s+v,0);
+    const catRows=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>[c,v,catTotal>0?(v/catTotal*100).toFixed(1)+'%':'—']);
     const{cashBefore,cardBefore}=getBalanceBefore(yr+'-01-01');
     let rC=cashBefore,rK=cardBefore;
     const mRows=Array.from({length:12},(_,i)=>{
       const m=yr+'-'+String(i+1).padStart(2,'0');
       const mi=DB.income().filter(x=>x.date.startsWith(m));
       const me=DB.expenses().filter(x=>x.date.startsWith(m));
+      const ms=DB.creditPayments().filter(x=>x.date.startsWith(m));
       const ti=mi.reduce((s,x)=>s+x.cash+x.card,0);
       const ci=mi.reduce((s,x)=>s+x.cash,0),ki=mi.reduce((s,x)=>s+x.card,0);
-      const ce=me.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
-      const ke=me.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+      const ce=me.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0)+ms.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+      const ke=me.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0)+ms.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
       const te=ce+ke;
       const fc=me.filter(x=>x.type==='FC').reduce((s,x)=>s+x.amount,0);
       rC+=ci-ce;rK+=ki-ke;
@@ -4264,6 +4528,8 @@ function generatePDF(){
         <div class="kpi amber"><div class="kpi-label">Food Cost %</div><div class="kpi-val">${s.fcPct}%</div></div>
       </div>
       ${ledgerHTML(yr+'-01-01',s)}
+      ${catRows.length?`<div class="section-title">📊 ${isEl?'Ανάλυση Εσόδων ανά Κανάλι':'Revenue by Channel'}</div>
+      ${tableHTML([isEl?'Κανάλι':'Channel',isEl?'Ποσό':'Amount','%'],catRows,[1])}`:''}
       <div class="section-title">${isEl?'Μηνιαία Σύνοψη':'Monthly Summary'}</div>
       ${tableHTML([isEl?'Μήνας':'Month',isEl?'Έσοδα':'Revenue',isEl?'Έξοδα':'Expenses',isEl?'Κέρδος':'Profit',isEl?'Κέρδος%':'Profit%','Food Cost',isEl?'Υπ.Σύνολο':'Balance'],mRows,[1,2,3,4,6])}`;
   }
@@ -4907,26 +5173,56 @@ function renderDashboardChart(){
 }
 
 // ── ON CREDIT PAGE ──
+// ── CREDIT SETTLEMENT ──
+let _settleSupplier=null;
+function openSettle(supplierName,balance){
+  _settleSupplier=supplierName;
+  document.getElementById('settle-supplier-info').innerHTML=
+    `<strong>${supplierName}</strong><br>
+     <span style="color:var(--ink3)">${lang==='el'?'Ανεξόφλητο υπόλοιπο':'Outstanding balance'}: </span>
+     <strong style="color:var(--danger);font-family:var(--mono)">${fmtE(balance)}</strong>`;
+  document.getElementById('settle-date').value=today();
+  document.getElementById('settle-amount').value=balance.toFixed(2);
+  document.getElementById('settle-pay').value='Κάρτα';
+  openModal('modal-settle');
+}
+function confirmSettle(){
+  if(!_settleSupplier)return;
+  const date=document.getElementById('settle-date').value;
+  const amount=parseFloat(document.getElementById('settle-amount').value)||0;
+  const pay=document.getElementById('settle-pay').value;
+  if(!date||amount<=0){notify(lang==='el'?'Συμπλήρωσε όλα τα πεδία':'Fill all fields','danger');return;}
+  const payments=DB.creditPayments();
+  payments.push({id:uid(),date,supplier:_settleSupplier,amount,pay,time:timeNow()});
+  DB.saveCreditPayments(payments);
+  closeModal('modal-settle');
+  notify(lang==='el'?`✅ Εξόφληση ${fmtE(amount)} καταχωρήθηκε`:`✅ Payment of ${fmtE(amount)} recorded`);
+  renderCreditPage();
+  updateHomeStats();
+}
+
 function renderCreditPage(){
   const suppliers=DB.suppliers();
   const allExp=DB.expenses();
+  const allPayments=DB.creditPayments();
+
   // Build per-supplier credit data
   const creditSuppliers=suppliers.map(s=>{
     const exp=allExp.filter(x=>x.supplier===s.name);
     const creditEntries=exp.filter(x=>x.pay==='Επί Πιστώσει').sort((a,b)=>a.date.localeCompare(b.date));
-    const totalInv=exp.reduce((a,x)=>a+x.amount,0);
-    const paid=exp.filter(x=>x.pay!=='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
-    const balance=totalInv-paid;
-    return{s,exp,creditEntries,totalInv,paid,balance};
-  }).filter(x=>x.balance>0).sort((a,b)=>b.balance-a.balance);
+    const totalCredit=creditEntries.reduce((a,x)=>a+x.amount,0);
+    const payments=allPayments.filter(x=>x.supplier===s.name);
+    const totalPaid=payments.reduce((a,x)=>a+x.amount,0);
+    const balance=Math.max(0,totalCredit-totalPaid);
+    return{s,creditEntries,payments,totalCredit,totalPaid,balance};
+  }).filter(x=>x.totalCredit>0).sort((a,b)=>b.balance-a.balance);
 
   const totalBalance=creditSuppliers.reduce((s,x)=>s+x.balance,0);
   const allCreditDates=creditSuppliers.flatMap(x=>x.creditEntries.map(e=>e.date));
   const oldestDate=allCreditDates.length?allCreditDates.sort()[0]:'—';
 
-  // Update stats
   document.getElementById('cr-total-balance').textContent=fmtE(totalBalance);
-  document.getElementById('cr-supplier-count').textContent=creditSuppliers.length;
+  document.getElementById('cr-supplier-count').textContent=creditSuppliers.filter(x=>x.balance>0).length;
   document.getElementById('cr-oldest-date').textContent=oldestDate;
 
   const el=document.getElementById('credit-content');
@@ -4935,26 +5231,41 @@ function renderCreditPage(){
     return;
   }
 
-  el.innerHTML=creditSuppliers.map(({s,creditEntries,totalInv,paid,balance})=>{
-    const payBadge={'Μετρητά':'badge-gray','Κάρτα':'badge-blue','Επί Πιστώσει':'badge-amber'};
-    const rows=creditEntries.map(r=>`<tr>
+  el.innerHTML=creditSuppliers.map(({s,creditEntries,payments,totalCredit,totalPaid,balance})=>{
+    const invoiceRows=creditEntries.map(r=>`<tr>
       <td style="padding:8px 16px">${r.date}</td>
       <td style="padding:8px 16px">${r.inv||'—'}</td>
       <td style="padding:8px 16px"><span class="badge badge-amber">${lang==='el'?'Επί Πιστώσει':'On Credit'}</span></td>
       <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--danger);font-weight:600">${fmtE(r.amount)}</td>
     </tr>`).join('');
-    return`<div class="credit-supplier-block">
+
+    const paymentRows=payments.map(p=>`<tr style="background:rgba(0,212,170,.04)">
+      <td style="padding:8px 16px">${p.date}</td>
+      <td style="padding:8px 16px;color:var(--ink3)">—</td>
+      <td style="padding:8px 16px"><span class="badge badge-green">✓ ${p.pay==='Κάρτα'?(lang==='el'?'Τράπεζα':'Bank'):(lang==='el'?'Μετρητά':'Cash')}</span></td>
+      <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--accent);font-weight:600">-${fmtE(p.amount)}</td>
+    </tr>`).join('');
+
+    const isFullyPaid=balance<=0;
+
+    return`<div class="credit-supplier-block" style="${isFullyPaid?'opacity:.6':''}">
       <div class="credit-supplier-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
         <div>
-          <div class="credit-supplier-name">${s.name}</div>
+          <div class="credit-supplier-name">${s.name} ${isFullyPaid?'<span style="font-size:11px;color:var(--accent);font-weight:700">✓ ΕΞΟΦΛΗΜΕΝΟ</span>':''}</div>
           <div style="font-size:11.5px;color:var(--ink3);margin-top:3px">
-            ${s.type?`${s.type} · `:''}${s.phone||''}
-            · ${creditEntries.length} ${lang==='el'?'τιμολόγια':'invoice(s)'}
+            ${s.type?`${s.type} · `:''}${creditEntries.length} ${lang==='el'?'τιμολόγια':'invoice(s)'}
+            ${payments.length?` · ${payments.length} ${lang==='el'?'πληρωμές':'payment(s)'}  `:''}
           </div>
         </div>
-        <div style="text-align:right">
-          <div class="credit-supplier-bal">${fmtE(balance)}</div>
-          <div style="font-size:11px;color:var(--ink3);margin-top:2px">${lang==='el'?'ανεξόφλητο':'outstanding'}</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          ${!isFullyPaid?`<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openSettle('${s.name}',${balance})" style="gap:5px;background:var(--accent);color:#000;border-color:var(--accent)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            ${lang==='el'?'Εξόφληση':'Settle'}
+          </button>`:''}
+          <div style="text-align:right">
+            <div class="credit-supplier-bal" style="color:${isFullyPaid?'var(--accent)':'var(--danger)'}">${fmtE(balance)}</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:2px">${isFullyPaid?(lang==='el'?'εξοφλημένο':'settled'):(lang==='el'?'ανεξόφλητο':'outstanding')}</div>
+          </div>
         </div>
       </div>
       <div class="credit-supplier-body" style="display:none">
@@ -4966,11 +5277,11 @@ function renderCreditPage(){
               <th>${lang==='el'?'Κατάσταση':'Status'}</th>
               <th style="text-align:right">${lang==='el'?'Ποσό':'Amount'}</th>
             </tr></thead>
-            <tbody>${rows}</tbody>
+            <tbody>${invoiceRows}${paymentRows}</tbody>
             <tfoot>
               <tr class="tfoot">
-                <td colspan="3" style="padding:10px 16px"><strong>${lang==='el'?'Υπόλοιπο Πίστωσης':'Credit Balance'}</strong></td>
-                <td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--danger)"><strong>${fmtE(balance)}</strong></td>
+                <td colspan="3" style="padding:10px 16px"><strong>${lang==='el'?'Υπόλοιπο':'Balance'}</strong></td>
+                <td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:${isFullyPaid?'var(--accent)':'var(--danger)'}"><strong>${fmtE(balance)}</strong></td>
               </tr>
             </tfoot>
           </table>
@@ -5357,30 +5668,41 @@ function renderWallet(){
   const allExpenses=DB.expenses().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to));
 
   // ── Calculate balances ──
+  const allCreditPayments=DB.creditPayments().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to));
+
   const cashIn=allIncome.reduce((s,x)=>s+x.cash,0);
   const cashOut=allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
-  const cashBal=cashIn-cashOut;
+  const creditPaysCash=allCreditPayments.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const cashBal=cashIn-cashOut-creditPaysCash;
 
   const cardIn=allIncome.reduce((s,x)=>s+x.card,0);
   const cardOut=allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
-  const cardBal=cardIn-cardOut;
+  const creditPaysCard=allCreditPayments.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const cardBal=cardIn-cardOut-creditPaysCard;
 
-  const creditTotal=allExpenses.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
-  const creditCount=allExpenses.filter(x=>x.pay==='Επί Πιστώσει').length;
+  // Outstanding credit = all credit invoices minus all settlements (ALL TIME, not filtered by date)
+  const allCreditInvoices=DB.expenses().filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+  const allSettlements=DB.creditPayments().reduce((s,x)=>s+x.amount,0);
+  const creditTotal=Math.max(0,allCreditInvoices-allSettlements);
+  const creditCount=DB.suppliers().filter(s=>{
+    const inv=DB.expenses().filter(x=>x.supplier===s.name&&x.pay==='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
+    const paid=DB.creditPayments().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
+    return inv-paid>0;
+  }).length;
 
   // Update cards
   const cashEl=document.getElementById('wallet-cash-bal');
   cashEl.textContent=fmtE(cashBal);
   cashEl.className='stat-value mono '+(cashBal>=0?'green':'red');
-  document.getElementById('wallet-cash-sub').textContent=`${fmtE(cashIn)} in · ${fmtE(cashOut)} out`;
+  document.getElementById('wallet-cash-sub').textContent=`${fmtE(cashIn)} in · ${fmtE(cashOut+creditPaysCash)} out`;
 
   const cardEl=document.getElementById('wallet-card-bal');
   cardEl.textContent=fmtE(cardBal);
   cardEl.className='stat-value mono '+(cardBal>=0?'blue':'red');
-  document.getElementById('wallet-card-sub').textContent=`${fmtE(cardIn)} in · ${fmtE(cardOut)} out`;
+  document.getElementById('wallet-card-sub').textContent=`${fmtE(cardIn)} in · ${fmtE(cardOut+creditPaysCard)} out`;
 
   document.getElementById('wallet-credit-bal').textContent=fmtE(creditTotal);
-  document.getElementById('wallet-credit-sub').textContent=`${creditCount} unpaid invoice${creditCount!==1?'s':''}`;
+  document.getElementById('wallet-credit-sub').textContent=`${creditCount} unpaid supplier${creditCount!==1?'s':''}`;
 
   // ── Build transactions list ──
   const txns=[];
@@ -5396,6 +5718,13 @@ function renderWallet(){
   allExpenses.forEach(r=>{
     const payKey=r.pay==='Μετρητά'?'cash':r.pay==='Κάρτα'?'card':'credit';
     txns.push({date:r.date,time:r.time,desc:`${r.supplier} (${r.type})`,type:'expense',pay:payKey,amount:r.amount,raw:r});
+  });
+
+  // Credit settlement payments (these affect cash/bank)
+  const allCreditPays=DB.creditPayments().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to));
+  allCreditPays.forEach(r=>{
+    const payKey=r.pay==='Μετρητά'?'cash':'card';
+    txns.push({date:r.date,time:r.time||'00:00',desc:`${r.supplier} — ${lang==='el'?'Εξόφληση':'Settlement'}`,type:'expense',pay:payKey,amount:r.amount,raw:r});
   });
 
   // Sort by date+time
@@ -5705,6 +6034,47 @@ function printZReport(){
     <style>body{font-family:monospace;font-size:13px;padding:20px;color:#000;background:#fff;line-height:1.8}
     *{box-sizing:border-box}</style></head><body>${area.innerHTML}</body></html>`);
   w.document.close();setTimeout(()=>{w.print();},300);
+}
+
+// ── BACKUP REMINDER ──
+function quickBackup(){
+  backupData();
+  const now=new Date();
+  localStorage.setItem('fos_last_backup', now.toISOString());
+  updateBackupReminder();
+  notify(lang==='el'?'✅ Τα δεδομένα αποθηκεύτηκαν!':'✅ Data saved successfully!');
+}
+
+function updateBackupReminder(){
+  const last=localStorage.getItem('fos_last_backup');
+  const reminder=document.getElementById('backup-reminder');
+  const label=document.getElementById('backup-last-label');
+  if(!reminder)return;
+
+  if(!last){
+    reminder.style.display='block';
+    label.textContent=lang==='el'?'Δεν έχεις αποθηκεύσει ποτέ!':'You have never saved a backup!';
+    return;
+  }
+
+  const lastDate=new Date(last);
+  const now=new Date();
+  const diffDays=Math.floor((now-lastDate)/(1000*60*60*24));
+
+  if(diffDays===0){
+    reminder.style.display='none'; // saved today — no reminder
+  } else if(diffDays===1){
+    reminder.style.display='block';
+    label.textContent=lang==='el'?'Τελευταία αποθήκευση: χθες':'Last saved: yesterday';
+  } else {
+    reminder.style.display='block';
+    label.textContent=lang==='el'?`Τελευταία αποθήκευση: ${diffDays} μέρες πριν`:`Last saved: ${diffDays} days ago`;
+    // Urgent color if more than 3 days
+    if(diffDays>3){
+      reminder.querySelector('div').style.borderColor='rgba(255,77,109,.3)';
+      reminder.querySelector('div').style.background='rgba(255,77,109,.05)';
+    }
+  }
 }
 
 // ── GOALS & ALERTS ──
