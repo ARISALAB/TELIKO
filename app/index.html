@@ -318,7 +318,7 @@ footer a{color:var(--accent);text-decoration:none}
   nav,footer,.no-print,#notif,.mobile-nav-toggle,.bottom-nav,.bottom-nav-more,.ambient,
   .btn,.btn-icon,.modal-overlay,.hero,.feature-grid,
   #page-income:not(.active),#page-expenses:not(.active),#page-suppliers:not(.active),
-  #page-payroll:not(.active),#page-credit:not(.active),#page-compare:not(.active),
+  #page-payroll:not(.active),#page-credit:not(.active),#page-compare:not(.active),#page-wallet:not(.active),
   #page-weekly-report:not(.active),#page-monthly-report:not(.active),
   #page-annual-report:not(.active),#page-daily-report:not(.active),
   #page-home:not(.active){display:none!important}
@@ -639,19 +639,33 @@ footer a{color:var(--accent);text-decoration:none}
     <button class="nav-link" onclick="nav('income')" id="nl-income" data-el="nav-income">Revenue</button>
     <button class="nav-link" onclick="nav('expenses')" id="nl-expenses" data-el="nav-expenses">Expenses</button>
     <button class="nav-link" onclick="nav('suppliers')" id="nl-suppliers" data-el="nav-suppliers">Suppliers</button>
-    <button class="nav-link" onclick="nav('credit')" id="nl-credit" style="color:var(--warning)" title="Outstanding credit balances">On Credit</button>
     <button class="nav-link" onclick="nav('payroll')" id="nl-payroll" data-el="nav-payroll">Payroll</button>
+    <div class="nav-dropdown" id="dd-finance">
+      <button class="nav-link" onclick="toggleFinanceDD()" id="nl-finance">
+        Finance ▾
+      </button>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-item" onclick="nav('wallet');closeDDs()" style="color:var(--accent)">
+          <span>💳</span> Wallet
+        </div>
+        <div class="nav-dropdown-item" onclick="nav('credit');closeDDs()" style="color:var(--warning)">
+          <span>⚠️</span> On Credit
+        </div>
+        <div style="height:1px;background:var(--border);margin:4px 0"></div>
+        <div class="nav-dropdown-item" onclick="nav('compare');closeDDs()" style="color:var(--accent2)">
+          <span>⚖️</span> Compare Periods
+        </div>
+      </div>
+    </div>
     <div class="nav-dropdown" id="dd-reports">
       <button class="nav-link" onclick="toggleDD()" id="nl-reports">
         <span data-el="nav-reports">Reports</span> ▾
       </button>
       <div class="nav-dropdown-menu">
-        <div class="nav-dropdown-item" onclick="nav('daily-report')"><span>📅</span> <span data-el="nav-daily">Daily Report</span></div>
-        <div class="nav-dropdown-item" onclick="nav('weekly-report')"><span>📆</span> <span data-el="nav-weekly">Weekly Report</span></div>
-        <div class="nav-dropdown-item" onclick="nav('monthly-report')"><span>🗓️</span> <span data-el="nav-monthly">Monthly Report</span></div>
-        <div class="nav-dropdown-item" onclick="nav('annual-report')"><span>📊</span> <span data-el="nav-annual">Annual Report</span></div>
-        <div style="height:1px;background:var(--border);margin:4px 0"></div>
-        <div class="nav-dropdown-item" onclick="nav('compare')" style="color:var(--accent2)"><span>⚖️</span> Compare Periods</div>
+        <div class="nav-dropdown-item" onclick="nav('daily-report');closeDDs()"><span>📅</span> <span data-el="nav-daily">Daily Report</span></div>
+        <div class="nav-dropdown-item" onclick="nav('weekly-report');closeDDs()"><span>📆</span> <span data-el="nav-weekly">Weekly Report</span></div>
+        <div class="nav-dropdown-item" onclick="nav('monthly-report');closeDDs()"><span>🗓️</span> <span data-el="nav-monthly">Monthly Report</span></div>
+        <div class="nav-dropdown-item" onclick="nav('annual-report');closeDDs()"><span>📊</span> <span data-el="nav-annual">Annual Report</span></div>
       </div>
     </div>
     <div class="nav-dropdown" id="dd-tools">
@@ -1775,6 +1789,73 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 </div>
+<!-- WALLET PAGE -->
+<div class="page" id="page-wallet">
+  <div class="page-header">
+    <div>
+      <div class="page-title">💳 Wallet</div>
+      <div class="page-sub">Cash balance, bank balance and outstanding credit</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="date" id="wallet-date-from" style="width:auto" onchange="renderWallet()"/>
+      <span style="color:var(--ink3);font-size:13px">→</span>
+      <input type="date" id="wallet-date-to" style="width:auto" onchange="renderWallet()"/>
+      <button class="btn btn-secondary btn-sm" onclick="resetWalletDates()">All time</button>
+    </div>
+  </div>
+
+  <!-- 3 Wallet Cards -->
+  <div class="grid-4 section" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat green" style="cursor:pointer" onclick="filterWallet('cash')">
+      <div class="stat-glow"></div>
+      <div style="font-size:22px;margin-bottom:4px">💵</div>
+      <div class="stat-label">Cash Balance</div>
+      <div class="stat-value green mono" id="wallet-cash-bal">—</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="wallet-cash-sub">— in · — out</div>
+    </div>
+    <div class="stat blue" style="cursor:pointer" onclick="filterWallet('card')">
+      <div class="stat-glow"></div>
+      <div style="font-size:22px;margin-bottom:4px">🏦</div>
+      <div class="stat-label">Bank Balance</div>
+      <div class="stat-value blue mono" id="wallet-card-bal">—</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="wallet-card-sub">— in · — out</div>
+    </div>
+    <div class="stat amber" style="cursor:pointer" onclick="filterWallet('credit')">
+      <div class="stat-glow"></div>
+      <div style="font-size:22px;margin-bottom:4px">⚠️</div>
+      <div class="stat-label">Outstanding Credit</div>
+      <div class="stat-value amber mono" id="wallet-credit-bal">—</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="wallet-credit-sub">— unpaid invoices</div>
+    </div>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="tabs" style="margin-bottom:20px" id="wallet-filter-tabs">
+    <button class="tab active" id="wf-all" onclick="filterWallet('all')">All transactions</button>
+    <button class="tab" id="wf-cash" onclick="filterWallet('cash')">💵 Cash</button>
+    <button class="tab" id="wf-card" onclick="filterWallet('card')">🏦 Bank</button>
+    <button class="tab" id="wf-credit" onclick="filterWallet('credit')">⚠️ On Credit</button>
+  </div>
+
+  <!-- Transactions table -->
+  <div class="table-wrap">
+    <table id="wallet-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Payment</th>
+          <th style="text-align:right">Amount</th>
+          <th style="text-align:right">Running Balance</th>
+        </tr>
+      </thead>
+      <tbody id="wallet-tbody">
+        <tr><td colspan="6"><div class="empty"><p>Loading...</p></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 </main>
 
@@ -1839,6 +1920,10 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="bottom-nav-more-item" onclick="nav('suppliers');closeMobileMore()" id="bm-suppliers">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
     <span data-el="nav-suppliers">Suppliers</span>
+  </div>
+  <div class="bottom-nav-more-item" onclick="nav('wallet');closeMobileMore()" style="color:var(--accent)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/><circle cx="17" cy="15" r="2"/></svg>
+    <span>💳 Wallet</span>
   </div>
   <div class="bottom-nav-more-item" onclick="nav('credit');closeMobileMore()" id="bm-credit" style="color:var(--warning)">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -2643,11 +2728,12 @@ function toggleDD(){
 document.addEventListener('click',e=>{
   if(!e.target.closest('#dd-reports'))document.getElementById('dd-reports').classList.remove('open');
   if(!e.target.closest('#dd-tools'))document.getElementById('dd-tools').classList.remove('open');
+  if(!e.target.closest('#dd-finance'))document.getElementById('dd-finance')?.classList.remove('open');
 });
 
 // ── NAV ──
 let currentPage='home';
-const pages=['home','income','expenses','suppliers','credit','payroll','daily-report','weekly-report','monthly-report','annual-report','compare'];
+const pages=['home','income','expenses','suppliers','credit','payroll','daily-report','weekly-report','monthly-report','annual-report','compare','wallet'];
 function nav(page){
   pages.forEach(p=>{
     const el=document.getElementById('page-'+p);if(el)el.classList.toggle('active',p===page);
@@ -2677,6 +2763,17 @@ function onPageEnter(page){
   if(page==='suppliers')renderSuppliers();
   if(page==='credit')renderCreditPage();
   if(page==='compare')setCmpMode(cmpMode);
+  if(page==='wallet'){
+    // Default: current month
+    const now=new Date();
+    const firstDay=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+    const lastDay=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${new Date(now.getFullYear(),now.getMonth()+1,0).getDate()}`;
+    const df=document.getElementById('wallet-date-from');
+    const dt=document.getElementById('wallet-date-to');
+    if(df&&!df.value)df.value=firstDay;
+    if(dt&&!dt.value)dt.value=lastDay;
+    renderWallet();
+  }
   if(page==='payroll'){if(!document.getElementById('pay-date').value)document.getElementById('pay-date').value=d;renderEmployees();}
   if(page==='daily-report'&&!document.getElementById('dr-date').value){document.getElementById('dr-date').value=d;loadDailyReport();}
   if(page==='monthly-report'&&!document.getElementById('mr-month').value){document.getElementById('mr-month').value=d.slice(0,7);loadMonthlyReport();}
@@ -3734,13 +3831,20 @@ function renderChart(id,type,labels,data,colors){
   chartInst[id]=new Chart(ctx,{type,data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:0,borderRadius:type==='bar'?6:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{...CHART_DEFAULTS.plugins}}});
 }
 // ── TOOLS DROPDOWN ──
+function toggleFinanceDD(){
+  document.getElementById('dd-finance').classList.toggle('open');
+  document.getElementById('dd-reports').classList.remove('open');
+  document.getElementById('dd-tools').classList.remove('open');
+}
 function toggleToolsDD(){
   document.getElementById('dd-tools').classList.toggle('open');
   document.getElementById('dd-reports').classList.remove('open');
+  document.getElementById('dd-finance').classList.remove('open');
 }
 function closeDDs(){
   document.getElementById('dd-tools').classList.remove('open');
   document.getElementById('dd-reports').classList.remove('open');
+  document.getElementById('dd-finance')?.classList.remove('open');
 }
 document.addEventListener('click',e=>{
   if(!e.target.closest('#dd-tools'))document.getElementById('dd-tools').classList.remove('open');
@@ -5217,6 +5321,121 @@ function dismissQuickStart(){
   localStorage.setItem('fos_qs_dismissed','1');
   const card=document.getElementById('quick-start-card');
   if(card)card.style.display='none';
+}
+
+// ── WALLET ──
+let walletFilter='all';
+
+function resetWalletDates(){
+  document.getElementById('wallet-date-from').value='';
+  document.getElementById('wallet-date-to').value='';
+  renderWallet();
+}
+
+function filterWallet(type){
+  walletFilter=type;
+  ['all','cash','card','credit'].forEach(t=>{
+    const el=document.getElementById('wf-'+t);
+    if(el)el.classList.toggle('active',t===type);
+  });
+  renderWallet();
+}
+
+function renderWallet(){
+  const from=document.getElementById('wallet-date-from')?.value||'';
+  const to=document.getElementById('wallet-date-to')?.value||'';
+
+  const allIncome=DB.income().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to));
+  const allExpenses=DB.expenses().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to));
+
+  // ── Calculate balances ──
+  const cashIn=allIncome.reduce((s,x)=>s+x.cash,0);
+  const cashOut=allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const cashBal=cashIn-cashOut;
+
+  const cardIn=allIncome.reduce((s,x)=>s+x.card,0);
+  const cardOut=allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const cardBal=cardIn-cardOut;
+
+  const creditTotal=allExpenses.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+  const creditCount=allExpenses.filter(x=>x.pay==='Επί Πιστώσει').length;
+
+  // Update cards
+  const cashEl=document.getElementById('wallet-cash-bal');
+  cashEl.textContent=fmtE(cashBal);
+  cashEl.className='stat-value mono '+(cashBal>=0?'green':'red');
+  document.getElementById('wallet-cash-sub').textContent=`${fmtE(cashIn)} in · ${fmtE(cashOut)} out`;
+
+  const cardEl=document.getElementById('wallet-card-bal');
+  cardEl.textContent=fmtE(cardBal);
+  cardEl.className='stat-value mono '+(cardBal>=0?'blue':'red');
+  document.getElementById('wallet-card-sub').textContent=`${fmtE(cardIn)} in · ${fmtE(cardOut)} out`;
+
+  document.getElementById('wallet-credit-bal').textContent=fmtE(creditTotal);
+  document.getElementById('wallet-credit-sub').textContent=`${creditCount} unpaid invoice${creditCount!==1?'s':''}`;
+
+  // ── Build transactions list ──
+  const txns=[];
+
+  // Income transactions
+  allIncome.forEach(r=>{
+    const payType=r.cash>0&&r.card>0?'both':r.cash>0?'cash':'card';
+    if(r.cash>0) txns.push({date:r.date,time:r.time,desc:r.category||r.desc||'Revenue',type:'income',pay:'cash',amount:r.cash,raw:r});
+    if(r.card>0) txns.push({date:r.date,time:r.time,desc:r.category||r.desc||'Revenue',type:'income',pay:'card',amount:r.card,raw:r});
+  });
+
+  // Expense transactions
+  allExpenses.forEach(r=>{
+    const payKey=r.pay==='Μετρητά'?'cash':r.pay==='Κάρτα'?'card':'credit';
+    txns.push({date:r.date,time:r.time,desc:`${r.supplier} (${r.type})`,type:'expense',pay:payKey,amount:r.amount,raw:r});
+  });
+
+  // Sort by date+time
+  txns.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+
+  // Filter by selected type
+  const filtered=walletFilter==='all'?txns:txns.filter(x=>x.pay===walletFilter);
+
+  // Running balances per wallet
+  let runCash=0,runCard=0,runCredit=0;
+
+  const tb=document.getElementById('wallet-tbody');
+  if(!filtered.length){
+    tb.innerHTML=`<tr><td colspan="6"><div class="empty"><p>No transactions found</p></div></td></tr>`;
+    return;
+  }
+
+  // Pre-calculate all running balances
+  const withBal=filtered.map(tx=>{
+    if(tx.type==='income'){
+      if(tx.pay==='cash'){runCash+=tx.amount;}
+      else{runCard+=tx.amount;}
+    } else {
+      if(tx.pay==='cash'){runCash-=tx.amount;}
+      else if(tx.pay==='card'){runCard-=tx.amount;}
+      else{runCredit+=tx.amount;}
+    }
+    const bal=tx.pay==='cash'?runCash:tx.pay==='card'?runCard:runCredit;
+    return{...tx,runBal:bal};
+  });
+
+  const payIcons={cash:'💵',card:'🏦',credit:'⚠️'};
+  const payLabels={cash:'Cash',card:'Bank',credit:'On Credit'};
+
+  tb.innerHTML=withBal.map(tx=>{
+    const isIncome=tx.type==='income';
+    const amtColor=isIncome?'var(--accent)':'var(--danger)';
+    const sign=isIncome?'+':'-';
+    const balColor=tx.runBal>=0?'var(--accent)':'var(--danger)';
+    return`<tr>
+      <td style="white-space:nowrap;color:var(--ink3);font-size:12px">${tx.date}<br><span style="font-size:11px">${tx.time}</span></td>
+      <td style="font-weight:500">${tx.desc}</td>
+      <td><span class="badge ${isIncome?'badge-green':'badge-red'}" style="font-size:11px">${isIncome?'Revenue':'Expense'}</span></td>
+      <td><span style="font-size:13px">${payIcons[tx.pay]}</span> <span style="font-size:12px;color:var(--ink2)">${payLabels[tx.pay]}</span></td>
+      <td style="text-align:right;font-family:var(--mono);font-weight:700;color:${amtColor}">${sign}${fmtE(tx.amount)}</td>
+      <td style="text-align:right;font-family:var(--mono);color:${balColor};font-weight:600">${fmtE(tx.runBal)}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ── FOOD COST CALCULATOR ──
