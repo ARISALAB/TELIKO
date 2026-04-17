@@ -317,10 +317,11 @@ footer a{color:var(--accent);text-decoration:none}
   body{background:#fff!important;color:#111!important;font-family:'Plus Jakarta Sans',Arial,sans-serif!important;font-size:11pt}
   nav,footer,.no-print,#notif,.mobile-nav-toggle,.bottom-nav,.bottom-nav-more,.ambient,
   .btn,.btn-icon,.modal-overlay,.hero,.feature-grid,
-  #page-income,#page-expenses,#page-suppliers,#page-payroll,#page-credit,#page-compare,
-  #page-weekly-report,#page-monthly-report:not(.active),
+  #page-income:not(.active),#page-expenses:not(.active),#page-suppliers:not(.active),
+  #page-payroll:not(.active),#page-credit:not(.active),#page-compare:not(.active),
+  #page-weekly-report:not(.active),#page-monthly-report:not(.active),
   #page-annual-report:not(.active),#page-daily-report:not(.active),
-  #page-home{display:none!important}
+  #page-home:not(.active){display:none!important}
   main{padding:0!important;max-width:100%!important}
   .page.active{display:block!important}
   /* Report header */
@@ -565,16 +566,30 @@ footer a{color:var(--accent);text-decoration:none}
           <div style="font-size:12.5px;color:var(--ink3);margin-top:2px">Interface, reports and PDFs will use this language.</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div id="ob-lang-el" onclick="selectObLang('el')" style="padding:18px;border:2px solid var(--accent);border-radius:var(--radius-lg);cursor:pointer;text-align:center;background:var(--accent-subtle)">
-          <div style="font-size:28px;margin-bottom:8px">🇬🇷</div>
-          <div style="font-weight:700">Ελληνικά</div>
-          <div style="font-size:11.5px;color:var(--ink3);margin-top:3px">Greek</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div id="ob-lang-el" onclick="selectObLang('el')" style="padding:14px;border:2px solid var(--accent);border-radius:var(--radius-lg);cursor:pointer;text-align:center;background:var(--accent-subtle)">
+          <div style="font-size:22px;margin-bottom:6px">🇬🇷</div>
+          <div style="font-weight:700;font-size:12px">Ελληνικά</div>
         </div>
-        <div id="ob-lang-en" onclick="selectObLang('en')" style="padding:18px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;text-align:center">
-          <div style="font-size:28px;margin-bottom:8px">🇬🇧</div>
-          <div style="font-weight:700">English</div>
-          <div style="font-size:11.5px;color:var(--ink3);margin-top:3px">English</div>
+        <div id="ob-lang-en" onclick="selectObLang('en')" style="padding:14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🇬🇧</div>
+          <div style="font-weight:700;font-size:12px">English</div>
+        </div>
+        <div id="ob-lang-es" onclick="selectObLang('es')" style="padding:14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🇪🇸</div>
+          <div style="font-weight:700;font-size:12px">Español</div>
+        </div>
+        <div id="ob-lang-it" onclick="selectObLang('it')" style="padding:14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🇮🇹</div>
+          <div style="font-weight:700;font-size:12px">Italiano</div>
+        </div>
+        <div id="ob-lang-fr" onclick="selectObLang('fr')" style="padding:14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🇫🇷</div>
+          <div style="font-weight:700;font-size:12px">Français</div>
+        </div>
+        <div id="ob-lang-de" onclick="selectObLang('de')" style="padding:14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🇩🇪</div>
+          <div style="font-weight:700;font-size:12px">Deutsch</div>
         </div>
       </div>
     </div>
@@ -656,6 +671,14 @@ footer a{color:var(--accent);text-decoration:none}
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
           Goals & Alerts
         </div>
+        <div class="nav-dropdown-item" onclick="openModal('modal-fc-calc');closeDDs()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+          🍽 Food Cost Calculator
+        </div>
+        <div class="nav-dropdown-item" onclick="printPayrollPDF();closeDDs()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          Payroll PDF
+        </div>
         <div style="height:1px;background:var(--border);margin:5px 0"></div>
         <div class="nav-dropdown-item" onclick="backupData();closeDDs()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -673,9 +696,18 @@ footer a{color:var(--accent);text-decoration:none}
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
       <span id="nav-biz-name" style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Settings</span>
     </button>
-    <button class="lang-btn" id="btn-currency" onclick="openModal('modal-currency')" title="Currency" style="font-weight:700;font-family:var(--mono);min-width:52px;justify-content:center">€ EUR</button>
-    <button class="lang-btn" id="btn-lang-el" onclick="setLang('el')">🇬🇷 EL</button>
-    <button class="lang-btn active-lang" id="btn-lang-en" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn" onclick="openModal('modal-help');renderHelpModal()" title="Help" style="font-size:15px;font-weight:700;min-width:34px;justify-content:center">?</button>
+    <div class="nav-dropdown" id="dd-lang" style="position:relative">
+      <button class="lang-btn" onclick="toggleLangDD()" id="btn-lang-current" style="gap:4px;min-width:60px">🇬🇧 EN ▾</button>
+      <div id="lang-dropdown-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--border-bright);border-radius:var(--radius-lg);padding:4px;min-width:140px;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+        <div class="nav-dropdown-item" onclick="setLang('el');closeLangDD()">🇬🇷 Ελληνικά</div>
+        <div class="nav-dropdown-item" onclick="setLang('en');closeLangDD()">🇬🇧 English</div>
+        <div class="nav-dropdown-item" onclick="setLang('es');closeLangDD()">🇪🇸 Español</div>
+        <div class="nav-dropdown-item" onclick="setLang('it');closeLangDD()">🇮🇹 Italiano</div>
+        <div class="nav-dropdown-item" onclick="setLang('fr');closeLangDD()">🇫🇷 Français</div>
+        <div class="nav-dropdown-item" onclick="setLang('de');closeLangDD()">🇩🇪 Deutsch</div>
+      </div>
+    </div>
   </div>
   <button class="mobile-nav-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
     <div class="hamburger-line"></div>
@@ -685,8 +717,8 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 </nav>
 
-<div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileMenu()"></div>
-<div class="mobile-overlay" id="more-overlay" onclick="closeMobileMore()" style="z-index:298"></div>
+<div class="mobile-overlay" id="mobile-overlay" onclick="closeAllMobileMenus()"></div>
+<div class="mobile-overlay" id="more-overlay" onclick="closeAllMobileMenus()" style="z-index:298"></div>
 
 <!-- NOTIFICATIONS -->
 <div id="notif"></div>
@@ -1041,6 +1073,155 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </div>
 
+<!-- MODAL: HELP / USER GUIDE -->
+<div class="modal-overlay" id="modal-help">
+  <div class="modal" style="max-width:560px;max-height:80vh;overflow-y:auto">
+    <div class="modal-title" style="position:sticky;top:0;background:var(--surface);z-index:10;padding-bottom:12px">
+      <span data-el="help-title">User Guide</span>
+      <button class="modal-close" onclick="closeModal('modal-help')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+    <div id="help-sections-content" style="display:flex;flex-direction:column;gap:14px;margin-top:4px"></div>
+  </div>
+</div>
+
+<!-- QUICK START CARD (shown on home when no data) -->
+<div id="quick-start-card" style="display:none;background:linear-gradient(135deg,rgba(0,212,170,.07),rgba(0,184,255,.05));border:1px solid rgba(0,212,170,.2);border-radius:var(--radius-xl);padding:28px 24px;margin-bottom:24px">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px">
+    <div>
+      <div style="font-family:var(--head);font-size:18px;font-weight:700;margin-bottom:4px" data-el="qs-title">Get started 👋</div>
+      <div style="font-size:13px;color:var(--ink3)" data-el="qs-sub">3 simple steps to begin</div>
+    </div>
+    <button onclick="dismissQuickStart()" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:20px;padding:0;line-height:1">×</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px" id="qs-steps">
+    <!-- filled by JS -->
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="nav('income');dismissQuickStart()" data-el="qs-step1-title">Record Revenue</button>
+    <button class="btn btn-secondary" onclick="openModal('modal-help')" data-el="help-title">User Guide</button>
+    <button class="btn btn-secondary" onclick="dismissQuickStart()" data-el="qs-dismiss">Got it, let's go!</button>
+  </div>
+</div>
+
+<!-- MODAL: Z REPORT / DAY CLOSE -->
+<div class="modal-overlay" id="modal-zreport">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-title">
+      <span data-el="btn-zreport">Z Report / Day Close</span>
+      <button class="modal-close" onclick="closeModal('modal-zreport')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+    <div id="zreport-content"></div>
+    <div style="display:flex;gap:8px;margin-top:20px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('modal-zreport')">Close</button>
+      <button class="btn btn-secondary" onclick="printZReport()" style="gap:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: FOOD COST CALCULATOR -->
+<div class="modal-overlay" id="modal-fc-calc">
+  <div class="modal" style="max-width:500px">
+    <div class="modal-title">
+      <span>🍽 Food Cost Calculator</span>
+      <button class="modal-close" onclick="closeModal('modal-fc-calc')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+    <p style="font-size:13px;color:var(--ink3);margin-bottom:20px">Calculate Food Cost % and profit margin per dish. Add as many ingredients as needed.</p>
+
+    <!-- Dish name & selling price -->
+    <div class="form-grid" style="margin-bottom:16px">
+      <div class="form-group">
+        <label>Dish Name</label>
+        <input id="fc-dish-name" placeholder="e.g. Grilled Salmon" oninput="calcFC()"/>
+      </div>
+      <div class="form-group">
+        <label>Selling Price (incl. VAT)</label>
+        <input type="number" id="fc-sell-price" step="0.01" min="0" placeholder="0.00" oninput="calcFC()" style="font-size:18px;font-weight:700"/>
+      </div>
+      <div class="form-group">
+        <label>VAT %</label>
+        <select id="fc-vat" onchange="calcFC()">
+          <option value="0">0%</option>
+          <option value="13" selected>13%</option>
+          <option value="24">24%</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Ingredients -->
+    <div style="font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">Ingredients / Raw Cost</div>
+    <div id="fc-ingredients-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+      <div class="fc-ingredient-row" style="display:grid;grid-template-columns:1fr auto;gap:8px">
+        <input placeholder="Ingredient name" class="fc-ing-name" oninput="calcFC()" style="font-size:13px"/>
+        <input type="number" step="0.01" min="0" placeholder="Cost €" class="fc-ing-cost" oninput="calcFC()" style="width:90px;font-size:13px"/>
+      </div>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="addFCIngredient()" style="margin-bottom:20px;gap:6px">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add ingredient
+    </button>
+
+    <!-- Results -->
+    <div id="fc-results" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-xl);padding:18px;display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Raw Cost</div>
+          <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--danger)" id="fc-res-cost">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Food Cost %</div>
+          <div style="font-family:var(--mono);font-size:18px;font-weight:700" id="fc-res-pct">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Profit / Dish</div>
+          <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)" id="fc-res-profit">—</div>
+        </div>
+      </div>
+      <!-- FC% gauge bar -->
+      <div style="font-size:11px;color:var(--ink3);margin-bottom:5px">Food Cost % target: <span style="font-weight:700" id="fc-target-label">—</span></div>
+      <div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden">
+        <div id="fc-gauge-bar" style="height:100%;width:0%;border-radius:4px;transition:width .4s,background .4s"></div>
+      </div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="fc-verdict"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PAYROLL PDF -->
+<div class="modal-overlay" id="modal-payroll-pdf">
+  <div class="modal" style="max-width:500px">
+    <div class="modal-title">
+      <span>Payroll PDF</span>
+      <button class="modal-close" onclick="closeModal('modal-payroll-pdf')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+    <div class="form-grid" style="margin-bottom:20px">
+      <div class="form-group">
+        <label>From</label>
+        <input type="date" id="pp-from"/>
+      </div>
+      <div class="form-group">
+        <label>To</label>
+        <input type="date" id="pp-to"/>
+      </div>
+      <div class="form-group" style="grid-column:1/-1">
+        <label>Employee (leave blank for all)</label>
+        <select id="pp-employee">
+          <option value="">— All Employees —</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-secondary" onclick="closeModal('modal-payroll-pdf')">Cancel</button>
+      <button class="btn btn-primary" onclick="generatePayrollPDF()" style="gap:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Generate PDF
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== PAGES ===== -->
 <main>
 
@@ -1141,6 +1322,9 @@ footer a{color:var(--accent);text-decoration:none}
     <div style="position:relative;height:200px"><canvas id="dashboard-chart"></canvas></div>
   </div>
 
+  <!-- QUICK START (shown only when no data yet) -->
+  <div id="qs-home-placeholder"></div>
+
   <!-- GOALS ALERTS (shown when targets are at risk) -->
   <div id="home-goals-alerts" style="display:none;flex-direction:column;gap:8px"></div>
 
@@ -1151,6 +1335,7 @@ footer a{color:var(--accent);text-decoration:none}
       <span>You have outstanding credit balances: <strong id="home-credit-total"></strong> — <u>View On Credit →</u></span>
     </div>
   </div>
+
 </div>
 
 <!-- INCOME PAGE -->
@@ -1353,7 +1538,13 @@ footer a{color:var(--accent);text-decoration:none}
 <div class="page" id="page-payroll">
   <div class="page-header">
     <div><div class="page-title" data-el="pg-payroll-title">Payroll</div><div class="page-sub" data-el="pg-payroll-sub">Daily & weekly wage recording</div></div>
-    <button class="btn btn-secondary" onclick="openModal('modal-employee')" data-el="btn-new-employee">+ New Employee</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-secondary" onclick="printPayrollPDF()" style="gap:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Payroll PDF
+      </button>
+      <button class="btn btn-secondary" onclick="openModal('modal-employee')" data-el="btn-new-employee">+ New Employee</button>
+    </div>
   </div>
 
   <!-- Tabs: Daily Entry / Summary -->
@@ -1441,7 +1632,10 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="flex" style="gap:12px;margin-bottom:24px;align-items:flex-end;flex-wrap:wrap">
     <div class="form-group"><label data-el="lbl-date3">Date</label><input type="date" id="dr-date"/></div>
     <button class="btn btn-primary" onclick="loadDailyReport()" data-el="btn-load">Load Report</button>
-    <button class="btn btn-secondary" onclick="printDailyReport()">↓ PDF</button>
+    <button class="btn btn-secondary" onclick="printDailyReport()" style="gap:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Z Report
+    </button>
   </div>
   <div id="daily-report-content">
     <div class="empty"><svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4M9 17h6"/></svg><p data-el="empty-select-date3">Select a date and load the report</p></div>
@@ -1589,19 +1783,19 @@ footer a{color:var(--accent);text-decoration:none}
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="bottom-nav-inner">
-    <button class="bottom-nav-item active" id="bn-home" onclick="nav('home');closeMobileMore()">
+    <button class="bottom-nav-item active" id="bn-home" onclick="nav('home');closeAllMobileMenus()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/></svg>
       <span data-el="nav-home">Home</span>
     </button>
-    <button class="bottom-nav-item" id="bn-income" onclick="nav('income');closeMobileMore()">
+    <button class="bottom-nav-item" id="bn-income" onclick="nav('income');closeAllMobileMenus()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
       <span data-el="nav-income">Revenue</span>
     </button>
-    <button class="bottom-nav-item" id="bn-expenses" onclick="nav('expenses');closeMobileMore()">
+    <button class="bottom-nav-item" id="bn-expenses" onclick="nav('expenses');closeAllMobileMenus()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
       <span data-el="nav-expenses">Expenses</span>
     </button>
-    <button class="bottom-nav-item" id="bn-reports" onclick="toggleMobileMore()">
+    <button class="bottom-nav-item" id="bn-reports" onclick="toggleMobileReports()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       <span data-el="nav-reports">Reports</span>
     </button>
@@ -1612,9 +1806,36 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </div>
 
+<!-- MOBILE REPORTS MENU -->
+<div class="bottom-nav-more" id="mobile-reports-menu">
+  <div class="bottom-nav-more-handle"></div>
+  <div style="padding:0 16px 12px;font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:1px" data-el="nav-reports">Reports</div>
+  <div class="bottom-nav-more-item" onclick="nav('daily-report');closeMobileReports()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span data-el="nav-daily">Daily Report</span>
+  </div>
+  <div class="bottom-nav-more-item" onclick="nav('weekly-report');closeMobileReports()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span data-el="nav-weekly">Weekly Report</span>
+  </div>
+  <div class="bottom-nav-more-item" onclick="nav('monthly-report');closeMobileReports()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span data-el="nav-monthly">Monthly Report</span>
+  </div>
+  <div class="bottom-nav-more-item" onclick="nav('annual-report');closeMobileReports()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    <span data-el="nav-annual">Annual Report</span>
+  </div>
+  <div class="bottom-nav-more-item" onclick="nav('compare');closeMobileReports()" style="color:var(--accent2)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+    <span>⚖️ Compare Periods</span>
+  </div>
+</div>
+
 <!-- MOBILE MORE MENU -->
 <div class="bottom-nav-more" id="mobile-more-menu">
   <div class="bottom-nav-more-handle"></div>
+  <div style="padding:0 16px 12px;font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:1px">More</div>
   <div class="bottom-nav-more-item" onclick="nav('suppliers');closeMobileMore()" id="bm-suppliers">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
     <span data-el="nav-suppliers">Suppliers</span>
@@ -1628,39 +1849,36 @@ footer a{color:var(--accent);text-decoration:none}
     <span data-el="nav-payroll">Payroll</span>
   </div>
   <div class="bottom-nav-more-divider"></div>
-  <div class="bottom-nav-more-item" onclick="nav('daily-report');closeMobileMore()">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    <span data-el="nav-daily">Daily Report</span>
+  <div class="bottom-nav-more-item" onclick="openModal('modal-help');renderHelpModal();closeMobileMore()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span data-el="help-title">User Guide</span>
   </div>
-  <div class="bottom-nav-more-item" onclick="nav('weekly-report');closeMobileMore()">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    <span data-el="nav-weekly">Weekly Report</span>
+  <div class="bottom-nav-more-item" onclick="openGoalsModal();closeMobileMore()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    <span>🎯 Goals & Alerts</span>
   </div>
-  <div class="bottom-nav-more-item" onclick="nav('monthly-report');closeMobileMore()">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    <span data-el="nav-monthly">Monthly Report</span>
+  <div class="bottom-nav-more-item" onclick="openModal('modal-fc-calc');closeMobileMore()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+    <span>🍽 Food Cost Calc</span>
   </div>
-  <div class="bottom-nav-more-item" onclick="nav('annual-report');closeMobileMore()">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-    <span data-el="nav-annual">Annual Report</span>
-  </div>
-  <div class="bottom-nav-more-item" onclick="nav('compare');closeMobileMore()" style="color:var(--accent2)">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 20V10M12 20V4M6 20v-6"/><path d="M3 3h7v7H3zM14 3h7v7h-7z"/></svg>
-    <span>Compare Periods</span>
+  <div class="bottom-nav-more-item" onclick="printPayrollPDF();closeMobileMore()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+    <span>💰 Payroll PDF</span>
   </div>
   <div class="bottom-nav-more-divider"></div>
-  <div style="display:flex;gap:8px;padding:6px 16px 4px">
-    <button class="lang-btn" id="btn-lang-el2" onclick="setLang('el');closeMobileMore()" style="flex:1;justify-content:center">🇬🇷 EL</button>
-    <button class="lang-btn active-lang" id="btn-lang-en2" onclick="setLang('en');closeMobileMore()" style="flex:1;justify-content:center">🇬🇧 EN</button>
+  <div style="display:flex;gap:6px;padding:4px 16px 4px;flex-wrap:wrap">
+    <button class="lang-btn" onclick="setLang('el');closeMobileMore()" style="flex:1;justify-content:center;min-width:52px">🇬🇷 EL</button>
+    <button class="lang-btn" onclick="setLang('en');closeMobileMore()" style="flex:1;justify-content:center;min-width:52px">🇬🇧 EN</button>
+    <button class="lang-btn" onclick="setLang('es');closeMobileMore()" style="flex:1;justify-content:center;min-width:52px">🇪🇸 ES</button>
+    <button class="lang-btn" onclick="setLang('it');closeMobileMore()" style="flex:1;justify-content:center;min-width:52px">🇮🇹 IT</button>
+    <button class="lang-btn" onclick="setLang('fr');closeMobileMore()" style="flex:1;justify-content:center;min-width:52px">🇫🇷 FR</button>
+    <button class="lang-btn" onclick="setLang('de');closeMobileMore()" style="flex:1;justify-content:center;min-width:52px">🇩🇪 DE</button>
   </div>
   <div class="bottom-nav-more-divider"></div>
   <div style="display:flex;gap:8px;padding:4px 16px 8px">
     <button class="btn btn-secondary btn-sm" onclick="openModal('modal-export');closeMobileMore()" style="flex:1;justify-content:center">↓ Excel</button>
     <button class="btn btn-secondary btn-sm" onclick="openModal('modal-pdf');closeMobileMore()" style="flex:1;justify-content:center">↓ PDF</button>
     <button class="btn btn-secondary btn-sm" onclick="backupData();closeMobileMore()" style="flex:1;justify-content:center">💾 Backup</button>
-  </div>
-  <div style="padding:4px 16px 8px">
-    <button class="btn btn-secondary btn-sm" onclick="openGoalsModal();closeMobileMore()" style="width:100%;justify-content:center">🎯 Goals & Alerts</button>
   </div>
 </div>
 
@@ -1744,6 +1962,7 @@ const T = {
     'confirm-delete':'Διαγραφή;',
     'empty-no-records':'Δεν βρέθηκαν εγγραφές','empty-no-suppliers':'Δεν βρέθηκαν προμηθευτές','empty-no-payroll':'Δεν βρέθηκε μισθοδοσία',
     'btn-transactions':'Συναλλαγές','lbl-supplier-count-unit':'προμηθευτές',
+    'btn-zreport':'Z Report',
     'lbl-inc-category':'Κατηγορία',
     'cat-dine-in':'🍽 Εσωτερικό','cat-takeaway':'🥡 Take Away',
     'cat-events':'🎉 Events','cat-other':'📦 Άλλο',
@@ -1761,6 +1980,23 @@ const T = {
     'tbl-supplier-total':'Σύνολο Τιμολογίων','tbl-credit-balance':'Υπόλοιπο (Επί Πιστώσει)',
     'tbl-type':'Τύπος','tbl-desc-sup':'Περιγραφή/Προμ.','tbl-cash':'Μετρητά','tbl-card':'Κάρτα',
     'empty-no-transactions':'Δεν υπάρχουν συναλλαγές','lbl-employee':'Υπάλληλος',
+    'help-title':'Οδηγός Χρήσης','help-close':'Κλείσιμο',
+    'qs-title':'Ξεκίνα εδώ 👋','qs-sub':'3 απλά βήματα για να ξεκινήσεις',
+    'qs-step1-title':'Καταχώρησε Έσοδα','qs-step1':'Πήγαινε στη σελίδα Έσοδα, επίλεξε ημερομηνία, κατηγορία και ποσό ταμείου.',
+    'qs-step2-title':'Κατέγραψε Έξοδα','qs-step2':'Πήγαινε στη σελίδα Έξοδα, επίλεξε προμηθευτή, τύπο και ποσό.',
+    'qs-step3-title':'Δες τις Αναφορές','qs-step3':'Πήγαινε σε Αναφορές → Ημερήσια/Μηνιαία για πλήρη οικονομική εικόνα.',
+    'qs-dismiss':'Κατάλαβα, πάμε!',
+    'help-sections':[
+      {title:'📊 Έσοδα',text:'Επίλεξε ημερομηνία, κατηγορία (Εσωτερικό, Delivery, Take Away κτλ.), εισάγαγε το σύνολο ταμείου και το ποσό κάρτας. Τα μετρητά υπολογίζονται αυτόματα.'},
+      {title:'💸 Έξοδα',text:'Επίλεξε προμηθευτή (πρόσθεσε πρώτα στους Προμηθευτές), τύπο εξόδου (FC/Λειτουργικά κτλ.) και τρόπο πληρωμής. Το Food Cost % υπολογίζεται αυτόματα.'},
+      {title:'👥 Προμηθευτές',text:'Πρόσθεσε όλους τους προμηθευτές σου. Κάθε έξοδο συνδέεται με προμηθευτή για πλήρες ιστορικό συναλλαγών.'},
+      {title:'💰 Μισθοδοσία',text:'Φόρτωσε υπαλλήλους, επίλεξε ημερομηνία και καταχώρησε ημερομίσθια. Υποστηρίζει ημερήσιο και ωριαίο τρόπο.'},
+      {title:'📈 Αναφορές',text:'Ημερήσια, Εβδομαδιαία, Μηνιαία και Ετήσια αναφορά. Η Μηνιαία δείχνει σύγκριση με τον προηγούμενο μήνα.'},
+      {title:'⚖️ Σύγκριση Περιόδων',text:'Από το menu Αναφορές → Compare Periods μπορείς να συγκρίνεις οποιεσδήποτε δύο περιόδους.'},
+      {title:'🎯 Στόχοι & Alerts',text:'Από Tools → Goals & Alerts ορίζεις μηνιαίους στόχους εσόδων και FC%. Αν ξεπεραστούν, εμφανίζονται alerts στο dashboard.'},
+      {title:'📄 Εξαγωγή',text:'Από Tools → Export Excel ή Export PDF. Οι αναφορές υποστηρίζουν όλες τις γλώσσες.'},
+      {title:'💾 Backup',text:'Από Tools → Backup κατεβάζεις JSON αρχείο με όλα τα δεδομένα. Χρησιμοποίησε Restore για επαναφορά.'},
+    ],
     'mLabels':['Ιαν','Φεβ','Μαρ','Απρ','Μαΐ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'],
     'days-labels':['Δευ','Τρί','Τετ','Πέμ','Παρ','Σάβ','Κυρ'],'week-labels':['Εβδ.1','Εβδ.2','Εβδ.3','Εβδ.4'],
   },
@@ -1840,6 +2076,7 @@ const T = {
     'confirm-delete':'Delete this entry?',
     'empty-no-records':'No records found','empty-no-suppliers':'No suppliers found','empty-no-payroll':'No payroll found',
     'btn-transactions':'Transactions','lbl-supplier-count-unit':'suppliers',
+    'btn-zreport':'Z Report',
     'lbl-inc-category':'Category',
     'cat-dine-in':'🍽 Dine-In','cat-takeaway':'🥡 Take Away',
     'cat-events':'🎉 Events','cat-other':'📦 Other',
@@ -1857,17 +2094,449 @@ const T = {
     'tbl-supplier-total':'Total Invoices','tbl-credit-balance':'Balance (On Credit)',
     'tbl-type':'Type','tbl-desc-sup':'Desc./Supplier','tbl-cash':'Cash','tbl-card':'Card',
     'empty-no-transactions':'No transactions found','lbl-employee':'Employee',
+    'help-title':'User Guide','help-close':'Close',
+    'qs-title':'Get started 👋','qs-sub':'3 simple steps to begin',
+    'qs-step1-title':'Record Revenue','qs-step1':'Go to Revenue, select date, category and enter your register total.',
+    'qs-step2-title':'Log Expenses','qs-step2':'Go to Expenses, select supplier, type and amount.',
+    'qs-step3-title':'View Reports','qs-step3':'Go to Reports → Daily/Monthly for a full financial overview.',
+    'qs-dismiss':'Got it, let\'s go!',
+    'help-sections':[
+      {title:'📊 Revenue',text:'Select date, category (Dine-In, Delivery, Take Away etc.), enter total register and card amount. Cash is calculated automatically.'},
+      {title:'💸 Expenses',text:'Select supplier (add to Suppliers first), expense type (FC/Operational etc.) and payment method. Food Cost % is calculated automatically.'},
+      {title:'👥 Suppliers',text:'Add all your suppliers. Each expense links to a supplier for a full transaction history.'},
+      {title:'💰 Payroll',text:'Load employees, select date and enter daily wages. Supports daily and hourly modes.'},
+      {title:'📈 Reports',text:'Daily, Weekly, Monthly and Annual reports. Monthly report shows comparison with the previous month.'},
+      {title:'⚖️ Compare Periods',text:'From Reports → Compare Periods you can compare any two periods side by side.'},
+      {title:'🎯 Goals & Alerts',text:'From Tools → Goals & Alerts set monthly revenue and FC% targets. Alerts appear on dashboard when at risk.'},
+      {title:'📄 Export',text:'From Tools → Export Excel or Export PDF. Reports support all languages.'},
+      {title:'💾 Backup',text:'From Tools → Backup downloads a JSON file with all your data. Use Restore to import it back.'},
+    ],
     'mLabels':['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
     'days-labels':['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],'week-labels':['Wk.1','Wk.2','Wk.3','Wk.4'],
+  },
+  es: {
+    'logo-tagline':'Gestión Empresarial',
+    'nav-home':'Inicio','nav-income':'Ingresos','nav-expenses':'Gastos','nav-suppliers':'Proveedores','nav-payroll':'Nóminas','nav-reports':'Informes',
+    'nav-daily':'Informe Diario','nav-weekly':'Informe Semanal','nav-monthly':'Informe Mensual','nav-annual':'Informe Anual',
+    'hero-badge':'Suite Profesional de Negocio',
+    'hero-title':'Gestión Empresarial<br><span>al siguiente nivel.</span>',
+    'hero-sub':'Registre ingresos, gastos, proveedores y nóminas en una plataforma unificada. Análisis en tiempo real e informes profesionales.',
+    'hero-btn1':'Registrar Ingresos','hero-btn2':'Ver Informes',
+    'hs-lbl-income':'Ingresos Hoy','hs-lbl-expense':'Gastos Hoy','hs-lbl-cash':'Saldo Total','hs-lbl-suppliers':'Proveedores',
+    'fc-income-name':'Ingresos Diarios','fc-income-desc':'Registre cobros en efectivo y tarjeta rápidamente.',
+    'fc-expenses-name':'Gastos Diarios','fc-expenses-desc':'Controle gastos por categoría, proveedor y forma de pago.',
+    'fc-suppliers-name':'Proveedores','fc-suppliers-desc':'Gestione contactos y controle todas las transacciones.',
+    'fc-payroll-name':'Nóminas','fc-payroll-desc':'Registre salarios diarios y calcule nóminas semanales.',
+    'fc-daily-report-name':'Informe Diario','fc-daily-report-desc':'Análisis financiero completo por día con gráficos.',
+    'fc-monthly-report-name':'Informe Mensual','fc-monthly-report-desc':'Análisis mensual de ingresos, gastos y Food Cost.',
+    'fc-manage':'Gestionar →','fc-manage2':'Gestionar →','fc-manage3':'Gestionar →','fc-manage4':'Gestionar →',
+    'fc-view':'Ver informe →','fc-view2':'Ver informe →',
+    'pg-income-title':'Ingresos Diarios','pg-income-sub':'Registre cobros por día',
+    'card-new-entry':'Nueva Entrada','card-day-summary':'Resumen del Día',
+    'lbl-date':'Fecha','lbl-desc':'Descripción','lbl-cash-eur':'Efectivo','lbl-card-eur':'Tarjeta',
+    'lbl-entry-total':'Total Entrada','btn-add-income':'+ Añadir Ingreso',
+    'section-entries':'Entradas','empty-select-date':'Seleccione una fecha',
+    'th-time':'Hora','th-desc':'Descripción','th-cash-eur':'Efectivo','th-card-eur':'Tarjeta','th-total-eur':'Total',
+    'tf-day-total':'Total del Día',
+    'pg-expenses-title':'Gastos Diarios','pg-expenses-sub':'Registre gastos por categoría',
+    'card-new-expense':'Nuevo Gasto','card-expenses-summary':'Resumen de Gastos',
+    'lbl-date2':'Fecha','lbl-supplier':'Proveedor','lbl-type':'Tipo','lbl-payment':'Forma de Pago',
+    'lbl-invoice':'Nº Factura','lbl-amount-eur':'Importe','btn-add-expense':'+ Añadir Gasto',
+    'opt-select':'— Seleccionar —','opt-select2':'— Seleccionar —','opt-select3':'— Seleccionar —',
+    'opt-operational':'Operacional','opt-energy':'Energía','opt-salaries':'Salarios','opt-maintenance':'Mantenimiento','opt-other':'Otro',
+    'opt-cash':'Efectivo','opt-card':'Tarjeta','opt-credit':'A crédito',
+    'pg-suppliers-title':'Proveedores','pg-suppliers-sub':'Gestión de contactos y transacciones',
+    'card-new-supplier':'Nuevo Proveedor','lbl-company':'Empresa','btn-add-supplier':'+ Añadir Proveedor',
+    'lbl-suppliers-count':'proveedores','th-company':'Empresa','th-phone':'Teléfono','th-category':'Categoría','th-balance':'Saldo',
+    'pg-payroll-title':'Nóminas','pg-payroll-sub':'Registro diario y semanal de salarios',
+    'btn-new-employee':'+ Nuevo Empleado',
+    'lbl-from':'Desde','lbl-to':'Hasta','btn-show':'Mostrar',
+    'section-employees':'Empleados','th-fullname':'Nombre','th-role':'Rol','th-daily-rate-eur':'Salario Diario',
+    'pg-daily-title':'Informe Diario','lbl-date3':'Fecha','btn-load':'Cargar Informe',
+    'pg-weekly-title':'Informe Semanal','lbl-week':'Semana','btn-load2':'Cargar',
+    'pg-monthly-title':'Informe Mensual','lbl-month':'Mes','btn-load3':'Cargar',
+    'pg-annual-title':'Informe Anual','lbl-year':'Año','btn-load4':'Cargar',
+    'btn-cancel':'Cancelar','btn-save':'Guardar','btn-close':'Cerrar',
+    'footer-text':'Gestión Profesional de Negocio',
+    'Μετρητά':'Efectivo','Κάρτα':'Tarjeta','Επί Πιστώσει':'A crédito',
+    'notify-income-added':'¡Ingreso registrado!','notify-expense-added':'¡Gasto registrado!',
+    'notify-supplier-added':'¡Proveedor añadido!','notify-deleted':'Eliminado',
+    'notify-sel-date':'Seleccione una fecha','notify-fill-amount':'Ingrese importe',
+    'notify-sel-supplier':'Seleccione proveedor','notify-sel-type':'Seleccione tipo',
+    'notify-sel-pay':'Seleccione forma de pago','notify-fill-company':'Ingrese nombre de empresa',
+    'notify-sel-month':'Seleccione un mes','notify-enter-year':'Ingrese año',
+    'confirm-delete':'¿Eliminar esta entrada?',
+    'empty-no-records':'No se encontraron registros','empty-no-suppliers':'No se encontraron proveedores',
+    'btn-transactions':'Transacciones','lbl-supplier-count-unit':'proveedores',
+    'lbl-inc-category':'Categoría','cat-dine-in':'🍽 Comedor','cat-takeaway':'🥡 Para llevar','cat-events':'🎉 Eventos','cat-other':'📦 Otro',
+    'stat-total-income':'Total Ingresos','stat-total-expenses':'Total Gastos','stat-net-profit':'Beneficio Neto','stat-food-cost':'Food Cost %',
+    'col-income':'Ingresos','col-expenses':'Gastos','col-total':'Total','col-month':'Mes',
+    'chart-weekly-trend':'Tendencia Semanal','chart-expenses-by-cat':'Gastos por Categoría','detailed-summary':'Resumen Detallado',
+    'income-badge':'Ingreso','expense-badge':'Gasto',
+    'tbl-date':'Fecha','tbl-time':'Hora','tbl-payment':'Pago','tbl-invoice':'Factura','tbl-amount':'Importe','tbl-balance':'Saldo',
+    'tbl-supplier-total':'Total Facturas','tbl-credit-balance':'Saldo (A crédito)',
+    'empty-no-transactions':'No se encontraron transacciones',
+    'help-title':'Guía de Uso','help-close':'Cerrar',
+    'qs-title':'Empieza aquí 👋','qs-sub':'3 pasos simples para comenzar',
+    'qs-step1-title':'Registrar Ingresos','qs-step1':'Ve a Ingresos, selecciona fecha, categoría e ingresa el total del cajero.',
+    'qs-step2-title':'Registrar Gastos','qs-step2':'Ve a Gastos, selecciona proveedor, tipo e importe.',
+    'qs-step3-title':'Ver Informes','qs-step3':'Ve a Informes → Diario/Mensual para una visión financiera completa.',
+    'qs-dismiss':'¡Entendido, vamos!',
+    'help-sections':[
+      {title:'📊 Ingresos',text:'Selecciona fecha, categoría (Comedor, Delivery, Para llevar etc.) e ingresa el total del cajero y el importe con tarjeta. El efectivo se calcula automáticamente.'},
+      {title:'💸 Gastos',text:'Selecciona proveedor, tipo de gasto y método de pago. El Food Cost % se calcula automáticamente.'},
+      {title:'👥 Proveedores',text:'Agrega todos tus proveedores. Cada gasto se vincula a un proveedor para un historial completo.'},
+      {title:'💰 Nóminas',text:'Carga empleados, selecciona fecha e ingresa salarios diarios. Soporta modo diario y por horas.'},
+      {title:'📈 Informes',text:'Informes diarios, semanales, mensuales y anuales con comparación del mes anterior.'},
+      {title:'⚖️ Comparar Períodos',text:'Desde Informes → Comparar Períodos puedes comparar cualquier dos períodos.'},
+      {title:'🎯 Objetivos y Alertas',text:'Desde Herramientas → Objetivos y Alertas establece metas mensuales.'},
+      {title:'📄 Exportar',text:'Desde Herramientas → Exportar Excel o PDF.'},
+      {title:'💾 Copia de seguridad',text:'Desde Herramientas → Copia de seguridad descarga un archivo JSON con todos tus datos.'},
+    ],
+    'help-title':'Guía de Uso','help-close':'Cerrar',
+    'qs-title':'¡Bienvenido! 👋','qs-sub':'3 pasos simples para comenzar',
+    'qs-step1-title':'Registrar Ingresos','qs-step1':'Ve a Ingresos, selecciona fecha, categoría e ingresa el total de caja.',
+    'qs-step2-title':'Registrar Gastos','qs-step2':'Ve a Gastos, selecciona proveedor, tipo e importe.',
+    'qs-step3-title':'Ver Informes','qs-step3':'Ve a Informes → Diario/Mensual para una visión financiera completa.',
+    'qs-dismiss':'¡Entendido, vamos!',
+    'help-sections':[
+      {title:'📊 Ingresos',text:'Selecciona fecha, categoría (Comedor, Delivery, Para llevar etc.), ingresa el total de caja y el importe de tarjeta. El efectivo se calcula automáticamente.'},
+      {title:'💸 Gastos',text:'Selecciona proveedor (agrégalo primero en Proveedores), tipo de gasto (FC/Operacional etc.) y método de pago. El Food Cost % se calcula automáticamente.'},
+      {title:'👥 Proveedores',text:'Agrega todos tus proveedores. Cada gasto se vincula a un proveedor para un historial completo de transacciones.'},
+      {title:'💰 Nóminas',text:'Carga empleados, selecciona fecha e ingresa salarios diarios. Soporta modos diario y por horas.'},
+      {title:'📈 Informes',text:'Informes Diario, Semanal, Mensual y Anual. El informe mensual muestra comparación con el mes anterior.'},
+      {title:'⚖️ Comparar Períodos',text:'En Informes → Comparar Períodos puedes comparar cualquier dos períodos lado a lado.'},
+      {title:'🎯 Objetivos & Alertas',text:'En Herramientas → Objetivos & Alertas establece metas mensuales de ingresos y FC%. Las alertas aparecen en el panel cuando hay riesgo.'},
+      {title:'📄 Exportar',text:'En Herramientas → Exportar Excel o Exportar PDF. Los informes soportan todos los idiomas.'},
+      {title:'💾 Copia de seguridad',text:'En Herramientas → Copia de seguridad descarga un archivo JSON con todos tus datos. Usa Restaurar para importarlo.'},
+    ],
+    'mLabels':['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+    'days-labels':['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],'week-labels':['Sem.1','Sem.2','Sem.3','Sem.4'],
+  },
+  it: {
+    'logo-tagline':'Gestione Aziendale',
+    'nav-home':'Home','nav-income':'Ricavi','nav-expenses':'Spese','nav-suppliers':'Fornitori','nav-payroll':'Paghe','nav-reports':'Report',
+    'nav-daily':'Report Giornaliero','nav-weekly':'Report Settimanale','nav-monthly':'Report Mensile','nav-annual':'Report Annuale',
+    'hero-badge':'Suite Professionale per Aziende',
+    'hero-title':'Gestione Aziendale<br><span>al prossimo livello.</span>',
+    'hero-sub':'Registra ricavi, spese, fornitori e stipendi in un\'unica piattaforma. Analisi in tempo reale e report professionali.',
+    'hero-btn1':'Registra Ricavi','hero-btn2':'Vedi Report',
+    'hs-lbl-income':'Ricavi Oggi','hs-lbl-expense':'Spese Oggi','hs-lbl-cash':'Saldo Totale','hs-lbl-suppliers':'Fornitori',
+    'fc-income-name':'Ricavi Giornalieri','fc-income-desc':'Registra incassi in contanti e carta rapidamente.',
+    'fc-expenses-name':'Spese Giornaliere','fc-expenses-desc':'Tieni traccia delle spese per categoria e fornitore.',
+    'fc-suppliers-name':'Fornitori','fc-suppliers-desc':'Gestisci i contatti e monitora tutte le transazioni.',
+    'fc-payroll-name':'Paghe','fc-payroll-desc':'Registra i salari giornalieri e calcola le paghe settimanali.',
+    'fc-daily-report-name':'Report Giornaliero','fc-daily-report-desc':'Analisi finanziaria completa per giorno con grafici.',
+    'fc-monthly-report-name':'Report Mensile','fc-monthly-report-desc':'Analisi mensile di ricavi, spese e Food Cost.',
+    'fc-manage':'Gestisci →','fc-manage2':'Gestisci →','fc-manage3':'Gestisci →','fc-manage4':'Gestisci →',
+    'fc-view':'Vedi report →','fc-view2':'Vedi report →',
+    'pg-income-title':'Ricavi Giornalieri','pg-income-sub':'Registra gli incassi per giorno',
+    'card-new-entry':'Nuova Voce','card-day-summary':'Riepilogo Giornata',
+    'lbl-date':'Data','lbl-desc':'Descrizione','lbl-cash-eur':'Contanti','lbl-card-eur':'Carta',
+    'lbl-entry-total':'Totale Voce','btn-add-income':'+ Aggiungi Ricavo',
+    'section-entries':'Voci','empty-select-date':'Seleziona una data',
+    'th-time':'Ora','th-desc':'Descrizione','th-cash-eur':'Contanti','th-card-eur':'Carta','th-total-eur':'Totale',
+    'tf-day-total':'Totale Giorno',
+    'pg-expenses-title':'Spese Giornaliere','pg-expenses-sub':'Registra le spese per categoria',
+    'card-new-expense':'Nuova Spesa','card-expenses-summary':'Riepilogo Spese',
+    'lbl-date2':'Data','lbl-supplier':'Fornitore','lbl-type':'Tipo','lbl-payment':'Metodo di Pagamento',
+    'lbl-invoice':'N. Fattura','lbl-amount-eur':'Importo','btn-add-expense':'+ Aggiungi Spesa',
+    'opt-select':'— Seleziona —','opt-select2':'— Seleziona —','opt-select3':'— Seleziona —',
+    'opt-operational':'Operativo','opt-energy':'Energia','opt-salaries':'Stipendi','opt-maintenance':'Manutenzione','opt-other':'Altro',
+    'opt-cash':'Contanti','opt-card':'Carta','opt-credit':'A credito',
+    'pg-suppliers-title':'Fornitori','pg-suppliers-sub':'Gestione contatti e transazioni',
+    'card-new-supplier':'Nuovo Fornitore','lbl-company':'Azienda','btn-add-supplier':'+ Aggiungi Fornitore',
+    'lbl-suppliers-count':'fornitori','th-company':'Azienda','th-phone':'Telefono','th-category':'Categoria','th-balance':'Saldo',
+    'pg-payroll-title':'Paghe','pg-payroll-sub':'Registrazione giornaliera e settimanale degli stipendi',
+    'btn-new-employee':'+ Nuovo Dipendente',
+    'lbl-from':'Da','lbl-to':'A','btn-show':'Mostra',
+    'section-employees':'Dipendenti','th-fullname':'Nome','th-role':'Ruolo','th-daily-rate-eur':'Paga Giornaliera',
+    'pg-daily-title':'Report Giornaliero','lbl-date3':'Data','btn-load':'Carica Report',
+    'pg-weekly-title':'Report Settimanale','lbl-week':'Settimana','btn-load2':'Carica',
+    'pg-monthly-title':'Report Mensile','lbl-month':'Mese','btn-load3':'Carica',
+    'pg-annual-title':'Report Annuale','lbl-year':'Anno','btn-load4':'Carica',
+    'btn-cancel':'Annulla','btn-save':'Salva','btn-close':'Chiudi',
+    'footer-text':'Gestione Professionale Aziendale',
+    'Μετρητά':'Contanti','Κάρτα':'Carta','Επί Πιστώσει':'A credito',
+    'notify-income-added':'Ricavo registrato!','notify-expense-added':'Spesa registrata!',
+    'notify-supplier-added':'Fornitore aggiunto!','notify-deleted':'Eliminato',
+    'notify-sel-date':'Seleziona una data','notify-fill-amount':'Inserisci importo',
+    'notify-sel-supplier':'Seleziona fornitore','notify-sel-type':'Seleziona tipo',
+    'notify-sel-pay':'Seleziona metodo di pagamento','notify-fill-company':'Inserisci nome azienda',
+    'notify-sel-month':'Seleziona un mese','notify-enter-year':'Inserisci anno',
+    'confirm-delete':'Eliminare questa voce?',
+    'empty-no-records':'Nessun record trovato','empty-no-suppliers':'Nessun fornitore trovato',
+    'btn-transactions':'Transazioni','lbl-supplier-count-unit':'fornitori',
+    'lbl-inc-category':'Categoria','cat-dine-in':'🍽 Sala','cat-takeaway':'🥡 Da asporto','cat-events':'🎉 Eventi','cat-other':'📦 Altro',
+    'stat-total-income':'Totale Ricavi','stat-total-expenses':'Totale Spese','stat-net-profit':'Utile Netto','stat-food-cost':'Food Cost %',
+    'col-income':'Ricavi','col-expenses':'Spese','col-total':'Totale','col-month':'Mese',
+    'chart-weekly-trend':'Tendenza Settimanale','chart-expenses-by-cat':'Spese per Categoria','detailed-summary':'Riepilogo Dettagliato',
+    'income-badge':'Ricavo','expense-badge':'Spesa',
+    'tbl-date':'Data','tbl-time':'Ora','tbl-payment':'Pagamento','tbl-invoice':'Fattura','tbl-amount':'Importo','tbl-balance':'Saldo',
+    'tbl-supplier-total':'Totale Fatture','tbl-credit-balance':'Saldo (A credito)',
+    'empty-no-transactions':'Nessuna transazione trovata',
+    'help-title':'Guida all\'uso','help-close':'Chiudi',
+    'qs-title':'Inizia qui 👋','qs-sub':'3 semplici passi per cominciare',
+    'qs-step1-title':'Registra Ricavi','qs-step1':'Vai a Ricavi, seleziona data, categoria e inserisci il totale del registratore.',
+    'qs-step2-title':'Registra Spese','qs-step2':'Vai a Spese, seleziona fornitore, tipo e importo.',
+    'qs-step3-title':'Vedi Report','qs-step3':'Vai a Report → Giornaliero/Mensile per una panoramica finanziaria completa.',
+    'qs-dismiss':'Capito, andiamo!',
+    'help-sections':[
+      {title:'📊 Ricavi',text:'Seleziona data, categoria (Sala, Delivery, Asporto ecc.) e inserisci il totale del registratore e il pagamento con carta. I contanti vengono calcolati automaticamente.'},
+      {title:'💸 Spese',text:'Seleziona fornitore, tipo di spesa e metodo di pagamento. Il Food Cost % viene calcolato automaticamente.'},
+      {title:'👥 Fornitori',text:'Aggiungi tutti i tuoi fornitori. Ogni spesa è collegata a un fornitore per uno storico completo.'},
+      {title:'💰 Paghe',text:'Carica i dipendenti, seleziona la data e inserisci i salari giornalieri. Supporta la modalità giornaliera e oraria.'},
+      {title:'📈 Report',text:'Report giornalieri, settimanali, mensili e annuali con confronto con il mese precedente.'},
+      {title:'⚖️ Confronto Periodi',text:'Da Report → Confronto Periodi puoi confrontare qualsiasi due periodi.'},
+      {title:'🎯 Obiettivi e Avvisi',text:'Da Strumenti → Obiettivi e Avvisi imposta obiettivi mensili.'},
+      {title:'📄 Esporta',text:'Da Strumenti → Esporta Excel o PDF.'},
+      {title:'💾 Backup',text:'Da Strumenti → Backup scarica un file JSON con tutti i tuoi dati.'},
+    ],
+    'help-title':'Guida all\'Uso','help-close':'Chiudi',
+    'qs-title':'Benvenuto! 👋','qs-sub':'3 semplici passi per iniziare',
+    'qs-step1-title':'Registra Ricavi','qs-step1':'Vai a Ricavi, seleziona data, categoria e inserisci il totale del registratore.',
+    'qs-step2-title':'Registra Spese','qs-step2':'Vai a Spese, seleziona fornitore, tipo e importo.',
+    'qs-step3-title':'Vedi Report','qs-step3':'Vai a Report → Giornaliero/Mensile per una panoramica finanziaria completa.',
+    'qs-dismiss':'Capito, andiamo!',
+    'help-sections':[
+      {title:'📊 Ricavi',text:'Seleziona data, categoria (Sala, Delivery, Da asporto ecc.), inserisci il totale del registratore e l\'importo carta. I contanti vengono calcolati automaticamente.'},
+      {title:'💸 Spese',text:'Seleziona fornitore (aggiungilo prima in Fornitori), tipo di spesa (FC/Operativo ecc.) e metodo di pagamento. Il Food Cost % viene calcolato automaticamente.'},
+      {title:'👥 Fornitori',text:'Aggiungi tutti i tuoi fornitori. Ogni spesa è collegata a un fornitore per uno storico completo delle transazioni.'},
+      {title:'💰 Paghe',text:'Carica i dipendenti, seleziona la data e inserisci i salari giornalieri. Supporta modalità giornaliera e oraria.'},
+      {title:'📈 Report',text:'Report Giornaliero, Settimanale, Mensile e Annuale. Il report mensile mostra il confronto con il mese precedente.'},
+      {title:'⚖️ Confronta Periodi',text:'In Report → Confronta Periodi puoi confrontare qualsiasi due periodi fianco a fianco.'},
+      {title:'🎯 Obiettivi & Avvisi',text:'In Strumenti → Obiettivi & Avvisi imposta obiettivi mensili di ricavi e FC%. Gli avvisi appaiono nella dashboard quando c\'è rischio.'},
+      {title:'📄 Esporta',text:'In Strumenti → Esporta Excel o Esporta PDF. I report supportano tutte le lingue.'},
+      {title:'💾 Backup',text:'In Strumenti → Backup scarica un file JSON con tutti i tuoi dati. Usa Ripristina per importarlo.'},
+    ],
+    'mLabels':['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'],
+    'days-labels':['Lun','Mar','Mer','Gio','Ven','Sab','Dom'],'week-labels':['Sett.1','Sett.2','Sett.3','Sett.4'],
+  },
+  fr: {
+    'logo-tagline':'Gestion d\'Entreprise',
+    'nav-home':'Accueil','nav-income':'Revenus','nav-expenses':'Dépenses','nav-suppliers':'Fournisseurs','nav-payroll':'Paie','nav-reports':'Rapports',
+    'nav-daily':'Rapport Journalier','nav-weekly':'Rapport Hebdomadaire','nav-monthly':'Rapport Mensuel','nav-annual':'Rapport Annuel',
+    'hero-badge':'Suite Professionnelle de Gestion',
+    'hero-title':'Gestion d\'Entreprise<br><span>au niveau supérieur.</span>',
+    'hero-sub':'Enregistrez vos revenus, dépenses, fournisseurs et paies sur une plateforme unifiée. Analyses en temps réel et rapports professionnels.',
+    'hero-btn1':'Enregistrer Revenus','hero-btn2':'Voir Rapports',
+    'hs-lbl-income':'Revenus Aujourd\'hui','hs-lbl-expense':'Dépenses Aujourd\'hui','hs-lbl-cash':'Solde Total','hs-lbl-suppliers':'Fournisseurs',
+    'fc-income-name':'Revenus Journaliers','fc-income-desc':'Enregistrez les encaissements en espèces et par carte rapidement.',
+    'fc-expenses-name':'Dépenses Journalières','fc-expenses-desc':'Suivez les dépenses par catégorie et fournisseur.',
+    'fc-suppliers-name':'Fournisseurs','fc-suppliers-desc':'Gérez vos contacts et suivez toutes les transactions.',
+    'fc-payroll-name':'Paie','fc-payroll-desc':'Enregistrez les salaires journaliers et calculez les paies hebdomadaires.',
+    'fc-daily-report-name':'Rapport Journalier','fc-daily-report-desc':'Analyse financière complète par jour avec graphiques.',
+    'fc-monthly-report-name':'Rapport Mensuel','fc-monthly-report-desc':'Analyse mensuelle des revenus, dépenses et Food Cost.',
+    'fc-manage':'Gérer →','fc-manage2':'Gérer →','fc-manage3':'Gérer →','fc-manage4':'Gérer →',
+    'fc-view':'Voir rapport →','fc-view2':'Voir rapport →',
+    'pg-income-title':'Revenus Journaliers','pg-income-sub':'Enregistrez les encaissements par jour',
+    'card-new-entry':'Nouvelle Entrée','card-day-summary':'Résumé du Jour',
+    'lbl-date':'Date','lbl-desc':'Description','lbl-cash-eur':'Espèces','lbl-card-eur':'Carte',
+    'lbl-entry-total':'Total Entrée','btn-add-income':'+ Ajouter Revenu',
+    'section-entries':'Entrées','empty-select-date':'Sélectionnez une date',
+    'th-time':'Heure','th-desc':'Description','th-cash-eur':'Espèces','th-card-eur':'Carte','th-total-eur':'Total',
+    'tf-day-total':'Total du Jour',
+    'pg-expenses-title':'Dépenses Journalières','pg-expenses-sub':'Enregistrez les dépenses par catégorie',
+    'card-new-expense':'Nouvelle Dépense','card-expenses-summary':'Résumé des Dépenses',
+    'lbl-date2':'Date','lbl-supplier':'Fournisseur','lbl-type':'Type','lbl-payment':'Mode de Paiement',
+    'lbl-invoice':'N° Facture','lbl-amount-eur':'Montant','btn-add-expense':'+ Ajouter Dépense',
+    'opt-select':'— Sélectionner —','opt-select2':'— Sélectionner —','opt-select3':'— Sélectionner —',
+    'opt-operational':'Opérationnel','opt-energy':'Énergie','opt-salaries':'Salaires','opt-maintenance':'Maintenance','opt-other':'Autre',
+    'opt-cash':'Espèces','opt-card':'Carte','opt-credit':'À crédit',
+    'pg-suppliers-title':'Fournisseurs','pg-suppliers-sub':'Gestion des contacts et transactions',
+    'card-new-supplier':'Nouveau Fournisseur','lbl-company':'Entreprise','btn-add-supplier':'+ Ajouter Fournisseur',
+    'lbl-suppliers-count':'fournisseurs','th-company':'Entreprise','th-phone':'Téléphone','th-category':'Catégorie','th-balance':'Solde',
+    'pg-payroll-title':'Paie','pg-payroll-sub':'Enregistrement journalier et hebdomadaire des salaires',
+    'btn-new-employee':'+ Nouvel Employé',
+    'lbl-from':'Du','lbl-to':'Au','btn-show':'Afficher',
+    'section-employees':'Employés','th-fullname':'Nom','th-role':'Rôle','th-daily-rate-eur':'Salaire Journalier',
+    'pg-daily-title':'Rapport Journalier','lbl-date3':'Date','btn-load':'Charger Rapport',
+    'pg-weekly-title':'Rapport Hebdomadaire','lbl-week':'Semaine','btn-load2':'Charger',
+    'pg-monthly-title':'Rapport Mensuel','lbl-month':'Mois','btn-load3':'Charger',
+    'pg-annual-title':'Rapport Annuel','lbl-year':'Année','btn-load4':'Charger',
+    'btn-cancel':'Annuler','btn-save':'Enregistrer','btn-close':'Fermer',
+    'footer-text':'Gestion Professionnelle d\'Entreprise',
+    'Μετρητά':'Espèces','Κάρτα':'Carte','Επί Πιστώσει':'À crédit',
+    'notify-income-added':'Revenu enregistré !','notify-expense-added':'Dépense enregistrée !',
+    'notify-supplier-added':'Fournisseur ajouté !','notify-deleted':'Supprimé',
+    'notify-sel-date':'Sélectionnez une date','notify-fill-amount':'Saisissez un montant',
+    'notify-sel-supplier':'Sélectionnez un fournisseur','notify-sel-type':'Sélectionnez un type',
+    'notify-sel-pay':'Sélectionnez un mode de paiement','notify-fill-company':'Saisissez le nom de l\'entreprise',
+    'notify-sel-month':'Sélectionnez un mois','notify-enter-year':'Saisissez l\'année',
+    'confirm-delete':'Supprimer cette entrée ?',
+    'empty-no-records':'Aucun enregistrement trouvé','empty-no-suppliers':'Aucun fournisseur trouvé',
+    'btn-transactions':'Transactions','lbl-supplier-count-unit':'fournisseurs',
+    'lbl-inc-category':'Catégorie','cat-dine-in':'🍽 Salle','cat-takeaway':'🥡 À emporter','cat-events':'🎉 Événements','cat-other':'📦 Autre',
+    'stat-total-income':'Total Revenus','stat-total-expenses':'Total Dépenses','stat-net-profit':'Bénéfice Net','stat-food-cost':'Food Cost %',
+    'col-income':'Revenus','col-expenses':'Dépenses','col-total':'Total','col-month':'Mois',
+    'chart-weekly-trend':'Tendance Hebdomadaire','chart-expenses-by-cat':'Dépenses par Catégorie','detailed-summary':'Résumé Détaillé',
+    'income-badge':'Revenu','expense-badge':'Dépense',
+    'tbl-date':'Date','tbl-time':'Heure','tbl-payment':'Paiement','tbl-invoice':'Facture','tbl-amount':'Montant','tbl-balance':'Solde',
+    'tbl-supplier-total':'Total Factures','tbl-credit-balance':'Solde (À crédit)',
+    'empty-no-transactions':'Aucune transaction trouvée',
+    'help-title':'Guide d\'utilisation','help-close':'Fermer',
+    'qs-title':'Commencez ici 👋','qs-sub':'3 étapes simples pour démarrer',
+    'qs-step1-title':'Enregistrer Revenus','qs-step1':'Allez à Revenus, sélectionnez date, catégorie et entrez le total de caisse.',
+    'qs-step2-title':'Enregistrer Dépenses','qs-step2':'Allez à Dépenses, sélectionnez fournisseur, type et montant.',
+    'qs-step3-title':'Voir Rapports','qs-step3':'Allez à Rapports → Journalier/Mensuel pour une vue financière complète.',
+    'qs-dismiss':'Compris, allons-y !',
+    'help-sections':[
+      {title:'📊 Revenus',text:'Sélectionnez date, catégorie (Salle, Livraison, À emporter etc.) et entrez le total de caisse et le montant par carte. Les espèces sont calculées automatiquement.'},
+      {title:'💸 Dépenses',text:'Sélectionnez fournisseur, type de dépense et mode de paiement. Le Food Cost % est calculé automatiquement.'},
+      {title:'👥 Fournisseurs',text:'Ajoutez tous vos fournisseurs. Chaque dépense est liée à un fournisseur pour un historique complet.'},
+      {title:'💰 Paie',text:'Chargez les employés, sélectionnez la date et entrez les salaires journaliers. Prend en charge le mode journalier et horaire.'},
+      {title:'📈 Rapports',text:'Rapports quotidiens, hebdomadaires, mensuels et annuels avec comparaison au mois précédent.'},
+      {title:'⚖️ Comparer Périodes',text:'Depuis Rapports → Comparer Périodes vous pouvez comparer deux périodes.'},
+      {title:'🎯 Objectifs et Alertes',text:'Depuis Outils → Objectifs et Alertes définissez des objectifs mensuels.'},
+      {title:'📄 Exporter',text:'Depuis Outils → Exporter Excel ou PDF.'},
+      {title:'💾 Sauvegarde',text:'Depuis Outils → Sauvegarde télécharge un fichier JSON avec toutes vos données.'},
+    ],
+    'help-title':'Guide d\'Utilisation','help-close':'Fermer',
+    'qs-title':'Bienvenue ! 👋','qs-sub':'3 étapes simples pour commencer',
+    'qs-step1-title':'Enregistrer Revenus','qs-step1':'Allez dans Revenus, sélectionnez la date, la catégorie et saisissez le total de caisse.',
+    'qs-step2-title':'Enregistrer Dépenses','qs-step2':'Allez dans Dépenses, sélectionnez le fournisseur, le type et le montant.',
+    'qs-step3-title':'Voir Rapports','qs-step3':'Allez dans Rapports → Journalier/Mensuel pour une vue financière complète.',
+    'qs-dismiss':'Compris, allons-y !',
+    'help-sections':[
+      {title:'📊 Revenus',text:'Sélectionnez la date, la catégorie (Salle, Delivery, À emporter etc.), saisissez le total de caisse et le montant carte. Les espèces sont calculées automatiquement.'},
+      {title:'💸 Dépenses',text:'Sélectionnez le fournisseur (ajoutez-le d\'abord dans Fournisseurs), le type de dépense (FC/Opérationnel etc.) et le mode de paiement. Le Food Cost % est calculé automatiquement.'},
+      {title:'👥 Fournisseurs',text:'Ajoutez tous vos fournisseurs. Chaque dépense est liée à un fournisseur pour un historique complet des transactions.'},
+      {title:'💰 Paie',text:'Chargez les employés, sélectionnez la date et saisissez les salaires journaliers. Supporte les modes journalier et horaire.'},
+      {title:'📈 Rapports',text:'Rapports Journalier, Hebdomadaire, Mensuel et Annuel. Le rapport mensuel montre la comparaison avec le mois précédent.'},
+      {title:'⚖️ Comparer Périodes',text:'Dans Rapports → Comparer Périodes, vous pouvez comparer deux périodes côte à côte.'},
+      {title:'🎯 Objectifs & Alertes',text:'Dans Outils → Objectifs & Alertes, définissez des objectifs mensuels de revenus et de FC%. Les alertes apparaissent sur le tableau de bord en cas de risque.'},
+      {title:'📄 Exporter',text:'Dans Outils → Exporter Excel ou Exporter PDF. Les rapports supportent toutes les langues.'},
+      {title:'💾 Sauvegarde',text:'Dans Outils → Sauvegarde, téléchargez un fichier JSON avec toutes vos données. Utilisez Restaurer pour importer.'},
+    ],
+    'mLabels':['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
+    'days-labels':['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],'week-labels':['Sem.1','Sem.2','Sem.3','Sem.4'],
+  },
+  de: {
+    'logo-tagline':'Unternehmensführung',
+    'nav-home':'Start','nav-income':'Einnahmen','nav-expenses':'Ausgaben','nav-suppliers':'Lieferanten','nav-payroll':'Lohnabrechnung','nav-reports':'Berichte',
+    'nav-daily':'Tagesbericht','nav-weekly':'Wochenbericht','nav-monthly':'Monatsbericht','nav-annual':'Jahresbericht',
+    'hero-badge':'Professionelle Unternehmens-Suite',
+    'hero-title':'Unternehmensführung<br><span>auf dem nächsten Level.</span>',
+    'hero-sub':'Erfassen Sie Einnahmen, Ausgaben, Lieferanten und Löhne auf einer einheitlichen Plattform. Echtzeit-Analysen und professionelle Berichte.',
+    'hero-btn1':'Einnahmen erfassen','hero-btn2':'Berichte anzeigen',
+    'hs-lbl-income':'Einnahmen Heute','hs-lbl-expense':'Ausgaben Heute','hs-lbl-cash':'Gesamtguthaben','hs-lbl-suppliers':'Lieferanten',
+    'fc-income-name':'Tageseinnahmen','fc-income-desc':'Erfassen Sie Bar- und Kartenzahlungen schnell und präzise.',
+    'fc-expenses-name':'Tagesausgaben','fc-expenses-desc':'Verfolgen Sie Ausgaben nach Kategorie und Lieferant.',
+    'fc-suppliers-name':'Lieferanten','fc-suppliers-desc':'Verwalten Sie Kontakte und verfolgen Sie alle Transaktionen.',
+    'fc-payroll-name':'Lohnabrechnung','fc-payroll-desc':'Erfassen Sie Tageslöhne und berechnen Sie Wochenlöhne.',
+    'fc-daily-report-name':'Tagesbericht','fc-daily-report-desc':'Vollständige Finanzanalyse pro Tag mit Diagrammen.',
+    'fc-monthly-report-name':'Monatsbericht','fc-monthly-report-desc':'Monatliche Analyse von Einnahmen, Ausgaben und Food Cost.',
+    'fc-manage':'Verwalten →','fc-manage2':'Verwalten →','fc-manage3':'Verwalten →','fc-manage4':'Verwalten →',
+    'fc-view':'Bericht ansehen →','fc-view2':'Bericht ansehen →',
+    'pg-income-title':'Tageseinnahmen','pg-income-sub':'Einnahmen pro Tag erfassen',
+    'card-new-entry':'Neuer Eintrag','card-day-summary':'Tagesübersicht',
+    'lbl-date':'Datum','lbl-desc':'Beschreibung','lbl-cash-eur':'Bargeld','lbl-card-eur':'Karte',
+    'lbl-entry-total':'Eintrag Gesamt','btn-add-income':'+ Einnahme hinzufügen',
+    'section-entries':'Einträge','empty-select-date':'Datum auswählen',
+    'th-time':'Uhrzeit','th-desc':'Beschreibung','th-cash-eur':'Bargeld','th-card-eur':'Karte','th-total-eur':'Gesamt',
+    'tf-day-total':'Tagesgesamt',
+    'pg-expenses-title':'Tagesausgaben','pg-expenses-sub':'Ausgaben nach Kategorie erfassen',
+    'card-new-expense':'Neue Ausgabe','card-expenses-summary':'Ausgabenübersicht',
+    'lbl-date2':'Datum','lbl-supplier':'Lieferant','lbl-type':'Typ','lbl-payment':'Zahlungsmethode',
+    'lbl-invoice':'Rechnungsnr.','lbl-amount-eur':'Betrag','btn-add-expense':'+ Ausgabe hinzufügen',
+    'opt-select':'— Auswählen —','opt-select2':'— Auswählen —','opt-select3':'— Auswählen —',
+    'opt-operational':'Betrieblich','opt-energy':'Energie','opt-salaries':'Gehälter','opt-maintenance':'Wartung','opt-other':'Sonstiges',
+    'opt-cash':'Bargeld','opt-card':'Karte','opt-credit':'Auf Kredit',
+    'pg-suppliers-title':'Lieferanten','pg-suppliers-sub':'Kontakt- und Transaktionsverwaltung',
+    'card-new-supplier':'Neuer Lieferant','lbl-company':'Unternehmen','btn-add-supplier':'+ Lieferant hinzufügen',
+    'lbl-suppliers-count':'Lieferanten','th-company':'Unternehmen','th-phone':'Telefon','th-category':'Kategorie','th-balance':'Saldo',
+    'pg-payroll-title':'Lohnabrechnung','pg-payroll-sub':'Tägliche und wöchentliche Lohnerfassung',
+    'btn-new-employee':'+ Neuer Mitarbeiter',
+    'lbl-from':'Von','lbl-to':'Bis','btn-show':'Anzeigen',
+    'section-employees':'Mitarbeiter','th-fullname':'Name','th-role':'Rolle','th-daily-rate-eur':'Tageslohn',
+    'pg-daily-title':'Tagesbericht','lbl-date3':'Datum','btn-load':'Bericht laden',
+    'pg-weekly-title':'Wochenbericht','lbl-week':'Woche','btn-load2':'Laden',
+    'pg-monthly-title':'Monatsbericht','lbl-month':'Monat','btn-load3':'Laden',
+    'pg-annual-title':'Jahresbericht','lbl-year':'Jahr','btn-load4':'Laden',
+    'btn-cancel':'Abbrechen','btn-save':'Speichern','btn-close':'Schließen',
+    'footer-text':'Professionelle Unternehmensführung',
+    'Μετρητά':'Bargeld','Κάρτα':'Karte','Επί Πιστώσει':'Auf Kredit',
+    'notify-income-added':'Einnahme erfasst!','notify-expense-added':'Ausgabe erfasst!',
+    'notify-supplier-added':'Lieferant hinzugefügt!','notify-deleted':'Gelöscht',
+    'notify-sel-date':'Datum auswählen','notify-fill-amount':'Betrag eingeben',
+    'notify-sel-supplier':'Lieferant auswählen','notify-sel-type':'Typ auswählen',
+    'notify-sel-pay':'Zahlungsmethode auswählen','notify-fill-company':'Unternehmensname eingeben',
+    'notify-sel-month':'Monat auswählen','notify-enter-year':'Jahr eingeben',
+    'confirm-delete':'Diesen Eintrag löschen?',
+    'empty-no-records':'Keine Einträge gefunden','empty-no-suppliers':'Keine Lieferanten gefunden',
+    'btn-transactions':'Transaktionen','lbl-supplier-count-unit':'Lieferanten',
+    'lbl-inc-category':'Kategorie','cat-dine-in':'🍽 Gastraum','cat-takeaway':'🥡 Zum Mitnehmen','cat-events':'🎉 Veranstaltungen','cat-other':'📦 Sonstiges',
+    'stat-total-income':'Gesamteinnahmen','stat-total-expenses':'Gesamtausgaben','stat-net-profit':'Nettogewinn','stat-food-cost':'Food Cost %',
+    'col-income':'Einnahmen','col-expenses':'Ausgaben','col-total':'Gesamt','col-month':'Monat',
+    'chart-weekly-trend':'Wöchentlicher Trend','chart-expenses-by-cat':'Ausgaben nach Kategorie','detailed-summary':'Detaillierte Übersicht',
+    'income-badge':'Einnahme','expense-badge':'Ausgabe',
+    'tbl-date':'Datum','tbl-time':'Uhrzeit','tbl-payment':'Zahlung','tbl-invoice':'Rechnung','tbl-amount':'Betrag','tbl-balance':'Saldo',
+    'tbl-supplier-total':'Rechnungen Gesamt','tbl-credit-balance':'Saldo (Auf Kredit)',
+    'empty-no-transactions':'Keine Transaktionen gefunden',
+    'help-title':'Benutzerhandbuch','help-close':'Schließen',
+    'qs-title':'Hier starten 👋','qs-sub':'3 einfache Schritte zum Einstieg',
+    'qs-step1-title':'Einnahmen erfassen','qs-step1':'Gehen Sie zu Einnahmen, wählen Sie Datum, Kategorie und geben Sie den Kassengesamtbetrag ein.',
+    'qs-step2-title':'Ausgaben erfassen','qs-step2':'Gehen Sie zu Ausgaben, wählen Sie Lieferant, Typ und Betrag.',
+    'qs-step3-title':'Berichte anzeigen','qs-step3':'Gehen Sie zu Berichte → Täglich/Monatlich für einen vollständigen Finanzüberblick.',
+    'qs-dismiss':'Verstanden, los geht\'s!',
+    'help-sections':[
+      {title:'📊 Einnahmen',text:'Datum, Kategorie (Gastraum, Lieferung, Zum Mitnehmen usw.) auswählen und Kassenbetrag sowie Kartenzahlung eingeben. Bargeld wird automatisch berechnet.'},
+      {title:'💸 Ausgaben',text:'Lieferant, Ausgabentyp und Zahlungsmethode auswählen. Food Cost % wird automatisch berechnet.'},
+      {title:'👥 Lieferanten',text:'Alle Lieferanten hinzufügen. Jede Ausgabe wird mit einem Lieferanten für eine vollständige Transaktionshistorie verknüpft.'},
+      {title:'💰 Lohnabrechnung',text:'Mitarbeiter laden, Datum auswählen und Tageslöhne eingeben. Unterstützt Tages- und Stundenmodus.'},
+      {title:'📈 Berichte',text:'Tägliche, wöchentliche, monatliche und jährliche Berichte mit Vergleich zum Vormonat.'},
+      {title:'⚖️ Perioden vergleichen',text:'Unter Berichte → Perioden vergleichen können Sie beliebige zwei Perioden vergleichen.'},
+      {title:'🎯 Ziele und Warnungen',text:'Unter Werkzeuge → Ziele und Warnungen monatliche Ziele festlegen.'},
+      {title:'📄 Exportieren',text:'Unter Werkzeuge → Excel oder PDF exportieren.'},
+      {title:'💾 Sicherung',text:'Unter Werkzeuge → Sicherung eine JSON-Datei mit allen Daten herunterladen.'},
+    ],
+    'help-title':'Benutzerhandbuch','help-close':'Schließen',
+    'qs-title':'Willkommen! 👋','qs-sub':'3 einfache Schritte zum Start',
+    'qs-step1-title':'Einnahmen erfassen','qs-step1':'Gehen Sie zu Einnahmen, wählen Sie Datum, Kategorie und geben Sie den Gesamtbetrag der Kasse ein.',
+    'qs-step2-title':'Ausgaben erfassen','qs-step2':'Gehen Sie zu Ausgaben, wählen Sie Lieferant, Typ und Betrag.',
+    'qs-step3-title':'Berichte ansehen','qs-step3':'Gehen Sie zu Berichte → Täglich/Monatlich für einen vollständigen Finanzüberblick.',
+    'qs-dismiss':'Verstanden, los geht\'s!',
+    'help-sections':[
+      {title:'📊 Einnahmen',text:'Wählen Sie Datum, Kategorie (Gastraum, Delivery, Zum Mitnehmen usw.), geben Sie den Gesamtkassenbetrag und den Kartenbetrag ein. Bargeld wird automatisch berechnet.'},
+      {title:'💸 Ausgaben',text:'Wählen Sie Lieferant (zuerst unter Lieferanten hinzufügen), Ausgabentyp (FC/Betrieblich usw.) und Zahlungsmethode. Food Cost % wird automatisch berechnet.'},
+      {title:'👥 Lieferanten',text:'Fügen Sie alle Ihre Lieferanten hinzu. Jede Ausgabe ist mit einem Lieferanten für eine vollständige Transaktionshistorie verknüpft.'},
+      {title:'💰 Lohnabrechnung',text:'Laden Sie Mitarbeiter, wählen Sie Datum und geben Sie Tageslöhne ein. Unterstützt Tages- und Stundenmodus.'},
+      {title:'📈 Berichte',text:'Täglich-, Wochen-, Monats- und Jahresberichte. Der Monatsbericht zeigt den Vergleich mit dem Vormonat.'},
+      {title:'⚖️ Perioden vergleichen',text:'Unter Berichte → Perioden vergleichen können Sie beliebige zwei Perioden nebeneinander vergleichen.'},
+      {title:'🎯 Ziele & Warnungen',text:'Unter Werkzeuge → Ziele & Warnungen legen Sie monatliche Umsatz- und FC%-Ziele fest. Warnungen erscheinen im Dashboard bei Risiko.'},
+      {title:'📄 Exportieren',text:'Unter Werkzeuge → Excel oder PDF exportieren. Berichte unterstützen alle Sprachen.'},
+      {title:'💾 Backup',text:'Unter Werkzeuge → Backup wird eine JSON-Datei mit allen Ihren Daten heruntergeladen. Verwenden Sie Wiederherstellen zum Importieren.'},
+    ],
+    'mLabels':['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+    'days-labels':['Mo','Di','Mi','Do','Fr','Sa','So'],'week-labels':['Wo.1','Wo.2','Wo.3','Wo.4'],
   }
 };
 
 let lang = 'en';
 function t(key){return(T[lang]&&T[lang][key])||(T['en']&&T['en'][key])||key;}
+
+const LANG_FLAGS={el:'🇬🇷',en:'🇬🇧',es:'🇪🇸',it:'🇮🇹',fr:'🇫🇷',de:'🇩🇪'};
+const LANG_CODES={el:'EL',en:'EN',es:'ES',it:'IT',fr:'FR',de:'DE'};
+
+function toggleLangDD(){
+  const m=document.getElementById('lang-dropdown-menu');
+  m.style.display=m.style.display==='none'?'block':'none';
+}
+function closeLangDD(){
+  const m=document.getElementById('lang-dropdown-menu');
+  if(m)m.style.display='none';
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#dd-lang'))closeLangDD();
+});
+
 function setLang(l){
   lang=l;
-  ['btn-lang-el','btn-lang-el2'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active-lang',l==='el');});
-  ['btn-lang-en','btn-lang-en2'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('active-lang',l==='en');});
+  localStorage.setItem('fos_lang',l);
+  // Update nav button
+  const btn=document.getElementById('btn-lang-current');
+  if(btn)btn.textContent=`${LANG_FLAGS[l]||'🌐'} ${LANG_CODES[l]||l.toUpperCase()} ▾`;
+  closeLangDD();
   applyTranslations();
 }
 function applyTranslations(){
@@ -1883,6 +2552,11 @@ function applyTranslations(){
   if(currentPage==='expenses'){renderExpenseTable();renderExpenseSummary();}
   if(currentPage==='suppliers')renderSuppliers();
   if(currentPage==='payroll')renderEmployees();
+  // Re-render help if open
+  if(document.getElementById('modal-help')?.classList.contains('open'))renderHelpModal();
+  // Re-render quick start steps
+  const qs=document.getElementById('qs-steps');
+  if(qs&&qs.children.length>0)renderQuickStart();
 }
 
 // ── DATA ──
@@ -2044,6 +2718,7 @@ function updateHomeStats(){
   }
   renderDashboardChart();
   updateGoalsAlerts();
+  renderQuickStart();
 }
 
 // ── INCOME ──
@@ -2769,8 +3444,38 @@ function loadDailyReport(){
   const d=document.getElementById('dr-date').value;if(!d){notify(t('notify-sel-date'),'danger');return;}
   const income=DB.income().filter(x=>x.date===d);const expenses=DB.expenses().filter(x=>x.date===d);
   const s=reportSummaryHTML(income,expenses);
+
+  // ── Year-over-year comparison ──
+  const lastYearDate=d.replace(/^(\d{4})/,(y)=>String(parseInt(y)-1));
+  const lyIncome=DB.income().filter(x=>x.date===lastYearDate);
+  const lyExpenses=DB.expenses().filter(x=>x.date===lastYearDate);
+  const lyInc=lyIncome.reduce((sum,x)=>sum+x.cash+x.card,0);
+  const lyExp=lyExpenses.filter(x=>x.pay!=='Επί Πιστώσει').reduce((sum,x)=>sum+x.amount,0);
+  const lyProfit=lyInc-lyExp;
+  const lyFc=lyExpenses.filter(x=>x.type==='FC').reduce((sum,x)=>sum+x.amount,0);
+  const lyFcPct=lyInc>0?(lyFc/lyInc*100).toFixed(1):0;
+
+  const yoyBadge=(cur,prev)=>{
+    if(!prev||prev===0)return'';
+    const d=((cur-prev)/Math.abs(prev)*100);
+    const up=d>=0;
+    return`<span style="font-size:12px;font-weight:700;color:${up?'var(--accent)':'var(--danger)'};margin-left:6px">${up?'▲':'▼'}${Math.abs(d).toFixed(1)}%</span>`;
+  };
+
+  const yoyBanner=lyInc>0||lyExp>0?`
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:14px 18px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+      <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;flex-shrink:0">📅 ${lang==='el'?'Ίδια μέρα πέρυσι':'Same day last year'} (${lastYearDate})</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div><span style="font-size:11px;color:var(--ink3)">${t('stat-total-income')}</span><br><span style="font-family:var(--mono);font-weight:700">${fmtE(lyInc)}</span>${yoyBadge(s.totalInc,lyInc)}</div>
+        <div><span style="font-size:11px;color:var(--ink3)">${t('stat-total-expenses')}</span><br><span style="font-family:var(--mono);font-weight:700">${fmtE(lyExp)}</span>${yoyBadge(s.totalExp,lyExp)}</div>
+        <div><span style="font-size:11px;color:var(--ink3)">${t('stat-net-profit')}</span><br><span style="font-family:var(--mono);font-weight:700">${fmtE(lyProfit)}</span>${yoyBadge(s.totalBal,lyProfit)}</div>
+        <div><span style="font-size:11px;color:var(--ink3)">Food Cost %</span><br><span style="font-family:var(--mono);font-weight:700">${lyFcPct}%</span>${yoyBadge(-parseFloat(s.fcPct),-parseFloat(lyFcPct))}</div>
+      </div>
+    </div>`:``;
+
   const el=document.getElementById('daily-report-content');
   el.innerHTML=`
+    ${yoyBanner}
     <div class="grid-4 section">
       <div class="stat green"><div class="stat-glow"></div><div class="stat-icon green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div><div class="stat-label">${t('stat-total-income')}</div><div class="stat-value green">${fmtE(s.totalInc)}</div></div>
       <div class="stat red"><div class="stat-glow"></div><div class="stat-icon red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2.5" stroke-linecap="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg></div><div class="stat-label">${t('stat-total-expenses')}</div><div class="stat-value red">${fmtE(s.totalExp)}</div></div>
@@ -3493,22 +4198,56 @@ function generatePDF(){
 }
 
 // ── MOBILE NAV ──
-function toggleMobileMenu(){
-  const btn=document.getElementById('mobile-menu-btn');const overlay=document.getElementById('mobile-overlay');
-  if(btn.classList.contains('open')){closeMobileMenu();}
-  else{btn.classList.add('open');overlay.classList.add('open');}
+function closeAllMobileMenus(){
+  document.getElementById('mobile-menu-btn')?.classList.remove('open');
+  document.getElementById('mobile-overlay')?.classList.remove('open');
+  document.getElementById('mobile-more-menu')?.classList.remove('open');
+  document.getElementById('mobile-reports-menu')?.classList.remove('open');
+  document.getElementById('more-overlay')?.classList.remove('open');
 }
-function closeMobileMenu(){document.getElementById('mobile-menu-btn').classList.remove('open');document.getElementById('mobile-overlay').classList.remove('open');}
+function toggleMobileMenu(){
+  const btn=document.getElementById('mobile-menu-btn');
+  const isOpen=btn.classList.contains('open');
+  closeAllMobileMenus();
+  if(!isOpen){
+    // Hamburger just opens the More menu directly — no separate overlay needed
+    const menu=document.getElementById('mobile-more-menu');
+    const ov=document.getElementById('more-overlay');
+    btn.classList.add('open');
+    menu?.classList.add('open');
+    ov?.classList.add('open');
+  }
+}
+function closeMobileMenu(){
+  document.getElementById('mobile-menu-btn')?.classList.remove('open');
+  document.getElementById('mobile-overlay')?.classList.remove('open');
+}
+function toggleMobileReports(){
+  const menu=document.getElementById('mobile-reports-menu');
+  const isOpen=menu?.classList.contains('open');
+  closeAllMobileMenus();
+  if(!isOpen){
+    document.getElementById('mobile-reports-menu')?.classList.add('open');
+    document.getElementById('more-overlay')?.classList.add('open');
+  }
+}
+function closeMobileReports(){
+  document.getElementById('mobile-reports-menu')?.classList.remove('open');
+  document.getElementById('more-overlay')?.classList.remove('open');
+}
 function toggleMobileMore(){
   const menu=document.getElementById('mobile-more-menu');
-  const ov=document.getElementById('more-overlay');
-  const isOpen=menu.classList.contains('open');
-  if(isOpen){menu.classList.remove('open');ov.classList.remove('open');}
-  else{menu.classList.add('open');ov.classList.add('open');}
+  const isOpen=menu?.classList.contains('open');
+  closeAllMobileMenus();
+  if(!isOpen){
+    document.getElementById('mobile-more-menu')?.classList.add('open');
+    document.getElementById('more-overlay')?.classList.add('open');
+  }
 }
 function closeMobileMore(){
-  const m=document.getElementById('mobile-more-menu');if(m)m.classList.remove('open');
-  const ov=document.getElementById('more-overlay');if(ov)ov.classList.remove('open');
+  document.getElementById('mobile-menu-btn')?.classList.remove('open');
+  document.getElementById('mobile-more-menu')?.classList.remove('open');
+  document.getElementById('more-overlay')?.classList.remove('open');
 }
 // click outside more menu handled by overlay
 function updateBottomNav(page){
@@ -3964,10 +4703,13 @@ function showOnboarding(){
 }
 function selectObLang(l){
   _obLang=l;
-  document.getElementById('ob-lang-el').style.borderColor=l==='el'?'var(--accent)':'var(--border)';
-  document.getElementById('ob-lang-el').style.background=l==='el'?'var(--accent-subtle)':'transparent';
-  document.getElementById('ob-lang-en').style.borderColor=l==='en'?'var(--accent)':'var(--border)';
-  document.getElementById('ob-lang-en').style.background=l==='en'?'var(--accent-subtle)':'transparent';
+  ['el','en','es','it','fr','de'].forEach(code=>{
+    const el=document.getElementById('ob-lang-'+code);
+    if(!el)return;
+    el.style.borderWidth=code===l?'2px':'1.5px';
+    el.style.borderColor=code===l?'var(--accent)':'var(--border)';
+    el.style.background=code===l?'var(--accent-subtle)':'transparent';
+  });
 }
 function obStep(dir){
   _obStep+=dir;
@@ -4431,6 +5173,311 @@ function runComparison(){
   document.getElementById('compare-empty').style.display='none';
 }
 
+// ── HELP & QUICK START ──
+function renderHelpModal(){
+  const sections=t('help-sections')||[];
+  const el=document.getElementById('help-sections-content');
+  if(!el)return;
+  el.innerHTML=sections.map(s=>`
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 18px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">${s.title}</div>
+      <div style="font-size:13.5px;color:var(--ink2);line-height:1.65">${s.text}</div>
+    </div>`).join('');
+}
+
+function renderQuickStart(){
+  // Show only if no data yet and not dismissed
+  if(localStorage.getItem('fos_qs_dismissed'))return;
+  const hasData=DB.income().length>0||DB.expenses().length>0;
+  const card=document.getElementById('quick-start-card');
+  const placeholder=document.getElementById('qs-home-placeholder');
+  if(!card||!placeholder)return;
+  if(hasData){card.style.display='none';return;}
+  // Move card to placeholder position
+  placeholder.appendChild(card);
+  card.style.display='block';
+  // Render steps
+  const steps=[
+    {icon:'💰',titleKey:'qs-step1-title',textKey:'qs-step1'},
+    {icon:'💸',titleKey:'qs-step2-title',textKey:'qs-step2'},
+    {icon:'📈',titleKey:'qs-step3-title',textKey:'qs-step3'},
+  ];
+  const stepsEl=document.getElementById('qs-steps');
+  if(stepsEl){
+    stepsEl.innerHTML=steps.map(s=>`
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;text-align:center">
+        <div style="font-size:24px;margin-bottom:8px">${s.icon}</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:5px">${t(s.titleKey)}</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.5">${t(s.textKey)}</div>
+      </div>`).join('');
+  }
+}
+
+function dismissQuickStart(){
+  localStorage.setItem('fos_qs_dismissed','1');
+  const card=document.getElementById('quick-start-card');
+  if(card)card.style.display='none';
+}
+
+// ── FOOD COST CALCULATOR ──
+function addFCIngredient(){
+  const list=document.getElementById('fc-ingredients-list');
+  const row=document.createElement('div');
+  row.className='fc-ingredient-row';
+  row.style.cssText='display:grid;grid-template-columns:1fr auto auto;gap:8px';
+  row.innerHTML=`
+    <input placeholder="Ingredient name" class="fc-ing-name" oninput="calcFC()" style="font-size:13px"/>
+    <input type="number" step="0.01" min="0" placeholder="Cost €" class="fc-ing-cost" oninput="calcFC()" style="width:90px;font-size:13px"/>
+    <button onclick="this.parentElement.remove();calcFC()" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:18px;padding:0 4px">×</button>`;
+  list.appendChild(row);
+}
+
+function calcFC(){
+  const sellPriceVAT=parseFloat(document.getElementById('fc-sell-price').value)||0;
+  const vat=parseFloat(document.getElementById('fc-vat').value)||0;
+  const sellPrice=sellPriceVAT/(1+vat/100); // net price ex-VAT
+  const costs=[...document.querySelectorAll('.fc-ing-cost')].map(el=>parseFloat(el.value)||0);
+  const totalCost=costs.reduce((s,c)=>s+c,0);
+  const res=document.getElementById('fc-results');
+  if(sellPrice<=0||totalCost<=0){res.style.display='none';return;}
+  res.style.display='block';
+  const fcPct=(totalCost/sellPrice*100);
+  const profit=sellPrice-totalCost;
+  const target=GOALS.fc||30;
+  const isGood=fcPct<=target;
+  document.getElementById('fc-res-cost').textContent=fmtE(totalCost);
+  document.getElementById('fc-res-pct').textContent=fcPct.toFixed(1)+'%';
+  document.getElementById('fc-res-pct').style.color=isGood?'var(--accent)':'var(--danger)';
+  document.getElementById('fc-res-profit').textContent=fmtE(profit);
+  document.getElementById('fc-target-label').textContent=target+'%';
+  const bar=document.getElementById('fc-gauge-bar');
+  bar.style.width=Math.min(100,fcPct/target*100).toFixed(0)+'%';
+  bar.style.background=fcPct<=target*0.8?'var(--accent)':fcPct<=target?'var(--warning)':'var(--danger)';
+  const verdict=document.getElementById('fc-verdict');
+  if(fcPct<=target*0.8)verdict.textContent='✓ Excellent — well within target';
+  else if(fcPct<=target)verdict.textContent='⚠ OK — close to target, watch costs';
+  else verdict.textContent=`✗ Over target by ${(fcPct-target).toFixed(1)}% — consider adjusting price or recipe`;
+  verdict.style.color=fcPct<=target*0.8?'var(--accent)':fcPct<=target?'var(--warning)':'var(--danger)';
+}
+
+// ── PAYROLL PDF ──
+function printPayrollPDF(){
+  // Populate employee select
+  const sel=document.getElementById('pp-employee');
+  const emps=DB.employees();
+  sel.innerHTML='<option value="">— All Employees —</option>'+emps.map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
+  // Default to current month
+  const now=new Date();
+  const firstDay=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+  const lastDay=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${new Date(now.getFullYear(),now.getMonth()+1,0).getDate()}`;
+  document.getElementById('pp-from').value=firstDay;
+  document.getElementById('pp-to').value=lastDay;
+  openModal('modal-payroll-pdf');
+}
+
+function generatePayrollPDF(){
+  const from=document.getElementById('pp-from').value;
+  const to=document.getElementById('pp-to').value;
+  const empId=document.getElementById('pp-employee').value;
+  if(!from||!to){notify('Select date range','danger');return;}
+
+  const allPayroll=DB.payroll().filter(x=>x.date>=from&&x.date<=to);
+  const emps=DB.employees().filter(e=>!empId||e.id===empId);
+  const bizName=BIZ.name||'FinanceOS';
+
+  if(!emps.length){notify('No employees found','danger');return;}
+
+  // Filter payroll rows by selected employee
+  const payrollRows=empId
+    ? allPayroll.filter(x=>x.empId===empId)
+    : allPayroll;
+
+  if(!payrollRows.length){notify('No payroll entries for this period','danger');return;}
+
+  let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+  <title>Payroll — ${bizName}</title>
+  <style>
+    body{font-family:Arial,sans-serif;font-size:12px;color:#111;padding:30px;margin:0}
+    h1{font-size:22px;margin-bottom:4px}
+    .subtitle{color:#666;font-size:12px;margin-bottom:24px}
+    .emp-block{break-inside:avoid;margin-bottom:32px;border:1px solid #ddd;border-radius:8px;overflow:hidden}
+    .emp-header{background:#f5f5f5;padding:12px 16px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center}
+    .emp-name{font-size:15px;font-weight:700}
+    .emp-role{color:#666;font-size:12px}
+    table{width:100%;border-collapse:collapse}
+    th{background:#fafafa;padding:8px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;border-bottom:1px solid #eee}
+    td{padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:12px}
+    tr:last-child td{border-bottom:none}
+    .total-row td{font-weight:700;background:#f9f9f9;font-size:13px}
+    .signature-box{margin:16px;padding:16px;border:1px dashed #ccc;border-radius:6px;display:flex;justify-content:space-between;align-items:flex-end}
+    .sig-line{border-top:1px solid #333;width:160px;text-align:center;font-size:10px;color:#666;padding-top:4px}
+    .grand-total{background:#111;color:#fff;padding:14px 20px;border-radius:8px;margin-top:24px;display:flex;justify-content:space-between;font-size:16px;font-weight:700}
+  </style></head><body>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px">
+    <div>
+      <h1>${bizName}</h1>
+      <div class="subtitle">Payroll Report &nbsp;·&nbsp; ${from} — ${to}</div>
+    </div>
+    <div style="text-align:right;font-size:11px;color:#666">
+      ${new Date().toLocaleDateString()}<br>FinanceOS
+    </div>
+  </div>`;
+
+  let grandTotal=0;
+
+  emps.forEach(emp=>{
+    const rows=payrollRows.filter(x=>x.empId===emp.id).sort((a,b)=>a.date.localeCompare(b.date));
+    const empTotal=rows.reduce((s,x)=>s+(x.total||0),0);
+    grandTotal+=empTotal;
+
+    html+=`<div class="emp-block">
+      <div class="emp-header">
+        <div>
+          <div class="emp-name">${emp.name}</div>
+          <div class="emp-role">${emp.role||'—'}</div>
+        </div>
+        <div style="font-size:16px;font-weight:700;color:#059669">${fmtE(empTotal)}</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Mode</th>
+            <th>Qty</th>
+            <th>Rate (€)</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.length ? rows.map(r=>`<tr>
+            <td>${r.date}</td>
+            <td>${r.mode==='hour'?'Hourly':'Daily'}</td>
+            <td>${r.qty} ${r.mode==='hour'?'hrs':'days'}</td>
+            <td style="font-family:monospace">${fmtE(r.rate)}</td>
+            <td style="font-family:monospace;font-weight:600">${fmtE(r.total)}</td>
+          </tr>`).join('') :
+          `<tr><td colspan="5" style="text-align:center;color:#999;padding:16px">No entries for this period</td></tr>`}
+          ${rows.length?`<tr class="total-row">
+            <td colspan="4" style="text-align:right">TOTAL</td>
+            <td style="font-family:monospace">${fmtE(empTotal)}</td>
+          </tr>`:''}
+        </tbody>
+      </table>
+      <div class="signature-box">
+        <div style="text-align:center">
+          <div style="height:36px"></div>
+          <div class="sig-line">Employee Signature</div>
+        </div>
+        <div style="text-align:center">
+          <div style="height:36px"></div>
+          <div class="sig-line">Manager Signature</div>
+        </div>
+        <div style="font-size:11px;color:#999;align-self:flex-end">Date: _______________</div>
+      </div>
+    </div>`;
+  });
+
+  if(emps.length>1){
+    html+=`<div class="grand-total">
+      <span>GRAND TOTAL — ALL EMPLOYEES</span>
+      <span>${fmtE(grandTotal)}</span>
+    </div>`;
+  }
+
+  html+=`</body></html>`;
+
+  const w=window.open('','_blank','width=800,height=700');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(),400);
+  closeModal('modal-payroll-pdf');
+}
+
+// ── Z REPORT / DAY CLOSE ──
+function openZReport(){
+  // Use the date from daily report input if available, otherwise today
+  const drDate=document.getElementById('dr-date')?.value;
+  const d=drDate||today();
+  const income=DB.income().filter(x=>x.date===d);
+  const expenses=DB.expenses().filter(x=>x.date===d);
+  const totalInc=income.reduce((s,x)=>s+(x.total||x.cash+x.card),0);
+  const cashInc=income.reduce((s,x)=>s+x.cash,0);
+  const cardInc=income.reduce((s,x)=>s+x.card,0);
+  const totalExp=expenses.filter(x=>x.pay!=='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+  const cashExp=expenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  const cardExp=expenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  const creditExp=expenses.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+  const fc=expenses.filter(x=>x.type==='FC').reduce((s,x)=>s+x.amount,0);
+  const fcPct=totalInc>0?(fc/totalInc*100).toFixed(1):0;
+  const netCash=cashInc-cashExp;
+  const netCard=cardInc-cardExp;
+  const netProfit=totalInc-totalExp;
+
+  // Category breakdown
+  const cats={};
+  income.forEach(r=>{const c=r.category||r.desc||'Άλλο';cats[c]=(cats[c]||0)+(r.total||r.cash+r.card);});
+
+  const now=new Date();
+  const timeStr=now.toLocaleTimeString(lang==='el'?'el-GR':'en-GB',{hour:'2-digit',minute:'2-digit'});
+  const bizName=BIZ.name||'FinanceOS';
+
+  document.getElementById('zreport-content').innerHTML=`
+    <div id="zreport-print-area" style="font-family:var(--mono);font-size:13px;line-height:1.8">
+      <div style="text-align:center;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:16px">
+        <div style="font-size:16px;font-weight:700">${bizName}</div>
+        <div style="font-size:11px;color:var(--ink3)">Z REPORT — DAY CLOSE</div>
+        <div style="font-size:11px;color:var(--ink3)">${d} · ${timeStr}</div>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">── REVENUE ──────────────</div>
+        ${income.length===0?`<div style="color:var(--ink3);font-size:12px">No entries today</div>`:`
+        <div style="display:flex;justify-content:space-between"><span>Cash</span><span style="color:var(--accent)">${fmtE(cashInc)}</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Card / POS</span><span style="color:var(--accent2)">${fmtE(cardInc)}</span></div>
+        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;font-weight:700"><span>TOTAL REVENUE</span><span style="color:var(--accent)">${fmtE(totalInc)}</span></div>
+        `}
+      </div>
+      ${Object.keys(cats).length>0?`
+      <div style="margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">── BY CATEGORY ──────────</div>
+        ${Object.entries(cats).map(([c,v])=>`<div style="display:flex;justify-content:space-between"><span>${c}</span><span>${fmtE(v)}</span></div>`).join('')}
+      </div>`:''}
+      <div style="margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">── EXPENSES ─────────────</div>
+        ${expenses.length===0?`<div style="color:var(--ink3);font-size:12px">No entries today</div>`:`
+        <div style="display:flex;justify-content:space-between"><span>Cash Expenses</span><span style="color:var(--danger)">${fmtE(cashExp)}</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Card Expenses</span><span style="color:var(--danger)">${fmtE(cardExp)}</span></div>
+        <div style="display:flex;justify-content:space-between"><span>On Credit</span><span style="color:var(--warning)">${fmtE(creditExp)}</span></div>
+        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;font-weight:700"><span>TOTAL EXPENSES</span><span style="color:var(--danger)">${fmtE(totalExp)}</span></div>
+        `}
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">── CASH REGISTER ────────</div>
+        <div style="display:flex;justify-content:space-between"><span>Cash In</span><span>${fmtE(cashInc)}</span></div>
+        <div style="display:flex;justify-content:space-between"><span>Cash Out</span><span>${fmtE(cashExp)}</span></div>
+        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;font-weight:700;font-size:15px"><span>NET CASH</span><span style="color:${netCash>=0?'var(--accent)':'var(--danger)'}">${fmtE(netCash)}</span></div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Food Cost</span><span>${fmtE(fc)} (${fcPct}%)</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:700;font-size:15px"><span>NET PROFIT</span><span style="color:${netProfit>=0?'var(--accent)':'var(--danger)'}">${fmtE(netProfit)}</span></div>
+      </div>
+      <div style="text-align:center;font-size:10px;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+        ${income.length} revenue entries · ${expenses.length} expense entries<br>
+        Generated by FinanceOS · ${d} ${timeStr}
+      </div>
+    </div>`;
+  openModal('modal-zreport');
+}
+
+function printZReport(){
+  const area=document.getElementById('zreport-print-area');
+  if(!area)return;
+  const w=window.open('','_blank','width=400,height=600');
+  w.document.write(`<!DOCTYPE html><html><head><title>Z Report</title>
+    <style>body{font-family:monospace;font-size:13px;padding:20px;color:#000;background:#fff;line-height:1.8}
+    *{box-sizing:border-box}</style></head><body>${area.innerHTML}</body></html>`);
+  w.document.close();setTimeout(()=>{w.print();},300);
+}
+
 // ── GOALS & ALERTS ──
 let GOALS={revenue:0,expenses:0,fc:0,profit:0};
 
@@ -4505,7 +5552,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   loadBIZ();
   loadCurrency();
   loadGoals();
-  setLang('en');
+  // Load saved language
+  const savedLang=localStorage.getItem('fos_lang')||'en';
+  setLang(savedLang);
   updateBizUI();
 
   if(!BIZ.mode){
