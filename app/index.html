@@ -1563,7 +1563,10 @@ footer a{color:var(--accent);text-decoration:none}
         <div class="form-group"><label data-el="lbl-company">Company Name</label><input id="sup-name" data-placeholder-el="ph-sup-name" placeholder="e.g. Smith Bros."/></div>
         <div class="form-group"><label data-el="lbl-phone2">Phone</label><input id="sup-phone" placeholder="+30 2101234567"/></div>
         <div class="form-group"><label>Tax ID (ΑΦΜ)</label><input id="sup-afm" placeholder="123456789"/></div>
-        <div class="form-group"><label data-el="lbl-category">Category</label><input id="sup-type" data-placeholder-el="ph-sup-type" placeholder="e.g. Food, Services"/></div>
+        <div class="form-group"><label data-el="lbl-category">Category</label>
+          <select id="sup-type-select" onchange="onSupTypeChange()"></select>
+          <input id="sup-type" placeholder="..." style="display:none;margin-top:6px"/>
+        </div>
       </div>
       <button class="btn btn-primary" onclick="addSupplier()" style="width:100%" data-el="btn-add-supplier">+ Add Supplier</button>
     </div>
@@ -2674,7 +2677,7 @@ function applyTranslations(){
   });
   if(currentPage==='income'){renderIncomeTable();renderIncomeSummary();}
   if(currentPage==='expenses'){renderExpenseTable();renderExpenseSummary();}
-  if(currentPage==='suppliers')renderSuppliers();
+  if(currentPage==='suppliers'){renderSuppliers();populateSupTypeDrop();}
   if(currentPage==='payroll')renderEmployees();
   if(currentPage==='home'){updateHomeStats();updateBackupReminder();}
   // Re-render help if open
@@ -2803,7 +2806,7 @@ function onPageEnter(page){
     if(!document.getElementById('exp-filter-date').value)document.getElementById('exp-filter-date').value=d;
     populateSupplierSelect();renderExpenseTable();renderExpenseSummary();
   }
-  if(page==='suppliers')renderSuppliers();
+  if(page==='suppliers'){renderSuppliers();populateSupTypeDrop();}
   if(page==='credit')renderCreditPage();
   if(page==='compare')setCmpMode(cmpMode);
   if(page==='wallet'){
@@ -3196,16 +3199,58 @@ function printReport(){
 }
 
 // ── SUPPLIERS ──
+const SUP_CATS={
+  el:['🥩 Τρόφιμα','🍷 Ποτά','🧴 Αναλώσιμα','📦 Συσκευασία','🔧 Συντήρηση','⚡ Ενέργεια','🏢 Ενοίκιο','👔 Ένδυση','📱 Τεχνολογία','🚛 Μεταφορά'],
+  en:['🥩 Food','🍷 Beverages','🧴 Consumables','📦 Packaging','🔧 Maintenance','⚡ Energy','🏢 Rent','👔 Uniforms','📱 Technology','🚛 Transport'],
+  es:['🥩 Alimentos','🍷 Bebidas','🧴 Consumibles','📦 Embalaje','🔧 Mantenimiento','⚡ Energía','🏢 Alquiler','👔 Uniformes','📱 Tecnología','🚛 Transporte'],
+  it:['🥩 Alimenti','🍷 Bevande','🧴 Materiali','📦 Imballaggi','🔧 Manutenzione','⚡ Energia','🏢 Affitto','👔 Divise','📱 Tecnologia','🚛 Trasporto'],
+  fr:['🥩 Alimentation','🍷 Boissons','🧴 Consommables','📦 Emballage','🔧 Maintenance','⚡ Énergie','🏢 Loyer','👔 Uniformes','📱 Technologie','🚛 Transport'],
+  de:['🥩 Lebensmittel','🍷 Getränke','🧴 Verbrauchsmaterial','📦 Verpackung','🔧 Wartung','⚡ Energie','🏢 Miete','👔 Uniformen','📱 Technologie','🚛 Transport']
+};
+const SUP_OTHER={el:'✏️ Άλλο...',en:'✏️ Other...',es:'✏️ Otro...',it:'✏️ Altro...',fr:'✏️ Autre...',de:'✏️ Andere...'};
+const SUP_SELECT={el:'— Επιλέξτε —',en:'— Select —',es:'— Seleccionar —',it:'— Seleziona —',fr:'— Sélectionner —',de:'— Auswählen —'};
+
+function populateSupTypeDrop(){
+  const sel=document.getElementById('sup-type-select');
+  if(!sel)return;
+  const current=document.getElementById('sup-type').value;
+  const cats=SUP_CATS[lang]||SUP_CATS.en;
+  sel.innerHTML=`<option value="">${SUP_SELECT[lang]||SUP_SELECT.en}</option>`
+    +cats.map(c=>`<option value="${c}" ${current===c?'selected':''}>${c}</option>`).join('')
+    +`<option value="other">${SUP_OTHER[lang]||SUP_OTHER.en}</option>`;
+}
+
+function onSupTypeChange(){
+  const sel=document.getElementById('sup-type-select').value;
+  const inp=document.getElementById('sup-type');
+  const ph={el:'Γράψτε κατηγορία...',en:'Type category...',es:'Escribe categoría...',it:'Scrivi categoria...',fr:'Tapez catégorie...',de:'Kategorie eingeben...'};
+  if(sel==='other'){
+    inp.style.display='block';
+    inp.placeholder=ph[lang]||ph.en;
+    inp.focus();
+    inp.value='';
+  } else {
+    inp.style.display='none';
+    inp.value=sel;
+  }
+}
+
 function addSupplier(){
   const name=document.getElementById('sup-name').value.trim();
   const phone=document.getElementById('sup-phone').value.trim();
   const afm=document.getElementById('sup-afm').value.trim();
-  const type=document.getElementById('sup-type').value.trim();
+  // Get type from custom input if "other" selected, else from hidden input
+  const selVal=document.getElementById('sup-type-select').value;
+  const type=selVal==='other'
+    ?document.getElementById('sup-type').value.trim()
+    :document.getElementById('sup-type').value.trim();
   if(!name){notify(t('notify-fill-company'),'danger');return;}
   const data=DB.suppliers();
   if(data.find(s=>s.name.toLowerCase()===name.toLowerCase())){notify(t('notify-sup-exists'),'danger');return;}
   data.push({id:uid(),name,phone,afm,type});DB.saveSuppliers(data);
   ['sup-name','sup-phone','sup-afm','sup-type'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sup-type-select').value='';
+  document.getElementById('sup-type').style.display='none';
   renderSuppliers();populateSupplierSelect();notify(t('notify-supplier-added'));
 }
 function deleteSupplier(id){
