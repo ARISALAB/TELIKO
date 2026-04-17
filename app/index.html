@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
+
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>FinanceOS — Business Management</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -3163,6 +3165,8 @@ function printSupplierTransactions(){
 
   const html=`<!DOCTYPE html><html lang="${lang}"><head>
     <meta charset="UTF-8"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
+
     <title>${s.name} — ${isEl?'Συναλλαγές':'Transactions'}</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
@@ -4267,6 +4271,8 @@ function generatePDF(){
   // Build full HTML and open print window
   const html=`<!DOCTYPE html><html lang="${lang}"><head>
     <meta charset="UTF-8"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
+
     <title>${bizName} — ${title}</title>
     <style>${CSS}</style>
   </head><body>
@@ -4998,6 +5004,8 @@ function printCreditReport(){
     </tr>`).join('')
   ).join('');
   const html=`<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
+
     <title>${isEl?'Αναφορά Επί Πιστώσει':'On Credit Report'}</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
@@ -5514,6 +5522,8 @@ function generatePayrollPDF(){
   if(!payrollRows.length){notify('No payroll entries for this period','danger');return;}
 
   let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
+
   <title>Payroll — ${bizName}</title>
   <style>
     body{font-family:Arial,sans-serif;font-size:12px;color:#111;padding:30px;margin:0}
