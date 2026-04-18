@@ -330,9 +330,8 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 .mobile-hero-stats{display:none}
 @media(max-width:640px){.mobile-hero-stats{display:grid}}
 </style>
-<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+
 <script>
-  // Paddle.js loaded — configured in openCheckout()
 </script>
 </head>
 <body>
@@ -847,27 +846,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 // 1. Catalog → Products → το product σου → Share → Copy Pay Link
 // 2. Βάλε το Pay Link παρακάτω
 
-const PADDLE_PAY_LINK = 'https://buy.paddle.com/product/pri_01kpc2kh7vk0hae88575j0svr2';
-const PADDLE_PRICE_ID = 'pri_01kpc2kh7vk0hae88575j0svr2'; // από Paddle dashboard
-const PADDLE_SELLER_ID = 318168; // αριθμός π.χ. 12345
+const LS_CHECKOUT_URL = 'https://akron.lemonsqueezy.com/checkout/buy/d0a13cdc-1eec-4184-87c0-b49a68e80d4d';
 
 function openCheckout(plan) {
-  const isConfigured = PADDLE_SELLER_ID > 0 && !PADDLE_PRICE_ID.includes('REPLACE');
-  if (isConfigured && typeof Paddle !== 'undefined') {
-    Paddle.Setup({ seller: PADDLE_SELLER_ID });
-    Paddle.Checkout.open({
-      items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }],
-      settings: {
-        displayMode: 'overlay',
-        theme: 'dark',
-        locale: 'en',
-        successUrl: window.location.href + '?purchase=success',
-      }
-    });
-  } else {
-    // Ανοίγει το Paddle Pay Link σε νέα καρτέλα
-    window.open(PADDLE_PAY_LINK, '_blank');
-  }
+  window.open(LS_CHECKOUT_URL, '_blank');
 }
 
 // Show success message if redirected back after purchase
