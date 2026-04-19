@@ -2987,7 +2987,10 @@ async function authSubmit(){
 }
 
 async function signInGoogle(){
-  const{error}=await supa.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.href}});
+  const{error}=await supa.auth.signInWithOAuth({
+    provider:'google',
+    options:{redirectTo:'https://getfinanceos.netlify.app/cloud/'}
+  });
   if(error)showAuthError(error.message);
 }
 
@@ -3023,15 +3026,23 @@ function onAuthSuccess(user){
 
 // ── INIT: Check session on load ──
 (async()=>{
-  const{data:{session}}=await supa.auth.getSession();
+  // First handle any OAuth redirect in the URL
+  const{data:{session},error}=await supa.auth.getSession();
+
   if(session?.user){
     onAuthSuccess(session.user);
-  } else {
-    document.getElementById('auth-screen').style.display='flex';
+    return;
   }
-  // Listen for auth changes (Google OAuth redirect)
-  supa.auth.onAuthStateChange((_,session)=>{
-    if(session?.user&&!currentUser)onAuthSuccess(session.user);
+
+  // Show auth screen
+  document.getElementById('auth-screen').style.display='flex';
+
+  // Listen for auth state changes (handles OAuth redirect)
+  supa.auth.onAuthStateChange((event,session)=>{
+    console.log('Auth event:',event,session?.user?.email);
+    if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session?.user&&!currentUser){
+      onAuthSuccess(session.user);
+    }
   });
 })();
 
