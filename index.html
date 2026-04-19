@@ -612,10 +612,10 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
   <div class="container">
     <div class="reveal">
       <div class="section-eyebrow">Everything you need</div>
-      <h2 class="section-title">Built for the way<br>restaurants actually work</h2>
-      <p class="section-sub">No bloat. No complex accounting. Just the features a restaurant owner needs every day.</p>
+      <h2 class="section-title" data-t="feat-title">Built for the way<br>restaurants actually work</h2>
+      <p class="section-sub" data-t="feat-sub">No bloat. No complex accounting. Just the features a restaurant owner needs every day.</p>
     </div>
-    <div class="features-grid">
+    <div class="features-grid" id="features-grid">
       <div class="feature-card reveal reveal-delay-1">
         <div class="f-icon teal">📊</div>
         <div class="f-title">Daily Revenue Tracking</div>
@@ -668,7 +668,7 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <!-- STATS BAND -->
 <section class="stats-band">
   <div class="container">
-    <div class="stats-grid">
+    <div class="stats-grid" id="stats-grid">
       <div class="reveal">
         <div class="stat-num">6</div>
         <div class="stat-label">Languages supported</div>
@@ -693,10 +693,10 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <section class="how" id="how">
   <div class="container">
     <div class="reveal" style="text-align:center">
-      <div class="section-eyebrow">Simple by design</div>
-      <h2 class="section-title">Up and running in minutes</h2>
+      <div class="section-eyebrow" data-t="how-eyebrow">Simple by design</div>
+      <h2 class="section-title" data-t="how-title">Up and running in minutes</h2>
     </div>
-    <div class="steps">
+    <div class="steps" id="steps-grid">
       <div class="step reveal reveal-delay-1">
         <div class="step-num">1</div>
         <div class="step-title">Open & Start</div>
@@ -720,8 +720,8 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <section class="langs">
   <div class="container">
     <div class="reveal">
-      <div class="section-eyebrow">International</div>
-      <h2 class="section-title">Available in 6 languages</h2>
+      <div class="section-eyebrow" data-t="lang-eyebrow">International</div>
+      <h2 class="section-title" data-t="lang-title">Available in 6 languages</h2>
       <p class="section-sub" style="margin:12px auto 0">The entire interface — menus, reports, PDF exports — switches instantly to your language.</p>
     </div>
     <div class="lang-flags">
@@ -739,8 +739,8 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <section class="pricing" id="pricing">
   <div class="container">
     <div class="reveal" style="text-align:center">
-      <div class="section-eyebrow">Simple pricing</div>
-      <h2 class="section-title">Try free. Pay when ready.</h2>
+      <div class="section-eyebrow" data-t="price-eyebrow">Simple pricing</div>
+      <h2 class="section-title" data-t="price-title">Try free. Pay when ready.</h2>
       <p class="section-sub" style="margin:12px auto 0">Open the app instantly in your browser, try it free with up to 3 entries. When you're ready, unlock everything for a one-time payment.</p>
     </div>
 
@@ -748,34 +748,34 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
     <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:24px;max-width:720px;margin:64px auto 0">
       <!-- Free -->
       <div class="price-card reveal" style="display:flex;flex-direction:column">
-        <div class="price-name">Free Trial</div>
+        <div class="price-name" data-t="price-free-name">Free Trial</div>
         <div class="price-amount"><span class="price-currency" style="font-size:16px"></span>Free</div>
         <div class="price-period">no credit card · no sign-up</div>
         <div class="price-divider"></div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Full app access</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All features visible</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--ink3)">Limited to 3 entries</span></div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--ink3)">No exports</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-full-access">Full app access</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-all-features">All features visible</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--ink3)"><span data-t="pf-limited">Limited to 3 entries</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span style="color:var(--ink3)"><span data-t="pf-no-exports">No exports</span></div>
         <div style="flex:1"></div>
-        <a href="https://getfinanceos.netlify.app/app/" target="_blank" class="price-cta ghost" style="margin-top:28px">Open App Free →</a>
-        <p class="price-note">Opens instantly in your browser</p>
+        <a href="https://getfinanceos.netlify.app/app/" target="_blank" class="price-cta ghost" style="margin-top:28px" data-t="price-free-cta">Open App Free →</a>
+        <p class="price-note" data-t="pf-opens-note">Opens instantly in your browser</p>
       </div>
 
       <!-- Full License -->
       <div class="price-card featured reveal reveal-delay-1" style="display:flex;flex-direction:column">
-        <div class="price-name">Full License</div>
+        <div class="price-name" data-t="price-full-name">Full License</div>
         <div class="price-amount"><span class="price-currency">€</span>69</div>
         <div class="price-period">one-time payment · 1 device · yours forever</div>
         <div class="price-divider"></div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited entries</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>PDF & Excel exports</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All reports & analytics</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All 6 languages</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Free updates for 1 year</div>
-        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Email support</div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-unlimited">Unlimited entries</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-pdf">PDF & Excel exports</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-reports">All reports & analytics</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-langs">All 6 languages</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-updates">Free updates for 1 year</span></div>
+        <div class="price-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span data-t="pf-support">Email support</span></div>
         <div style="flex:1"></div>
         <button class="price-cta" onclick="openCheckout('full')" style="margin-top:28px">Get Full License →</button>
-        <p class="price-note">License key sent within 2h · No subscription ever</p>
+        <p class="price-note" data-t="pf-license-note">License key sent within 2h · No subscription ever</p>
       </div>
     </div>
 
@@ -789,10 +789,10 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <section class="testimonials">
   <div class="container">
     <div class="reveal" style="text-align:center">
-      <div class="section-eyebrow">What owners say</div>
-      <h2 class="section-title">Trusted by restaurants</h2>
+      <div class="section-eyebrow" data-t="testi-eyebrow">What owners say</div>
+      <h2 class="section-title" data-t="testi-title">Trusted by restaurants</h2>
     </div>
-    <div class="testi-grid">
+    <div class="testi-grid" id="testi-grid">
       <div class="testi-card reveal reveal-delay-1">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">"Finally an app that doesn't require an accounting degree. I close my daily cashier in 3 minutes and the reports go straight to my accountant."</p>
@@ -825,48 +825,48 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <section class="faq" id="faq">
   <div class="container">
     <div class="reveal" style="text-align:center">
-      <div class="section-eyebrow">Questions</div>
-      <h2 class="section-title">Frequently asked</h2>
+      <div class="section-eyebrow" data-t="faq-eyebrow">Questions</div>
+      <h2 class="section-title" data-t="faq-title">Frequently asked</h2>
     </div>
-    <div class="faq-list">
+    <div class="faq-list" id="faq-list">
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          Does it work without internet?
+          <span data-t="faq-q1">Does it work without internet?</span>
           <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
-        <div class="faq-a">Yes, completely. FinanceOS is a single HTML file that runs in your browser. After the initial license activation (requires internet once), it works 100% offline. Your data is stored locally on your device.</div>
+        <div class="faq-a" data-t="faq-a1">Yes, completely. FinanceOS is a single HTML file that runs in your browser. After the initial license activation (requires internet once), it works 100% offline. Your data is stored locally on your device.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          What happens to my data if I reinstall or change computers?
+          <span data-t="faq-q2">What happens to my data if I reinstall or change computers?</span>
           <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
         <div class="faq-a">Use the built-in Backup feature to export your data as a JSON file before changing computers. When you set up on the new machine, use Restore to import everything back. For license transfers, contact us and we'll issue a new key within a few hours.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          Can I use it on multiple devices?
+          <span data-t="faq-q3">Can I use it on multiple devices?</span>
           <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
         <div class="faq-a">Each license is for one device. If you need multiple devices or locations, contact us for group pricing — we offer discounts for 3+ licenses.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          Is it compatible with my accountant's software?
+          <span data-t="faq-q4">Is it compatible with my accountant's software?</span>
           <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
         <div class="faq-a">FinanceOS exports professional Excel files (.xlsx) with all data organized in sheets — Revenue, Expenses, Payroll, Suppliers and Monthly Summary. Any accountant can work with these files directly.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          Do I need to pay again for updates?
+          <span data-t="faq-q5">Do I need to pay again for updates?</span>
           <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
         <div class="faq-a">Standard includes 1 year of free updates. Professional includes 2 years. After that, updates are optional — your current version continues to work forever, you just won't get new features.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
-          Which browser do I need?
+          <span data-t="faq-q6">Which browser do I need?</span>
           <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
         <div class="faq-a">Google Chrome or Microsoft Edge are recommended (any recent version). The app works on Windows, macOS and Linux. It is not designed for mobile browsers.</div>
@@ -879,8 +879,8 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
 <section class="cta-bottom">
   <div class="container">
     <div class="cta-box reveal">
-      <h2 class="cta-title">Ready to take control<br>of your finances?</h2>
-      <p class="cta-sub">Join restaurant owners across Europe who track their business with FinanceOS.</p>
+      <h2 class="cta-title" data-t="cta-title">Ready to take control<br>of your finances?</h2>
+      <p class="cta-sub" data-t="cta-sub">Join restaurant owners across Europe who track their business with FinanceOS.</p>
       <div class="cta-actions">
         <button onclick="openCheckout('full')" class="btn-primary" style="font-size:16px;padding:16px 32px;border:none;cursor:pointer">
           Get Full License — €69
@@ -927,8 +927,8 @@ footer{padding:48px 0 32px;border-top:1px solid var(--border)}
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 MyCashier Arakron. All rights reserved.</p>
-      <p>Made with ♥ for the hospitality industry</p>
+      <p data-t="footer-copy">© 2025 MyCashier Arakron. All rights reserved.</p>
+      <p data-t="footer-made">Made with ♥ for the hospitality industry</p>
     </div>
   </div>
 </footer>
@@ -1041,13 +1041,47 @@ const LT={
     'hero-sub':'Καταγράψε έσοδα, έξοδα, προμηθευτές και μισθοδοσία σε μία offline εφαρμογή. Χωρίς συνδρομή. Χωρίς cloud.',
     'hero-btn1':'Αποκτήστε το FinanceOS','hero-btn2':'Δείτε τις λειτουργίες',
     'hero-note':'Δωρεάν δοκιμή · χωρίς εγγραφή · <span>€69 εφάπαξ</span> για πλήρη πρόσβαση',
-    'section-features':'Λειτουργίες','section-how':'Πώς λειτουργεί','section-langs':'Διαθέσιμο σε 6 γλώσσες',
-    'section-pricing':'Τιμολόγηση','section-faq':'Συχνές Ερωτήσεις',
-    'price-free-title':'Δωρεάν Δοκιμή','price-full-title':'Πλήρης Άδεια',
-    'price-free-cta':'Δοκιμή Τώρα','price-full-cta':'Αγορά — €69',
-    'footer-copy':'© 2025 FinanceOS — Επαγγελματική Διαχείριση Επιχείρησης',
+    'feat-eyebrow':'Όλα όσα χρειάζεστε',
+    'feat-title':'Σχεδιασμένο για τον τρόπο<br>που δουλεύουν τα εστιατόρια',
+    'feat-sub':'Χωρίς περιττά. Χωρίς πολύπλοκη λογιστική. Μόνο οι λειτουργίες που χρειάζεται κάθε μέρα ο εστιάτορας.',
+    'how-eyebrow':'Απλό στη σχεδίαση',
+    'how-title':'Έτοιμο σε λεπτά',
+    'lang-eyebrow':'Διεθνές',
+    'lang-title':'Διαθέσιμο σε 6 γλώσσες',
+    'price-eyebrow':'Απλή τιμολόγηση',
+    'price-title':'Δοκιμάστε δωρεάν. Αγοράστε όταν είστε έτοιμοι.',
+    'price-free-name':'Δωρεάν Δοκιμή',
+    'price-full-name':'Πλήρης Άδεια',
+    'price-free-cta':'Ανοίξτε δωρεάν →',
+    'testi-eyebrow':'Τι λένε οι ιδιοκτήτες',
+    'testi-title':'Εμπιστοσύνη από εστιατόρια',
+    'faq-eyebrow':'Ερωτήσεις',
+    'faq-title':'Συχνές ερωτήσεις',
+    'cta-title':'Έτοιμοι να πάρετε τον έλεγχο<br>των οικονομικών σας;',
+    'cta-sub':'Ενταχθείτε σε εστιάτορες σε όλη την Ευρώπη που παρακολουθούν την επιχείρησή τους με το FinanceOS.',
+    'footer-copy':'© 2025 MyCashier Arakron. Με επιφύλαξη παντός δικαιώματος.',
+    'footer-made':'Φτιαγμένο με ♥ για τον κλάδο της φιλοξενίας',
     'langs-title':'Μία εφαρμογή. Έξι γλώσσες.',
-    'langs-sub':'Ιδανικό για εστιατόρια σε Ελλάδα, Κύπρο και παγκοσμίως.'
+    'langs-sub':'Ιδανικό για εστιατόρια σε Ελλάδα, Κύπρο και παγκοσμίως.',
+    'pf-full-access':'Πλήρης πρόσβαση στην εφαρμογή',
+    'pf-all-features':'Όλες οι λειτουργίες ορατές',
+    'pf-limited':'Έως 3 καταχωρήσεις',
+    'pf-no-exports':'Χωρίς εξαγωγές',
+    'pf-opens-note':'Ανοίγει αμέσως στον browser σας',
+    'pf-unlimited':'Απεριόριστες καταχωρήσεις',
+    'pf-pdf':'Εξαγωγή PDF & Excel',
+    'pf-reports':'Όλες οι αναφορές & αναλύσεις',
+    'pf-langs':'Και οι 6 γλώσσες',
+    'pf-updates':'Δωρεάν ενημερώσεις για 1 χρόνο',
+    'pf-support':'Υποστήριξη email',
+    'pf-license-note':'Κλειδί άδειας εντός 2ω · Καμία συνδρομή ποτέ',
+    'faq-q1':'Λειτουργεί χωρίς internet;',
+    'faq-q2':'Τι γίνεται με τα δεδομένα μου αν επανεγκαταστήσω ή αλλάξω υπολογιστή;',
+    'faq-q3':'Μπορώ να το χρησιμοποιήσω σε πολλές συσκευές;',
+    'faq-q4':'Είναι συμβατό με το λογισμικό του λογιστή μου;',
+    'faq-q5':'Χρειάζεται να πληρώσω ξανά για ενημερώσεις;',
+    'faq-q6':'Ποιον browser χρειάζομαι;',
+    'faq-a1':'Ναι, εντελώς. Το FinanceOS είναι ένα αρχείο HTML που τρέχει στον browser σας. Μετά την αρχική ενεργοποίηση άδειας (απαιτεί internet μία φορά), λειτουργεί 100% offline. Τα δεδομένα σας αποθηκεύονται τοπικά στη συσκευή σας.'
   },
   en:{
     'nav-features':'Features','nav-how':'How it works','nav-pricing':'Pricing','nav-faq':'FAQ',
@@ -1057,13 +1091,47 @@ const LT={
     'hero-sub':'Track revenue, expenses, suppliers and payroll in one offline-first desktop app. No subscription. No cloud required.',
     'hero-btn1':'Get FinanceOS','hero-btn2':'See Features',
     'hero-note':'Try free · no sign-up · <span>€69 one-time</span> to unlock everything',
-    'section-features':'Features','section-how':'How it works','section-langs':'Available in 6 languages',
-    'section-pricing':'Pricing','section-faq':'FAQ',
-    'price-free-title':'Free Trial','price-full-title':'Full License',
-    'price-free-cta':'Try Free','price-full-cta':'Get License — €69',
-    'footer-copy':'© 2025 FinanceOS — Professional Business Management',
+    'feat-eyebrow':'Everything you need',
+    'feat-title':'Built for the way<br>restaurants actually work',
+    'feat-sub':'No bloat. No complex accounting. Just the features a restaurant owner needs every day.',
+    'how-eyebrow':'Simple by design',
+    'how-title':'Up and running in minutes',
+    'lang-eyebrow':'International',
+    'lang-title':'Available in 6 languages',
+    'price-eyebrow':'Simple pricing',
+    'price-title':'Try free. Pay when ready.',
+    'price-free-name':'Free Trial',
+    'price-full-name':'Full License',
+    'price-free-cta':'Open App Free →',
+    'testi-eyebrow':'What owners say',
+    'testi-title':'Trusted by restaurants',
+    'faq-eyebrow':'Questions',
+    'faq-title':'Frequently asked',
+    'cta-title':'Ready to take control<br>of your finances?',
+    'cta-sub':'Join restaurant owners across Europe who track their business with FinanceOS.',
+    'footer-copy':'© 2025 MyCashier Arakron. All rights reserved.',
+    'footer-made':'Made with ♥ for the hospitality industry',
     'langs-title':'One app. Six languages.',
-    'langs-sub':'Perfect for restaurants in Greece, Cyprus and worldwide.'
+    'langs-sub':'Perfect for restaurants in Greece, Cyprus and worldwide.',
+    'pf-full-access':'Full app access',
+    'pf-all-features':'All features visible',
+    'pf-limited':'Limited to 3 entries',
+    'pf-no-exports':'No exports',
+    'pf-opens-note':'Opens instantly in your browser',
+    'pf-unlimited':'Unlimited entries',
+    'pf-pdf':'PDF & Excel exports',
+    'pf-reports':'All reports & analytics',
+    'pf-langs':'All 6 languages',
+    'pf-updates':'Free updates for 1 year',
+    'pf-support':'Email support',
+    'pf-license-note':'License key sent within 2h · No subscription ever',
+    'faq-q1':'Does it work without internet?',
+    'faq-q2':'What happens to my data if I reinstall or change computers?',
+    'faq-q3':'Can I use it on multiple devices?',
+    'faq-q4':'Is it compatible with my accountant\'s software?',
+    'faq-q5':'Do I need to pay again for updates?',
+    'faq-q6':'Which browser do I need?',
+    'faq-a1':'Yes, completely. FinanceOS is a single HTML file that runs in your browser. After the initial license activation (requires internet once), it works 100% offline. Your data is stored locally on your device.'
   },
   es:{
     'nav-features':'Funciones','nav-how':'Cómo funciona','nav-pricing':'Precios','nav-faq':'FAQ',
@@ -1073,13 +1141,47 @@ const LT={
     'hero-sub':'Registra ingresos, gastos, proveedores y nóminas en una app offline. Sin suscripción. Sin nube.',
     'hero-btn1':'Obtener FinanceOS','hero-btn2':'Ver funciones',
     'hero-note':'Prueba gratis · sin registro · <span>€69 única vez</span> para todo',
-    'section-features':'Funciones','section-how':'Cómo funciona','section-langs':'Disponible en 6 idiomas',
-    'section-pricing':'Precios','section-faq':'Preguntas frecuentes',
-    'price-free-title':'Prueba Gratuita','price-full-title':'Licencia Completa',
-    'price-free-cta':'Probar Gratis','price-full-cta':'Comprar — €69',
-    'footer-copy':'© 2025 FinanceOS — Gestión Profesional de Empresas',
+    'feat-eyebrow':'Todo lo que necesitas',
+    'feat-title':'Diseñado para la forma<br>en que trabajan los restaurantes',
+    'feat-sub':'Sin complicaciones. Sin contabilidad compleja. Solo las funciones que necesita un restaurador cada día.',
+    'how-eyebrow':'Simple por diseño',
+    'how-title':'Listo en minutos',
+    'lang-eyebrow':'Internacional',
+    'lang-title':'Disponible en 6 idiomas',
+    'price-eyebrow':'Precios simples',
+    'price-title':'Prueba gratis. Paga cuando estés listo.',
+    'price-free-name':'Prueba Gratuita',
+    'price-full-name':'Licencia Completa',
+    'price-free-cta':'Abrir app gratis →',
+    'testi-eyebrow':'Lo que dicen los propietarios',
+    'testi-title':'La confianza de los restaurantes',
+    'faq-eyebrow':'Preguntas',
+    'faq-title':'Preguntas frecuentes',
+    'cta-title':'¿Listo para tomar el control<br>de tus finanzas?',
+    'cta-sub':'Únete a propietarios de restaurantes en toda Europa que gestionan su negocio con FinanceOS.',
+    'footer-copy':'© 2025 MyCashier Arakron. Todos los derechos reservados.',
+    'footer-made':'Hecho con ♥ para la industria hotelera',
     'langs-title':'Una app. Seis idiomas.',
-    'langs-sub':'Ideal para restaurantes en España, América Latina y todo el mundo.'
+    'langs-sub':'Ideal para restaurantes en España, América Latina y todo el mundo.',
+    'pf-full-access':'Acceso completo a la app',
+    'pf-all-features':'Todas las funciones visibles',
+    'pf-limited':'Limitado a 3 entradas',
+    'pf-no-exports':'Sin exportaciones',
+    'pf-opens-note':'Se abre al instante en tu navegador',
+    'pf-unlimited':'Entradas ilimitadas',
+    'pf-pdf':'Exportación PDF & Excel',
+    'pf-reports':'Todos los informes & análisis',
+    'pf-langs':'Los 6 idiomas',
+    'pf-updates':'Actualizaciones gratuitas por 1 año',
+    'pf-support':'Soporte por email',
+    'pf-license-note':'Clave de licencia enviada en 2h · Sin suscripción nunca',
+    'faq-q1':'¿Funciona sin internet?',
+    'faq-q2':'¿Qué pasa con mis datos si reinstalo o cambio de ordenador?',
+    'faq-q3':'¿Puedo usarlo en varios dispositivos?',
+    'faq-q4':'¿Es compatible con el software de mi contable?',
+    'faq-q5':'¿Necesito pagar de nuevo por las actualizaciones?',
+    'faq-q6':'¿Qué navegador necesito?',
+    'faq-a1':'Sí, completamente. FinanceOS es un único archivo HTML que funciona en tu navegador. Tras la activación inicial de la licencia (requiere internet una vez), funciona 100% sin conexión. Tus datos se almacenan localmente en tu dispositivo.'
   },
   it:{
     'nav-features':'Funzioni','nav-how':'Come funziona','nav-pricing':'Prezzi','nav-faq':'FAQ',
@@ -1089,13 +1191,47 @@ const LT={
     'hero-sub':'Registra ricavi, spese, fornitori e stipendi in un\'app offline. Nessun abbonamento. Nessun cloud.',
     'hero-btn1':'Ottieni FinanceOS','hero-btn2':'Vedi funzioni',
     'hero-note':'Prova gratis · nessuna registrazione · <span>€69 una tantum</span>',
-    'section-features':'Funzioni','section-how':'Come funziona','section-langs':'Disponibile in 6 lingue',
-    'section-pricing':'Prezzi','section-faq':'Domande frequenti',
-    'price-free-title':'Prova Gratuita','price-full-title':'Licenza Completa',
-    'price-free-cta':'Prova Gratis','price-full-cta':'Acquista — €69',
-    'footer-copy':'© 2025 FinanceOS — Gestione Professionale Aziendale',
+    'feat-eyebrow':'Tutto ciò di cui hai bisogno',
+    'feat-title':'Progettato per il modo<br>in cui lavorano i ristoranti',
+    'feat-sub':'Nessuna complessità. Nessuna contabilità complicata. Solo le funzioni che servono ogni giorno.',
+    'how-eyebrow':'Semplice per design',
+    'how-title':'Operativo in pochi minuti',
+    'lang-eyebrow':'Internazionale',
+    'lang-title':'Disponibile in 6 lingue',
+    'price-eyebrow':'Prezzi semplici',
+    'price-title':'Prova gratis. Paga quando sei pronto.',
+    'price-free-name':'Prova Gratuita',
+    'price-full-name':'Licenza Completa',
+    'price-free-cta':'Apri app gratis →',
+    'testi-eyebrow':'Cosa dicono i proprietari',
+    'testi-title':'La fiducia dei ristoranti',
+    'faq-eyebrow':'Domande',
+    'faq-title':'Domande frequenti',
+    'cta-title':'Pronto a prendere il controllo<br>delle tue finanze?',
+    'cta-sub':'Unisciti ai ristoratori di tutta Europa che gestiscono la loro attività con FinanceOS.',
+    'footer-copy':'© 2025 MyCashier Arakron. Tutti i diritti riservati.',
+    'footer-made':'Fatto con ♥ per il settore dell\'ospitalità',
     'langs-title':'Un\'app. Sei lingue.',
-    'langs-sub':'Perfetto per ristoranti in Italia e in tutto il mondo.'
+    'langs-sub':'Perfetto per ristoranti in Italia e in tutto il mondo.',
+    'pf-full-access':'Accesso completo all\'app',
+    'pf-all-features':'Tutte le funzioni visibili',
+    'pf-limited':'Limitato a 3 voci',
+    'pf-no-exports':'Nessuna esportazione',
+    'pf-opens-note':'Si apre immediatamente nel browser',
+    'pf-unlimited':'Voci illimitate',
+    'pf-pdf':'Esportazione PDF & Excel',
+    'pf-reports':'Tutti i report & analisi',
+    'pf-langs':'Tutte e 6 le lingue',
+    'pf-updates':'Aggiornamenti gratuiti per 1 anno',
+    'pf-support':'Supporto email',
+    'pf-license-note':'Chiave di licenza entro 2h · Nessun abbonamento mai',
+    'faq-q1':'Funziona senza internet?',
+    'faq-q2':'Cosa succede ai miei dati se reinstallo o cambio computer?',
+    'faq-q3':'Posso usarlo su più dispositivi?',
+    'faq-q4':'È compatibile con il software del mio commercialista?',
+    'faq-q5':'Devo pagare di nuovo per gli aggiornamenti?',
+    'faq-q6':'Quale browser mi serve?',
+    'faq-a1':'Sì, completamente. FinanceOS è un singolo file HTML che funziona nel browser. Dopo l\'attivazione iniziale della licenza (richiede internet una volta), funziona al 100% offline. I tuoi dati sono memorizzati localmente sul tuo dispositivo.'
   },
   fr:{
     'nav-features':'Fonctions','nav-how':'Comment ça marche','nav-pricing':'Tarifs','nav-faq':'FAQ',
@@ -1105,13 +1241,47 @@ const LT={
     'hero-sub':'Suivez revenus, dépenses, fournisseurs et paie dans une app hors ligne. Sans abonnement. Sans cloud.',
     'hero-btn1':'Obtenir FinanceOS','hero-btn2':'Voir les fonctions',
     'hero-note':'Essai gratuit · sans inscription · <span>€69 unique</span> pour tout débloquer',
-    'section-features':'Fonctions','section-how':'Comment ça marche','section-langs':'Disponible en 6 langues',
-    'section-pricing':'Tarifs','section-faq':'Questions fréquentes',
-    'price-free-title':'Essai Gratuit','price-full-title':'Licence Complète',
-    'price-free-cta':'Essayer Gratuitement','price-full-cta':'Acheter — €69',
-    'footer-copy':'© 2025 FinanceOS — Gestion Professionnelle d\'Entreprise',
+    'feat-eyebrow':'Tout ce dont vous avez besoin',
+    'feat-title':'Conçu pour la façon<br>dont les restaurants travaillent',
+    'feat-sub':'Sans superflu. Sans comptabilité complexe. Juste les fonctions dont un restaurateur a besoin chaque jour.',
+    'how-eyebrow':'Simple par conception',
+    'how-title':'Opérationnel en quelques minutes',
+    'lang-eyebrow':'International',
+    'lang-title':'Disponible en 6 langues',
+    'price-eyebrow':'Tarification simple',
+    'price-title':'Essayez gratuitement. Payez quand vous êtes prêt.',
+    'price-free-name':'Essai Gratuit',
+    'price-full-name':'Licence Complète',
+    'price-free-cta':'Ouvrir l\'app gratuitement →',
+    'testi-eyebrow':'Ce que disent les propriétaires',
+    'testi-title':'La confiance des restaurants',
+    'faq-eyebrow':'Questions',
+    'faq-title':'Questions fréquentes',
+    'cta-title':'Prêt à prendre le contrôle<br>de vos finances ?',
+    'cta-sub':'Rejoignez les restaurateurs de toute l\'Europe qui gèrent leur activité avec FinanceOS.',
+    'footer-copy':'© 2025 MyCashier Arakron. Tous droits réservés.',
+    'footer-made':'Fait avec ♥ pour le secteur de l\'hôtellerie',
     'langs-title':'Une app. Six langues.',
-    'langs-sub':'Parfait pour les restaurants en France et dans le monde entier.'
+    'langs-sub':'Parfait pour les restaurants en France et dans le monde entier.',
+    'pf-full-access':'Accès complet à l\'app',
+    'pf-all-features':'Toutes les fonctions visibles',
+    'pf-limited':'Limité à 3 entrées',
+    'pf-no-exports':'Pas d\'exportations',
+    'pf-opens-note':'S\'ouvre instantanément dans votre navigateur',
+    'pf-unlimited':'Entrées illimitées',
+    'pf-pdf':'Export PDF & Excel',
+    'pf-reports':'Tous les rapports & analyses',
+    'pf-langs':'Les 6 langues',
+    'pf-updates':'Mises à jour gratuites pendant 1 an',
+    'pf-support':'Support par email',
+    'pf-license-note':'Clé de licence envoyée en 2h · Aucun abonnement jamais',
+    'faq-q1':'Fonctionne-t-il sans internet ?',
+    'faq-q2':'Que se passe-t-il avec mes données si je réinstalle ou change d\'ordinateur ?',
+    'faq-q3':'Puis-je l\'utiliser sur plusieurs appareils ?',
+    'faq-q4':'Est-il compatible avec le logiciel de mon comptable ?',
+    'faq-q5':'Dois-je payer à nouveau pour les mises à jour ?',
+    'faq-q6':'Quel navigateur me faut-il ?',
+    'faq-a1':'Oui, complètement. FinanceOS est un fichier HTML unique qui fonctionne dans votre navigateur. Après l\'activation initiale de la licence (nécessite internet une fois), il fonctionne 100% hors ligne. Vos données sont stockées localement sur votre appareil.'
   },
   de:{
     'nav-features':'Funktionen','nav-how':'Wie es funktioniert','nav-pricing':'Preise','nav-faq':'FAQ',
@@ -1121,13 +1291,47 @@ const LT={
     'hero-sub':'Erfasse Einnahmen, Ausgaben, Lieferanten und Lohnabrechnung in einer Offline-App. Kein Abo. Keine Cloud.',
     'hero-btn1':'FinanceOS holen','hero-btn2':'Funktionen ansehen',
     'hero-note':'Kostenlos testen · keine Anmeldung · <span>€69 einmalig</span>',
-    'section-features':'Funktionen','section-how':'Wie es funktioniert','section-langs':'In 6 Sprachen verfügbar',
-    'section-pricing':'Preise','section-faq':'Häufige Fragen',
-    'price-free-title':'Kostenlose Testversion','price-full-title':'Vollständige Lizenz',
-    'price-free-cta':'Kostenlos testen','price-full-cta':'Kaufen — €69',
-    'footer-copy':'© 2025 FinanceOS — Professionelles Geschäftsmanagement',
+    'feat-eyebrow':'Alles was du brauchst',
+    'feat-title':'Gebaut für die Art,<br>wie Restaurants wirklich arbeiten',
+    'feat-sub':'Kein Ballast. Keine komplexe Buchhaltung. Nur die Funktionen, die ein Restaurantbesitzer täglich braucht.',
+    'how-eyebrow':'Einfach by Design',
+    'how-title':'In Minuten einsatzbereit',
+    'lang-eyebrow':'International',
+    'lang-title':'In 6 Sprachen verfügbar',
+    'price-eyebrow':'Einfache Preise',
+    'price-title':'Kostenlos testen. Kaufen wenn bereit.',
+    'price-free-name':'Kostenlose Testversion',
+    'price-full-name':'Vollständige Lizenz',
+    'price-free-cta':'App kostenlos öffnen →',
+    'testi-eyebrow':'Was Inhaber sagen',
+    'testi-title':'Vertrauen der Restaurants',
+    'faq-eyebrow':'Fragen',
+    'faq-title':'Häufig gestellte Fragen',
+    'cta-title':'Bereit, die Kontrolle über<br>deine Finanzen zu übernehmen?',
+    'cta-sub':'Schließe dich Restaurantbesitzern in ganz Europa an, die ihr Geschäft mit FinanceOS verwalten.',
+    'footer-copy':'© 2025 MyCashier Arakron. Alle Rechte vorbehalten.',
+    'footer-made':'Gemacht mit ♥ für die Gastronomiebranche',
     'langs-title':'Eine App. Sechs Sprachen.',
-    'langs-sub':'Ideal für Restaurants in Deutschland, Österreich und weltweit.'
+    'langs-sub':'Ideal für Restaurants in Deutschland, Österreich und weltweit.',
+    'pf-full-access':'Vollständiger App-Zugang',
+    'pf-all-features':'Alle Funktionen sichtbar',
+    'pf-limited':'Begrenzt auf 3 Einträge',
+    'pf-no-exports':'Keine Exporte',
+    'pf-opens-note':'Öffnet sofort im Browser',
+    'pf-unlimited':'Unbegrenzte Einträge',
+    'pf-pdf':'PDF & Excel Export',
+    'pf-reports':'Alle Berichte & Analysen',
+    'pf-langs':'Alle 6 Sprachen',
+    'pf-updates':'Kostenlose Updates für 1 Jahr',
+    'pf-support':'E-Mail-Support',
+    'pf-license-note':'Lizenzschlüssel innerhalb von 2h · Kein Abo jemals',
+    'faq-q1':'Funktioniert es ohne Internet?',
+    'faq-q2':'Was passiert mit meinen Daten bei Neuinstallation oder Computerwechsel?',
+    'faq-q3':'Kann ich es auf mehreren Geräten nutzen?',
+    'faq-q4':'Ist es kompatibel mit der Software meines Buchhalters?',
+    'faq-q5':'Muss ich für Updates erneut bezahlen?',
+    'faq-q6':'Welchen Browser benötige ich?',
+    'faq-a1':'Ja, vollständig. FinanceOS ist eine einzelne HTML-Datei, die in Ihrem Browser läuft. Nach der ersten Lizenzaktivierung (einmalig Internet erforderlich) funktioniert es 100% offline. Ihre Daten werden lokal auf Ihrem Gerät gespeichert.'
   }
 };
 
@@ -1146,6 +1350,272 @@ document.addEventListener('click',e=>{
     if(m)m.style.display='none';
   }
 });
+
+// ── FULL CONTENT TRANSLATIONS ──
+const LC={
+  en:{
+    features:[
+      {icon:'📊',title:'Daily Revenue Tracking',desc:'Enter total register + card POS. Cash is calculated automatically. Track by category: Dine-In, Delivery, Take Away, Bar, Events.'},
+      {icon:'💸',title:'Expense Management',desc:'Log expenses by supplier, category and payment method. Track Food Cost %, operational costs, energy, salaries and more.'},
+      {icon:'👥',title:'Supplier Management',desc:'Full supplier directory with transaction history, outstanding credit balances, and one-click PDF reports per supplier.'},
+      {icon:'💰',title:'Payroll',desc:'Daily wage entry per employee. Automatic weekly payroll calculation. Supports daily and hourly rate modes.'},
+      {icon:'📈',title:'Reports & Analytics',desc:'Daily, weekly, monthly and annual reports with balance ledger, Food Cost analysis and period comparisons.'},
+      {icon:'🎯',title:'Goals & Alerts',desc:'Set monthly revenue targets and Food Cost limits. Get instant dashboard alerts when targets are at risk.'},
+      {icon:'📄',title:'PDF & Excel Export',desc:'Professional PDF reports with real tables (supports all languages). Full Excel export with running balance per day.'},
+      {icon:'⚖️',title:'Period Comparison',desc:'Compare any two months, weeks, years or custom date ranges side by side with visual charts.'},
+      {icon:'🔒',title:'Offline-First & Secure',desc:'Works completely offline. Your data stays on your device. License protection prevents sharing between businesses.'},
+    ],
+    stats:[
+      {num:'6',label:'Languages supported'},
+      {num:'0',label:'Monthly fees — ever'},
+      {num:'100%',label:'Works offline'},
+      {num:'€69',label:'One-time price'},
+    ],
+    steps:[
+      {title:'Open & Start',desc:'Click "Try it Free", the app opens instantly in your browser. No account, no setup, no sign-up required.'},
+      {title:'Activate License',desc:'Enter your license key once. Set your business name, currency and language. Ready in under 2 minutes.'},
+      {title:'Start Recording',desc:'Enter daily revenue and expenses. Reports, balance ledger and analytics update in real time automatically.'},
+    ],
+    testimonials:[
+      {text:'"Finally an app that doesn\'t require an accounting degree. I close my daily cashier in 3 minutes and the reports go straight to my accountant."',name:'Michalis K.',role:'Restaurant Owner · Athens'},
+      {text:'"The Food Cost tracking alone saved me €400/month. I had no idea my FC was at 38% until I started using this. Now it\'s at 29%."',name:'Sofia R.',role:'Cafe Owner · Thessaloniki'},
+      {text:'"Works offline — this was the dealbreaker for me. My internet is unreliable and every other app requires cloud. This one just works."',name:'Dimitris L.',role:'Taverna Owner · Crete'},
+    ],
+    faqs:[
+      {q:'Does it work without internet?',a:'Yes, completely. FinanceOS is a single HTML file that runs in your browser. After the initial license activation (requires internet once), it works 100% offline. Your data is stored locally on your device.'},
+      {q:'What happens to my data if I reinstall or change computers?',a:'Use the built-in Backup feature to export your data before changing computers. Use Restore to import everything back. For license transfers, contact us within a few hours.'},
+      {q:'Can I use it on multiple devices?',a:'Each license is for one device. If you need multiple devices or locations, contact us for group pricing — we offer discounts for 3+ licenses.'},
+      {q:'Is it compatible with my accountant\'s software?',a:'FinanceOS exports professional Excel files (.xlsx) with all data organized in sheets — Revenue, Expenses, Payroll, Suppliers and Monthly Summary.'},
+      {q:'Do I need to pay again for updates?',a:'Standard includes 1 year of free updates. After that, updates are optional — your current version continues to work forever.'},
+      {q:'Which browser do I need?',a:'Google Chrome or Microsoft Edge are recommended (any recent version). Works on Windows, macOS and Linux.'},
+    ],
+  },
+  el:{
+    features:[
+      {icon:'📊',title:'Καθημερινή Καταγραφή Εσόδων',desc:'Εισαγωγή συνολικής ταμειακής + κάρτας POS. Τα μετρητά υπολογίζονται αυτόματα. Κατηγορίες: Εσωτερικό, Delivery, Take Away, Bar, Events.'},
+      {icon:'💸',title:'Διαχείριση Εξόδων',desc:'Καταγραφή εξόδων ανά προμηθευτή, κατηγορία και τρόπο πληρωμής. Παρακολούθηση Food Cost %, λειτουργικών εξόδων, ενέργειας και μισθοδοσίας.'},
+      {icon:'👥',title:'Διαχείριση Προμηθευτών',desc:'Πλήρες μητρώο προμηθευτών με ιστορικό συναλλαγών, υπόλοιπα επί πιστώσει και PDF αναφορές ανά προμηθευτή.'},
+      {icon:'💰',title:'Μισθοδοσία',desc:'Ημερήσια καταχώρηση ανά υπάλληλο. Αυτόματος εβδομαδιαίος υπολογισμός. Υποστηρίζει ημερήσια και ωριαία κλίμακα.'},
+      {icon:'📈',title:'Αναφορές & Αναλύσεις',desc:'Ημερήσιες, εβδομαδιαίες, μηνιαίες και ετήσιες αναφορές με υπόλοιπο ταμείου, ανάλυση Food Cost και συγκρίσεις περιόδων.'},
+      {icon:'🎯',title:'Στόχοι & Ειδοποιήσεις',desc:'Ορίστε μηνιαίους στόχους εσόδων και όρια Food Cost. Άμεσες ειδοποιήσεις dashboard όταν οι στόχοι κινδυνεύουν.'},
+      {icon:'📄',title:'Εξαγωγή PDF & Excel',desc:'Επαγγελματικές PDF αναφορές με πραγματικούς πίνακες. Πλήρης εξαγωγή Excel με τρέχον υπόλοιπο ανά ημέρα.'},
+      {icon:'⚖️',title:'Σύγκριση Περιόδων',desc:'Συγκρίνετε οποιεσδήποτε δύο περιόδους δίπλα-δίπλα με οπτικά γραφήματα και ποσοστιαίες διαφορές.'},
+      {icon:'🔒',title:'Offline & Ασφαλές',desc:'Λειτουργεί εντελώς offline. Τα δεδομένα σας παραμένουν στη συσκευή σας. Προστασία άδειας αποτρέπει την κοινή χρήση.'},
+    ],
+    stats:[
+      {num:'6',label:'Γλώσσες υποστηρίζονται'},
+      {num:'0',label:'Μηνιαία τέλη — ποτέ'},
+      {num:'100%',label:'Λειτουργεί offline'},
+      {num:'€69',label:'Εφάπαξ τιμή'},
+    ],
+    steps:[
+      {title:'Ανοίξτε & Ξεκινήστε',desc:'Κάντε κλικ στο "Δοκιμή Δωρεάν", η εφαρμογή ανοίγει αμέσως στον browser σας. Χωρίς λογαριασμό, χωρίς εγκατάσταση.'},
+      {title:'Ενεργοποιήστε την Άδεια',desc:'Εισαγάγετε το κλειδί άδειας μία φορά. Ορίστε το όνομα επιχείρησης, νόμισμα και γλώσσα. Έτοιμο σε κάτω από 2 λεπτά.'},
+      {title:'Ξεκινήστε Καταχώρηση',desc:'Εισαγάγετε ημερήσια έσοδα και έξοδα. Αναφορές, υπόλοιπο ταμείου και αναλύσεις ενημερώνονται σε πραγματικό χρόνο.'},
+    ],
+    testimonials:[
+      {text:'"Επιτέλους μία εφαρμογή που δεν απαιτεί πτυχίο λογιστικής. Κλείνω το ημερήσιο ταμείο σε 3 λεπτά και οι αναφορές πηγαίνουν κατευθείαν στον λογιστή μου."',name:'Μιχάλης Κ.',role:'Ιδιοκτήτης Εστιατορίου · Αθήνα'},
+      {text:'"Η παρακολούθηση Food Cost μόνη της με έσωσε €400/μήνα. Δεν ήξερα ότι το FC μου ήταν στο 38%. Τώρα είναι στο 29%."',name:'Σοφία Ρ.',role:'Ιδιοκτήτρια Καφέ · Θεσσαλονίκη'},
+      {text:'"Λειτουργεί offline — αυτό ήταν το κριτήριο για μένα. Το internet μου είναι αναξιόπιστο και κάθε άλλη εφαρμογή απαιτεί cloud. Αυτή απλά λειτουργεί."',name:'Δημήτρης Λ.',role:'Ιδιοκτήτης Ταβέρνας · Κρήτη'},
+    ],
+    faqs:[
+      {q:'Λειτουργεί χωρίς internet;',a:'Ναι, εντελώς. Το FinanceOS είναι ένα αρχείο HTML που τρέχει στον browser σας. Μετά την αρχική ενεργοποίηση άδειας (απαιτεί internet μία φορά), λειτουργεί 100% offline.'},
+      {q:'Τι γίνεται με τα δεδομένα μου αν αλλάξω υπολογιστή;',a:'Χρησιμοποιήστε τη λειτουργία Αντιγράφου Ασφαλείας για να εξάγετε τα δεδομένα σας πριν αλλάξετε υπολογιστή. Χρησιμοποιήστε Επαναφορά για να τα εισάγετε πίσω.'},
+      {q:'Μπορώ να το χρησιμοποιήσω σε πολλές συσκευές;',a:'Κάθε άδεια αφορά μία συσκευή. Αν χρειάζεστε πολλές συσκευές, επικοινωνήστε μαζί μας για ομαδική τιμολόγηση.'},
+      {q:'Είναι συμβατό με το λογισμικό του λογιστή μου;',a:'Το FinanceOS εξάγει επαγγελματικά αρχεία Excel (.xlsx) με όλα τα δεδομένα οργανωμένα σε φύλλα — Έσοδα, Έξοδα, Μισθοδοσία, Προμηθευτές.'},
+      {q:'Χρειάζεται να πληρώσω ξανά για ενημερώσεις;',a:'Περιλαμβάνει 1 χρόνο δωρεάν ενημερώσεις. Μετά, οι ενημερώσεις είναι προαιρετικές — η τρέχουσα έκδοση συνεχίζει να λειτουργεί για πάντα.'},
+      {q:'Ποιον browser χρειάζομαι;',a:'Συνιστάται Google Chrome ή Microsoft Edge. Λειτουργεί σε Windows, macOS και Linux.'},
+    ],
+  },
+  es:{
+    features:[
+      {icon:'📊',title:'Seguimiento Diario de Ingresos',desc:'Introduce el total de caja + tarjeta POS. El efectivo se calcula automáticamente. Categorías: Comedor, Delivery, Para Llevar, Bar, Eventos.'},
+      {icon:'💸',title:'Gestión de Gastos',desc:'Registra gastos por proveedor, categoría y método de pago. Controla el Food Cost %, costes operativos, energía y salarios.'},
+      {icon:'👥',title:'Gestión de Proveedores',desc:'Directorio completo con historial de transacciones, saldos pendientes y informes PDF por proveedor con un clic.'},
+      {icon:'💰',title:'Nóminas',desc:'Entrada diaria de salarios por empleado. Cálculo automático de nóminas semanales. Soporta tarifas diarias y por hora.'},
+      {icon:'📈',title:'Informes & Análisis',desc:'Informes diarios, semanales, mensuales y anuales con libro de saldos, análisis de Food Cost y comparaciones de períodos.'},
+      {icon:'🎯',title:'Objetivos & Alertas',desc:'Establece objetivos de ingresos mensuales y límites de Food Cost. Alertas instantáneas en el panel cuando los objetivos están en riesgo.'},
+      {icon:'📄',title:'Exportación PDF & Excel',desc:'Informes PDF profesionales con tablas reales. Exportación completa a Excel con saldo acumulado por día.'},
+      {icon:'⚖️',title:'Comparación de Períodos',desc:'Compara cualquier dos períodos lado a lado con gráficos visuales y diferencias porcentuales.'},
+      {icon:'🔒',title:'Sin Conexión & Seguro',desc:'Funciona completamente sin conexión. Tus datos permanecen en tu dispositivo. Protección de licencia.'},
+    ],
+    stats:[{num:'6',label:'Idiomas compatibles'},{num:'0',label:'Cuotas mensuales — nunca'},{num:'100%',label:'Funciona sin conexión'},{num:'€69',label:'Precio único'}],
+    steps:[
+      {title:'Abre & Empieza',desc:'Haz clic en "Prueba Gratis", la app se abre al instante en tu navegador. Sin cuenta, sin configuración.'},
+      {title:'Activa la Licencia',desc:'Introduce tu clave de licencia una vez. Configura tu negocio, moneda e idioma. Listo en menos de 2 minutos.'},
+      {title:'Empieza a Registrar',desc:'Introduce los ingresos y gastos diarios. Los informes y análisis se actualizan en tiempo real automáticamente.'},
+    ],
+    testimonials:[
+      {text:'"Por fin una app que no requiere un título en contabilidad. Cierro mi caja diaria en 3 minutos y los informes van directo a mi contable."',name:'Michalis K.',role:'Propietario de Restaurante · Atenas'},
+      {text:'"Solo el seguimiento del Food Cost me ahorró €400/mes. No sabía que mi FC estaba al 38%. Ahora está al 29%."',name:'Sofia R.',role:'Propietaria de Cafetería · Tesalónica'},
+      {text:'"Funciona sin conexión — este fue el factor decisivo para mí. Mi internet es poco fiable y todas las demás apps requieren nube."',name:'Dimitris L.',role:'Propietario de Taberna · Creta'},
+    ],
+    faqs:[
+      {q:'¿Funciona sin internet?',a:'Sí, completamente. FinanceOS es un único archivo HTML que funciona en tu navegador. Tras la activación inicial de la licencia, funciona 100% sin conexión.'},
+      {q:'¿Qué pasa con mis datos si cambio de ordenador?',a:'Usa la función de Copia de Seguridad para exportar tus datos antes de cambiar de ordenador. Usa Restaurar para importarlos de nuevo.'},
+      {q:'¿Puedo usarlo en varios dispositivos?',a:'Cada licencia es para un dispositivo. Si necesitas varios, contáctanos para precios de grupo.'},
+      {q:'¿Es compatible con el software de mi contable?',a:'FinanceOS exporta archivos Excel profesionales (.xlsx) con todos los datos organizados en hojas de cálculo.'},
+      {q:'¿Necesito pagar de nuevo por las actualizaciones?',a:'Incluye 1 año de actualizaciones gratuitas. Después, las actualizaciones son opcionales — tu versión actual sigue funcionando para siempre.'},
+      {q:'¿Qué navegador necesito?',a:'Se recomienda Google Chrome o Microsoft Edge. Funciona en Windows, macOS y Linux.'},
+    ],
+  },
+  it:{
+    features:[
+      {icon:'📊',title:'Monitoraggio Ricavi Giornalieri',desc:'Inserisci totale cassa + POS carta. Il contante si calcola automaticamente. Categorie: Interno, Delivery, Take Away, Bar, Eventi.'},
+      {icon:'💸',title:'Gestione Spese',desc:'Registra spese per fornitore, categoria e metodo di pagamento. Monitora Food Cost %, costi operativi, energia e stipendi.'},
+      {icon:'👥',title:'Gestione Fornitori',desc:'Directory completa con storico transazioni, saldi in sospeso e report PDF per fornitore in un clic.'},
+      {icon:'💰',title:'Gestione Stipendi',desc:'Inserimento stipendi giornalieri per dipendente. Calcolo automatico della busta paga settimanale.'},
+      {icon:'📈',title:'Report & Analisi',desc:'Report giornalieri, settimanali, mensili e annuali con libro contabile, analisi Food Cost e confronti tra periodi.'},
+      {icon:'🎯',title:'Obiettivi & Avvisi',desc:'Imposta obiettivi di ricavo mensili e limiti Food Cost. Avvisi istantanei sul dashboard quando gli obiettivi sono a rischio.'},
+      {icon:'📄',title:'Esportazione PDF & Excel',desc:'Report PDF professionali con tabelle reali. Esportazione completa in Excel con saldo progressivo per giorno.'},
+      {icon:'⚖️',title:'Confronto Periodi',desc:'Confronta qualsiasi due periodi affiancati con grafici visivi e differenze percentuali.'},
+      {icon:'🔒',title:'Offline & Sicuro',desc:'Funziona completamente offline. I tuoi dati rimangono sul tuo dispositivo. Protezione della licenza.'},
+    ],
+    stats:[{num:'6',label:'Lingue supportate'},{num:'0',label:'Canoni mensili — mai'},{num:'100%',label:'Funziona offline'},{num:'€69',label:'Prezzo unico'}],
+    steps:[
+      {title:'Apri & Inizia',desc:'Clicca su "Prova Gratis", l\'app si apre istantaneamente nel browser. Nessun account, nessuna configurazione.'},
+      {title:'Attiva la Licenza',desc:'Inserisci la chiave di licenza una volta. Configura la tua attività, valuta e lingua. Pronto in meno di 2 minuti.'},
+      {title:'Inizia a Registrare',desc:'Inserisci ricavi e spese giornalieri. Report e analisi si aggiornano in tempo reale automaticamente.'},
+    ],
+    testimonials:[
+      {text:'"Finalmente un\'app che non richiede una laurea in contabilità. Chiudo la cassa giornaliera in 3 minuti e i report vanno direttamente al mio commercialista."',name:'Michalis K.',role:'Proprietario Ristorante · Atene'},
+      {text:'"Solo il monitoraggio del Food Cost mi ha salvato €400/mese. Non sapevo che il mio FC era al 38%. Ora è al 29%."',name:'Sofia R.',role:'Proprietaria Caffè · Salonicco'},
+      {text:'"Funziona offline — questo è stato il fattore decisivo per me. La mia connessione è inaffidabile e tutte le altre app richiedono il cloud."',name:'Dimitris L.',role:'Proprietario Taverna · Creta'},
+    ],
+    faqs:[
+      {q:'Funziona senza internet?',a:'Sì, completamente. FinanceOS è un singolo file HTML che funziona nel browser. Dopo l\'attivazione iniziale della licenza, funziona al 100% offline.'},
+      {q:'Cosa succede ai miei dati se reinstallo o cambio computer?',a:'Usa la funzione Backup per esportare i dati prima di cambiare computer. Usa Ripristino per reimportarli.'},
+      {q:'Posso usarlo su più dispositivi?',a:'Ogni licenza è per un dispositivo. Se ne hai bisogno di più, contattaci per prezzi di gruppo.'},
+      {q:'È compatibile con il software del mio commercialista?',a:'FinanceOS esporta file Excel professionali (.xlsx) con tutti i dati organizzati in fogli.'},
+      {q:'Devo pagare di nuovo per gli aggiornamenti?',a:'Include 1 anno di aggiornamenti gratuiti. Dopo, gli aggiornamenti sono opzionali — la versione attuale continua a funzionare per sempre.'},
+      {q:'Quale browser mi serve?',a:'Si consiglia Google Chrome o Microsoft Edge. Funziona su Windows, macOS e Linux.'},
+    ],
+  },
+  fr:{
+    features:[
+      {icon:'📊',title:'Suivi Quotidien des Revenus',desc:'Saisissez le total caisse + TPE carte. Les espèces se calculent automatiquement. Catégories : Salle, Livraison, À emporter, Bar, Événements.'},
+      {icon:'💸',title:'Gestion des Dépenses',desc:'Enregistrez les dépenses par fournisseur, catégorie et mode de paiement. Suivez le Food Cost %, les coûts opérationnels et les salaires.'},
+      {icon:'👥',title:'Gestion des Fournisseurs',desc:'Répertoire complet avec historique des transactions, soldes impayés et rapports PDF par fournisseur en un clic.'},
+      {icon:'💰',title:'Paie',desc:'Saisie quotidienne des salaires par employé. Calcul automatique de la paie hebdomadaire. Tarifs journaliers et horaires.'},
+      {icon:'📈',title:'Rapports & Analyses',desc:'Rapports quotidiens, hebdomadaires, mensuels et annuels avec grand livre, analyse Food Cost et comparaisons de périodes.'},
+      {icon:'🎯',title:'Objectifs & Alertes',desc:'Fixez des objectifs de revenus mensuels et des limites de Food Cost. Alertes instantanées sur le tableau de bord.'},
+      {icon:'📄',title:'Export PDF & Excel',desc:'Rapports PDF professionnels avec de vrais tableaux. Export Excel complet avec solde courant par jour.'},
+      {icon:'⚖️',title:'Comparaison de Périodes',desc:'Comparez deux périodes côte à côte avec des graphiques visuels et des différences en pourcentage.'},
+      {icon:'🔒',title:'Hors Ligne & Sécurisé',desc:'Fonctionne complètement hors ligne. Vos données restent sur votre appareil. Protection de licence.'},
+    ],
+    stats:[{num:'6',label:'Langues prises en charge'},{num:'0',label:'Frais mensuels — jamais'},{num:'100%',label:'Fonctionne hors ligne'},{num:'€69',label:'Prix unique'}],
+    steps:[
+      {title:'Ouvrez & Commencez',desc:'Cliquez sur "Essai Gratuit", l\'app s\'ouvre instantanément dans votre navigateur. Sans compte, sans configuration.'},
+      {title:'Activez la Licence',desc:'Entrez votre clé de licence une fois. Configurez votre entreprise, devise et langue. Prêt en moins de 2 minutes.'},
+      {title:'Commencez à Enregistrer',desc:'Entrez les revenus et dépenses quotidiens. Les rapports et analyses se mettent à jour en temps réel automatiquement.'},
+    ],
+    testimonials:[
+      {text:'"Enfin une app qui ne nécessite pas de diplôme en comptabilité. Je ferme ma caisse quotidienne en 3 minutes et les rapports vont directement à mon comptable."',name:'Michalis K.',role:'Propriétaire de Restaurant · Athènes'},
+      {text:'"Le suivi du Food Cost seul m\'a économisé 400€/mois. Je ne savais pas que mon FC était à 38%. Maintenant il est à 29%."',name:'Sofia R.',role:'Propriétaire de Café · Thessalonique'},
+      {text:'"Fonctionne hors ligne — c\'était le critère décisif pour moi. Ma connexion est peu fiable et toutes les autres apps nécessitent le cloud."',name:'Dimitris L.',role:'Propriétaire de Taverne · Crète'},
+    ],
+    faqs:[
+      {q:'Fonctionne-t-il sans internet ?',a:'Oui, complètement. FinanceOS est un fichier HTML unique qui fonctionne dans votre navigateur. Après l\'activation initiale de la licence, il fonctionne 100% hors ligne.'},
+      {q:'Que se passe-t-il avec mes données si je change d\'ordinateur ?',a:'Utilisez la fonction Sauvegarde pour exporter vos données avant de changer d\'ordinateur. Utilisez Restaurer pour les réimporter.'},
+      {q:'Puis-je l\'utiliser sur plusieurs appareils ?',a:'Chaque licence est pour un appareil. Si vous en avez besoin de plusieurs, contactez-nous pour des tarifs de groupe.'},
+      {q:'Est-il compatible avec le logiciel de mon comptable ?',a:'FinanceOS exporte des fichiers Excel professionnels (.xlsx) avec toutes les données organisées en feuilles.'},
+      {q:'Dois-je payer à nouveau pour les mises à jour ?',a:'Comprend 1 an de mises à jour gratuites. Ensuite, les mises à jour sont optionnelles — votre version actuelle continue de fonctionner pour toujours.'},
+      {q:'Quel navigateur me faut-il ?',a:'Google Chrome ou Microsoft Edge sont recommandés. Fonctionne sur Windows, macOS et Linux.'},
+    ],
+  },
+  de:{
+    features:[
+      {icon:'📊',title:'Tägliche Umsatzverfolgung',desc:'Gib Gesamtkasse + Kartenlesegerät ein. Bargeld wird automatisch berechnet. Kategorien: Dine-In, Lieferung, Zum Mitnehmen, Bar, Veranstaltungen.'},
+      {icon:'💸',title:'Ausgabenverwaltung',desc:'Erfasse Ausgaben nach Lieferant, Kategorie und Zahlungsmethode. Verfolge Food Cost %, Betriebskosten, Energie und Gehälter.'},
+      {icon:'👥',title:'Lieferantenverwaltung',desc:'Vollständiges Lieferantenverzeichnis mit Transaktionshistorie, ausstehenden Guthaben und PDF-Berichten per Klick.'},
+      {icon:'💰',title:'Lohnabrechnung',desc:'Tägliche Lohneingabe pro Mitarbeiter. Automatische wöchentliche Lohnberechnung. Unterstützt Tages- und Stundensätze.'},
+      {icon:'📈',title:'Berichte & Analysen',desc:'Tägliche, wöchentliche, monatliche und jährliche Berichte mit Hauptbuch, Food Cost-Analyse und Periodenvergleichen.'},
+      {icon:'🎯',title:'Ziele & Warnungen',desc:'Setze monatliche Umsatzziele und Food Cost-Limits. Sofortige Dashboard-Warnungen wenn Ziele gefährdet sind.'},
+      {icon:'📄',title:'PDF & Excel Export',desc:'Professionelle PDF-Berichte mit echten Tabellen. Vollständiger Excel-Export mit laufendem Saldo pro Tag.'},
+      {icon:'⚖️',title:'Periodenvergleich',desc:'Vergleiche zwei beliebige Perioden nebeneinander mit visuellen Diagrammen und prozentualen Unterschieden.'},
+      {icon:'🔒',title:'Offline & Sicher',desc:'Funktioniert vollständig offline. Deine Daten bleiben auf deinem Gerät. Lizenzschutz verhindert gemeinsame Nutzung.'},
+    ],
+    stats:[{num:'6',label:'Unterstützte Sprachen'},{num:'0',label:'Monatliche Gebühren — nie'},{num:'100%',label:'Funktioniert offline'},{num:'€69',label:'Einmalpreis'}],
+    steps:[
+      {title:'Öffnen & Starten',desc:'Klicke auf "Kostenlos testen", die App öffnet sich sofort im Browser. Kein Account, keine Einrichtung erforderlich.'},
+      {title:'Lizenz Aktivieren',desc:'Gib deinen Lizenzschlüssel einmal ein. Richte Unternehmen, Währung und Sprache ein. In unter 2 Minuten bereit.'},
+      {title:'Aufzeichnung Beginnen',desc:'Gib tägliche Einnahmen und Ausgaben ein. Berichte und Analysen werden automatisch in Echtzeit aktualisiert.'},
+    ],
+    testimonials:[
+      {text:'"Endlich eine App, die keinen Buchhaltungsabschluss erfordert. Ich schließe meine Tageskasse in 3 Minuten und die Berichte gehen direkt an meinen Buchhalter."',name:'Michalis K.',role:'Restaurantbesitzer · Athen'},
+      {text:'"Allein die Food Cost-Verfolgung hat mir 400€/Monat gespart. Ich wusste nicht, dass mein FC bei 38% lag. Jetzt ist es bei 29%."',name:'Sofia R.',role:'Café-Besitzerin · Thessaloniki'},
+      {text:'"Funktioniert offline — das war das entscheidende Kriterium für mich. Mein Internet ist unzuverlässig und alle anderen Apps erfordern die Cloud."',name:'Dimitris L.',role:'Taverne-Besitzer · Kreta'},
+    ],
+    faqs:[
+      {q:'Funktioniert es ohne Internet?',a:'Ja, vollständig. FinanceOS ist eine einzelne HTML-Datei, die in deinem Browser läuft. Nach der ersten Lizenzaktivierung funktioniert es 100% offline.'},
+      {q:'Was passiert mit meinen Daten bei Computerwechsel?',a:'Nutze die Backup-Funktion zum Exportieren deiner Daten vor dem Computerwechsel. Nutze Wiederherstellen zum Reimportieren.'},
+      {q:'Kann ich es auf mehreren Geräten nutzen?',a:'Jede Lizenz ist für ein Gerät. Wenn du mehrere benötigst, kontaktiere uns für Gruppenpreise.'},
+      {q:'Ist es kompatibel mit der Software meines Buchhalters?',a:'FinanceOS exportiert professionelle Excel-Dateien (.xlsx) mit allen Daten in Arbeitsblättern organisiert.'},
+      {q:'Muss ich für Updates erneut bezahlen?',a:'Beinhaltet 1 Jahr kostenlose Updates. Danach sind Updates optional — deine aktuelle Version funktioniert für immer weiter.'},
+      {q:'Welchen Browser benötige ich?',a:'Google Chrome oder Microsoft Edge werden empfohlen. Funktioniert auf Windows, macOS und Linux.'},
+    ],
+  },
+};
+
+const FEAT_ICONS=['teal','red','blue','amber','purple','teal','blue','amber','red'];
+
+function rebuildSections(l){
+  const C=LC[l]||LC.en;
+  const chk='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="width:16px;height:16px;flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  // Features grid
+  const fg=document.getElementById('features-grid');
+  if(fg)fg.innerHTML=C.features.map((f,i)=>`
+    <div class="feature-card">
+      <div class="f-icon ${FEAT_ICONS[i]}">${f.icon}</div>
+      <div class="f-title">${f.title}</div>
+      <div class="f-desc">${f.desc}</div>
+    </div>`).join('');
+
+  // Stats
+  const sg=document.getElementById('stats-grid');
+  if(sg)sg.innerHTML=C.stats.map(s=>`
+    <div>
+      <div class="stat-num">${s.num}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>`).join('');
+
+  // Steps
+  const stg=document.getElementById('steps-grid');
+  if(stg)stg.innerHTML=C.steps.map((s,i)=>`
+    <div class="step">
+      <div class="step-num">${i+1}</div>
+      <div class="step-title">${s.title}</div>
+      <div class="step-desc">${s.desc}</div>
+    </div>`).join('');
+
+  // Testimonials
+  const tg=document.getElementById('testi-grid');
+  if(tg)tg.innerHTML=C.testimonials.map((t,i)=>{
+    const colors=[['#00d4aa','#00b8ff'],['#f59e0b','#ff4d6d'],['#a855f7','#ec4899']];
+    const [c1,c2]=colors[i];
+    const init=t.name.split(' ').map(n=>n[0]).join('');
+    return`<div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">${t.text}</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,${c1},${c2})">${init}</div>
+        <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // FAQ
+  const fl=document.getElementById('faq-list');
+  if(fl)fl.innerHTML=C.faqs.map(f=>`
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ${f.q}
+        <div class="faq-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">${f.a}</div>
+    </div>`).join('');
+}
 
 function setLandingLang(l){
   currentLandingLang=l;
@@ -1168,6 +1638,8 @@ function setLandingLang(l){
   document.querySelectorAll('.footer-lang-link').forEach(a=>{
     a.style.color=a.getAttribute('data-lang')===l?'var(--teal)':'';
   });
+  // Rebuild translated sections
+  rebuildSections(l);
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
