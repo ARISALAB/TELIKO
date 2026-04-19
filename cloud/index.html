@@ -9,6 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// Init Supabase immediately after SDK loads
+const SUPA_URL='https://frydjlifgcyywfliskkb.supabase.co';
+const SUPA_KEY='sb_publishable_FA6IuESx-TioUrKzQC3jpA_V0XjVPcp';
+const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
+let currentUser=null;
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
