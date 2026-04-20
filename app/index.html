@@ -1904,7 +1904,7 @@ footer a{color:var(--accent);text-decoration:none}
 
 </main>
 
-<footer>© 2025 FinanceOS &mdash; <span data-el="footer-text">Professional Business Management</span></footer>
+<footer>© 2025 FinanceOS &mdash; <span data-el="footer-text">Professional Business Management</span> &mdash; <span style="color:var(--accent);font-size:11px;font-weight:700">v3.1</span></footer>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
@@ -5281,6 +5281,14 @@ async function sbFetch(path,opts={}){
   return{ok:res.ok,status:res.status,data};
 }
 
+function removeDemoBanner(){
+  const b=document.getElementById('demo-banner');
+  if(b)b.remove();
+  // Also hide demo badge in license screen
+  const badge=document.getElementById('license-demo-badge');
+  if(badge)badge.style.display='none';
+}
+
 async function activateLicense(){
   const key=document.getElementById('license-key-input').value.trim().toUpperCase();
   const errEl=document.getElementById('license-error');
@@ -5331,6 +5339,7 @@ async function activateLicense(){
           // Supabase insert failed — activate offline with UUID
           BIZ.license=key;BIZ.mode='active';BIZ.fingerprint=getFingerprint();saveBIZ();
           document.getElementById('license-screen').style.display='none';
+          removeDemoBanner();
           notify('✓ License activated! Welcome to FinanceOS.');
           if(!BIZ.name)showOnboarding();
           return;
@@ -5380,6 +5389,7 @@ async function activateLicense(){
     saveBIZ();
     document.getElementById('license-screen').style.display='none';
     errEl.style.display='none';
+    removeDemoBanner();
     notify('✓ License activated! Welcome to FinanceOS.');
     if(!BIZ.name)showOnboarding();
 
@@ -5388,6 +5398,7 @@ async function activateLicense(){
     console.warn('License check failed, offline activation:',e);
     BIZ.license=key;BIZ.mode='active';BIZ.fingerprint=getFingerprint();saveBIZ();
     document.getElementById('license-screen').style.display='none';
+    removeDemoBanner();
     notify('Activated offline. Connect internet for full verification.');
     if(!BIZ.name)showOnboarding();
   }finally{
