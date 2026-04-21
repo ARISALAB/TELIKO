@@ -5141,12 +5141,78 @@ function loadWeeklyPayroll(){
 }
 
 // ── BUSINESS SETTINGS ──
-let BIZ={name:'',license:'',mode:'demo',fingerprint:''}; // mode: 'active' | 'demo'
+let BIZ={name:'',license:'',mode:'',fingerprint:''}; // mode: 'active' | 'demo' | ''
+
+// ── IndexedDB for persistent license storage ──
+const IDB_NAME='FinanceOS',IDB_STORE='biz',IDB_KEY='config';
+function idbSave(data){
+  try{
+    const req=indexedDB.open(IDB_NAME,1);
+    req.onupgradeneeded=e=>e.target.result.createObjectStore(IDB_STORE);
+    req.onsuccess=e=>{
+      const db=e.target.result;
+      const tx=db.transaction(IDB_STORE,'readwrite');
+      tx.objectStore(IDB_STORE).put(data,IDB_KEY);
+    };
+  }catch(e){}
+}
+function idbLoad(cb){
+  try{
+    const req=indexedDB.open(IDB_NAME,1);
+    req.onupgradeneeded=e=>e.target.result.createObjectStore(IDB_STORE);
+    req.onsuccess=e=>{
+      const db=e.target.result;
+      const tx=db.transaction(IDB_STORE,'readonly');
+      const r=tx.objectStore(IDB_STORE).get(IDB_KEY);
+      r.onsuccess=()=>cb(r.result||null);
+      r.onerror=()=>cb(null);
+    };
+    req.onerror=()=>cb(null);
+  }catch(e){cb(null);}
+}
 
 function loadBIZ(){
-  try{const s=localStorage.getItem('fos_biz');if(s)BIZ=JSON.parse(s);}catch(e){}
+  try{
+    // 1. localStorage primary
+    const s=localStorage.getItem('fos_biz');
+    if(s)BIZ=JSON.parse(s);
+    // 2. localStorage backup
+    if(BIZ.mode!=='active'){
+      const backup=localStorage.getItem('fos_biz_backup');
+      if(backup){const b=JSON.parse(backup);if(b.mode==='active')BIZ=b;}
+    }
+    // 3. sessionStorage
+    if(BIZ.mode!=='active'){
+      const sess=sessionStorage.getItem('fos_biz_sess');
+      if(sess){const b=JSON.parse(sess);if(b.mode==='active'){BIZ=b;saveBIZ();}}
+    }
+  }catch(e){}
+  // 4. IndexedDB async — restores if localStorage was cleared
+  idbLoad(data=>{
+    if(data&&data.mode==='active'&&BIZ.mode!=='active'){
+      BIZ=data;
+      // Restore to localStorage
+      localStorage.setItem('fos_biz',JSON.stringify(BIZ));
+      localStorage.setItem('fos_biz_backup',JSON.stringify(BIZ));
+      // Hide license screen if showing
+      const ls=document.getElementById('license-screen');
+      if(ls&&ls.style.display!=='none'){
+        ls.style.display='none';
+        removeDemoBanner();
+        nav('home');
+      }
+    }
+  });
 }
-function saveBIZ(){localStorage.setItem('fos_biz',JSON.stringify(BIZ));}
+function saveBIZ(){
+  const str=JSON.stringify(BIZ);
+  localStorage.setItem('fos_biz',str);
+  if(BIZ.mode==='active'){
+    localStorage.setItem('fos_biz_backup',str);
+    sessionStorage.setItem('fos_biz_sess',str);
+    idbSave(BIZ); // IndexedDB — most persistent
+  }
+}
 
 function saveBizSettings(){
   BIZ.name=document.getElementById('biz-name-input').value.trim();
@@ -6550,7 +6616,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   setLang(savedLang);
   updateBizUI();
 
-  if(!BIZ.mode){
+  if(!BIZ.mode || BIZ.mode===''){
     // First time ever — show license screen
     document.getElementById('license-screen').style.display='flex';
 
