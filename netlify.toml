@@ -13,3 +13,8 @@
   from = "/api/paddle-webhook"
   to = "/.netlify/functions/paddle-webhook"
   status = 200
+[[redirects]]
+  from = "https://getfinanceos.netlify.app/*"
+  to = "https://www.gofinanceos.com/:splat"
+  status = 301
+  force = true
