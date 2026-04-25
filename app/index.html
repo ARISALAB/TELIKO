@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-003C2969MG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -9,6 +9,7 @@
   gtag('js', new Date());
   gtag('config', 'G-003C2969MG');
 </script>
+
 <meta charset="UTF-8"/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
 
@@ -3304,6 +3305,16 @@ function addIncome(){
   if(card>total){notify('Card amount cannot exceed total register','danger');return;}
   const data=DB.income();data.push({id:uid(),date:d,time:timeNow(),desc:category,category,cash,card,total});
   DB.saveIncome(data);
+  
+  // Google Analytics event
+  if(typeof gtag==='function'){
+    gtag('event', 'income_added', {
+      'event_category': 'engagement',
+      'event_label': category,
+      'value': Math.round(total)
+    });
+  }
+  
   document.getElementById('inc-total-raw').value='';
   document.getElementById('inc-card').value='';
   document.getElementById('inc-cash-display').textContent='—';
@@ -3378,6 +3389,16 @@ function addExpense(){
   if(amount<=0){notify(t('notify-fill-amount'),'danger');return;}
   const data=DB.expenses();data.push({id:uid(),date:d,time:timeNow(),supplier,type,pay,inv,amount});
   DB.saveExpenses(data);
+  
+  // Google Analytics event
+  if(typeof gtag==='function'){
+    gtag('event', 'expense_added', {
+      'event_category': 'engagement',
+      'event_label': type,
+      'value': Math.round(amount)
+    });
+  }
+  
   ['exp-inv','exp-amount'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('exp-filter-date').value=d;renderExpenseTable();renderExpenseSummary();notify(t('notify-expense-added'));
 }
@@ -4581,6 +4602,15 @@ function exportToExcel(){
   const fname=`FinanceOS_Export_${today()}.xlsx`;
   XLSX.writeFile(wb,fname);
   closeModal('modal-export');
+  
+  // Google Analytics event
+  if(typeof gtag==='function'){
+    gtag('event', 'excel_exported', {
+      'event_category': 'engagement',
+      'event_label': wb.SheetNames.join(',')
+    });
+  }
+  
   notify(isEl?`✓ Εξαγωγή: ${fname}`:`✓ Exported: ${fname}`);
 }
 
@@ -4892,6 +4922,15 @@ function generatePDF(){
   win.document.close();
   win.onload=()=>{setTimeout(()=>{win.focus();win.print();},300);};
   closeModal('modal-pdf');
+  
+  // Google Analytics event
+  if(typeof gtag==='function'){
+    gtag('event', 'pdf_generated', {
+      'event_category': 'engagement',
+      'event_label': type
+    });
+  }
+  
   notify((lang==='el'?'Άνοιξε παράθυρο εκτύπωσης — επίλεξε Αποθήκευση ως PDF':lang==='es'?'Ventana de impresión abierta':lang==='it'?'Finestra di stampa aperta':lang==='fr'?'Fenêtre d impression ouverte':lang==='de'?'Druckfenster geöffnet':'Print window opened — choose Save as PDF'));
 }
 
@@ -5465,6 +5504,15 @@ async function activateLicense(){
     errEl.style.display='none';
     removeDemoBanner();
     notify('✓ License activated! Welcome to FinanceOS.');
+    
+    // Google Analytics event
+    if(typeof gtag==='function'){
+      gtag('event', 'license_activated', {
+        'event_category': 'engagement',
+        'event_label': isLSUUID(key)?'lemon_squeezy':'custom_key'
+      });
+    }
+    
     if(!BIZ.name)showOnboarding();
 
   }catch(e){
