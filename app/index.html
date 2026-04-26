@@ -1298,6 +1298,21 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 
+  <!-- Month Selector -->
+  <div class="section" style="max-width:320px;margin:0 auto 20px">
+    <div style="display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <select id="home-month-select" onchange="updateHomeStats()" style="flex:1;background:transparent;border:none;color:var(--ink);font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;outline:none;padding:0">
+        <!-- Populated by JS -->
+      </select>
+    </div>
+  </div>
+
   <div class="grid-4 section" id="home-stats">
     <div class="stat green">
       <div class="stat-glow"></div>
@@ -2027,7 +2042,7 @@ const T = {
     'hero-badge':'Επαγγελματική Διαχείριση','hero-title':'Διαχείριση Επιχείρησης<br><span>στο επόμενο επίπεδο.</span>',
     'hero-sub':'Καταγράψτε έσοδα, έξοδα, προμηθευτές και μισθοδοσία σε ένα ενιαίο σύστημα. Πλήρεις αναφορές σε πραγματικό χρόνο.',
     'hero-btn1':'Καταχώρηση Εσόδων','hero-btn2':'Δες Αναφορές',
-    'hs-lbl-income':'Τζίρος Μήνα','hs-lbl-avg':'Μέσος Όρος/Ημέρα','hs-lbl-cash':'Μετρητά','hs-lbl-card':'Κάρτες',
+    'hs-lbl-income':'ΤΖΙΡΟΣ ΜΗΝΑ','hs-lbl-avg':'ΜΕΣΟΣ ΟΡΟΣ/ΗΜΕΡΑ','hs-lbl-cash':'ΜΕΤΡΗΤΑ','hs-lbl-card':'ΚΑΡΤΕΣ',
     'fc-income-name':'Ημερήσια Έσοδα','fc-income-desc':'Καταχωρήστε ταμειακές και καρτικές εισπράξεις γρήγορα.',
     'fc-expenses-name':'Ημερήσια Έξοδα','fc-expenses-desc':'Παρακολουθήστε έξοδα ανά κατηγορία και προμηθευτή.',
     'fc-suppliers-name':'Προμηθευτές','fc-suppliers-desc':'Οργανώστε τους προμηθευτές και παρακολουθήστε συναλλαγές.',
@@ -2189,7 +2204,7 @@ const T = {
     'hero-title':'Business Management<br><span>at a new level.</span>',
     'hero-sub':'Track revenue, expenses, suppliers and payroll in one unified platform. Real-time analytics and beautiful reports — built for modern businesses.',
     'hero-btn1':'Record Revenue','hero-btn2':'View Reports',
-    'hs-lbl-income':'Monthly Revenue','hs-lbl-avg':'Daily Average','hs-lbl-cash':'Cash Balance','hs-lbl-card':'Card Balance',
+    'hs-lbl-income':'MONTHLY REVENUE','hs-lbl-avg':'DAILY AVERAGE','hs-lbl-cash':'CASH BALANCE','hs-lbl-card':'CARD BALANCE',
     'fc-income-name':'Daily Revenue','fc-income-desc':'Record cash and card receipts quickly and accurately.',
     'fc-expenses-name':'Daily Expenses','fc-expenses-desc':'Track expenses by category, supplier and payment method.',
     'fc-suppliers-name':'Suppliers','fc-suppliers-desc':'Manage supplier contacts and track all transactions.',
@@ -2351,7 +2366,7 @@ const T = {
     'hero-title':'Gestión Empresarial<br><span>al siguiente nivel.</span>',
     'hero-sub':'Registre ingresos, gastos, proveedores y nóminas en una plataforma unificada. Análisis en tiempo real e informes profesionales.',
     'hero-btn1':'Registrar Ingresos','hero-btn2':'Ver Informes',
-    'hs-lbl-income':'Ingresos del Mes','hs-lbl-avg':'Promedio Diario','hs-lbl-cash':'Saldo Efectivo','hs-lbl-card':'Saldo Tarjeta',
+    'hs-lbl-income':'INGRESOS DEL MES','hs-lbl-avg':'PROMEDIO DIARIO','hs-lbl-cash':'SALDO EFECTIVO','hs-lbl-card':'SALDO TARJETA',
     'fc-income-name':'Ingresos Diarios','fc-income-desc':'Registre cobros en efectivo y tarjeta rápidamente.',
     'fc-expenses-name':'Gastos Diarios','fc-expenses-desc':'Controle gastos por categoría, proveedor y forma de pago.',
     'fc-suppliers-name':'Proveedores','fc-suppliers-desc':'Gestione contactos y controle todas las transacciones.',
@@ -2498,7 +2513,7 @@ const T = {
     'hero-title':'Gestione Aziendale<br><span>al prossimo livello.</span>',
     'hero-sub':'Registra ricavi, spese, fornitori e stipendi in un\'unica piattaforma. Analisi in tempo reale e report professionali.',
     'hero-btn1':'Registra Ricavi','hero-btn2':'Vedi Report',
-    'hs-lbl-income':'Ricavi del Mese','hs-lbl-avg':'Media Giornaliera','hs-lbl-cash':'Saldo Contanti','hs-lbl-card':'Saldo Carta',
+    'hs-lbl-income':'RICAVI DEL MESE','hs-lbl-avg':'MEDIA GIORNALIERA','hs-lbl-cash':'SALDO CONTANTI','hs-lbl-card':'SALDO CARTA',
     'fc-income-name':'Ricavi Giornalieri','fc-income-desc':'Registra incassi in contanti e carta rapidamente.',
     'fc-expenses-name':'Spese Giornaliere','fc-expenses-desc':'Tieni traccia delle spese per categoria e fornitore.',
     'fc-suppliers-name':'Fornitori','fc-suppliers-desc':'Gestisci i contatti e monitora tutte le transazioni.',
@@ -2645,7 +2660,7 @@ const T = {
     'hero-title':'Gestion d\'Entreprise<br><span>au niveau supérieur.</span>',
     'hero-sub':'Enregistrez vos revenus, dépenses, fournisseurs et paies sur une plateforme unifiée. Analyses en temps réel et rapports professionnels.',
     'hero-btn1':'Enregistrer Revenus','hero-btn2':'Voir Rapports',
-    'hs-lbl-income':'Revenus du Mois','hs-lbl-avg':'Moyenne Quotidienne','hs-lbl-cash':'Solde Espèces','hs-lbl-card':'Solde Carte',
+    'hs-lbl-income':'REVENUS DU MOIS','hs-lbl-avg':'MOYENNE QUOTIDIENNE','hs-lbl-cash':'SOLDE ESPÈCES','hs-lbl-card':'SOLDE CARTE',
     'fc-income-name':'Revenus Journaliers','fc-income-desc':'Enregistrez les encaissements en espèces et par carte rapidement.',
     'fc-expenses-name':'Dépenses Journalières','fc-expenses-desc':'Suivez les dépenses par catégorie et fournisseur.',
     'fc-suppliers-name':'Fournisseurs','fc-suppliers-desc':'Gérez vos contacts et suivez toutes les transactions.',
@@ -2792,7 +2807,7 @@ const T = {
     'hero-title':'Unternehmensführung<br><span>auf dem nächsten Level.</span>',
     'hero-sub':'Erfassen Sie Einnahmen, Ausgaben, Lieferanten und Löhne auf einer einheitlichen Plattform. Echtzeit-Analysen und professionelle Berichte.',
     'hero-btn1':'Einnahmen erfassen','hero-btn2':'Berichte anzeigen',
-    'hs-lbl-income':'Monatsumsatz','hs-lbl-avg':'Tagesdurchschnitt','hs-lbl-cash':'Barguthaben','hs-lbl-card':'Kartenguthaben',
+    'hs-lbl-income':'MONATSUMSATZ','hs-lbl-avg':'TAGESDURCHSCHNITT','hs-lbl-cash':'BARGUTHABEN','hs-lbl-card':'KARTENGUTHABEN',
     'fc-income-name':'Tageseinnahmen','fc-income-desc':'Erfassen Sie Bar- und Kartenzahlungen schnell und präzise.',
     'fc-expenses-name':'Tagesausgaben','fc-expenses-desc':'Verfolgen Sie Ausgaben nach Kategorie und Lieferant.',
     'fc-suppliers-name':'Lieferanten','fc-suppliers-desc':'Verwalten Sie Kontakte und verfolgen Sie alle Transaktionen.',
@@ -3123,28 +3138,55 @@ function onPageEnter(page){
 // ── HOME ──
 function updateHomeStats(){
   const d=today();
-  const currentMonth=d.slice(0,7); // YYYY-MM
+  
+  // Populate month selector if empty
+  const monthSelect=document.getElementById('home-month-select');
+  if(monthSelect&&monthSelect.options.length===0){
+    const allIncome=DB.income();
+    const months=new Set(allIncome.map(x=>x.date.slice(0,7)));
+    const currentMonth=d.slice(0,7);
+    if(!months.has(currentMonth))months.add(currentMonth);
+    const sortedMonths=Array.from(months).sort().reverse();
+    sortedMonths.forEach(m=>{
+      const opt=document.createElement('option');
+      opt.value=m;
+      opt.textContent=formatMonthLabel(m);
+      if(m===currentMonth)opt.selected=true;
+      monthSelect.appendChild(opt);
+    });
+  } else if(monthSelect) {
+    // Update labels if language changed
+    Array.from(monthSelect.options).forEach(opt=>{
+      opt.textContent=formatMonthLabel(opt.value);
+    });
+  }
+  
+  const selectedMonth=monthSelect?monthSelect.value:d.slice(0,7);
   const allIncome=DB.income();
   const allExpenses=DB.expenses();
   const allSettlements=DB.creditPayments();
   
-  // Monthly revenue (current month)
-  const monthlyIncome=allIncome.filter(x=>x.date.startsWith(currentMonth));
-  const monthlyRevenue=monthlyIncome.reduce((s,x)=>s+x.cash+x.card,0);
+  // Filter data for selected month only
+  const monthIncome=allIncome.filter(x=>x.date.startsWith(selectedMonth));
+  const monthExpenses=allExpenses.filter(x=>x.date.startsWith(selectedMonth));
+  const monthSettlements=allSettlements.filter(x=>x.date.startsWith(selectedMonth));
   
-  // Daily average for current month
-  const daysWithData=new Set(monthlyIncome.map(x=>x.date)).size;
+  // Monthly revenue (selected month)
+  const monthlyRevenue=monthIncome.reduce((s,x)=>s+x.cash+x.card,0);
+  
+  // Daily average for selected month
+  const daysWithData=new Set(monthIncome.map(x=>x.date)).size;
   const dailyAvg=daysWithData>0?monthlyRevenue/daysWithData:0;
   
-  // Cash balance (separate from cards)
-  const totalCash=allIncome.reduce((s,x)=>s+x.cash,0)
-    -allExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0)
-    -allSettlements.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
+  // Cash balance for selected month
+  const totalCash=monthIncome.reduce((s,x)=>s+x.cash,0)
+    -monthExpenses.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0)
+    -monthSettlements.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
   
-  // Card balance (separate from cash)
-  const totalCard=allIncome.reduce((s,x)=>s+x.card,0)
-    -allExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0)
-    -allSettlements.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
+  // Card balance for selected month
+  const totalCard=monthIncome.reduce((s,x)=>s+x.card,0)
+    -monthExpenses.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0)
+    -monthSettlements.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
   
   document.getElementById('hs-income').textContent=fmtE(monthlyRevenue);
   document.getElementById('hs-avg').textContent=fmtE(dailyAvg);
@@ -3175,6 +3217,20 @@ function updateHomeStats(){
   renderDashboardChart();
   updateGoalsAlerts();
   renderQuickStart();
+}
+
+function formatMonthLabel(monthStr){
+  const monthNames={
+    el:['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος'],
+    en:['January','February','March','April','May','June','July','August','September','October','November','December'],
+    es:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    it:['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+    fr:['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+    de:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']
+  };
+  const monthNum=parseInt(monthStr.split('-')[1])-1;
+  const year=monthStr.split('-')[0];
+  return `${monthNames[lang][monthNum]} ${year}`;
 }
 
 // ── INCOME DATE BALANCE ──
