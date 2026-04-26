@@ -1652,10 +1652,8 @@ function setLandingLang(l){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  // Detect browser language
-  const bl=navigator.language?.slice(0,2)||'en';
-  const supported=['el','en','es','it','fr','de'];
-  setLandingLang(supported.includes(bl)?bl:'en');
+  // Default to English
+  setLandingLang('en');
 });
 </script>
 
