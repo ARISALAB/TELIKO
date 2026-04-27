@@ -501,6 +501,71 @@ footer a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 <body>
+<!-- PWA SPLASH SCREEN (only in standalone mode) -->
+<div id="pwa-splash" style="display:none;position:fixed;inset:0;background:#0a0b0f;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:1;transition:opacity 0.4s ease">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:32px;animation:splashFadeIn 0.6s ease-out">
+    <!-- Logo -->
+    <div style="width:80px;height:80px;background:linear-gradient(135deg,#00d4aa,#00b8ff);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(0,212,170,.6),inset 0 2px 0 rgba(255,255,255,.3);animation:splashPulse 2s ease-in-out infinite">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+        <polyline points="7.5 19.79 7.5 14.6 3 12"/>
+        <polyline points="21 12 16.5 14.6 16.5 19.79"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+        <line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+    </div>
+    
+    <!-- App Name -->
+    <div style="text-align:center">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:#f0f2f8;letter-spacing:-0.5px;margin-bottom:8px">FinanceOS</div>
+      <div style="font-size:12px;color:#5a637a;font-weight:500;letter-spacing:1px;text-transform:uppercase">Business Management</div>
+    </div>
+    
+    <!-- Loading Bar -->
+    <div style="width:200px;height:3px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden">
+      <div style="width:100%;height:100%;background:linear-gradient(90deg,#00d4aa,#00b8ff);border-radius:10px;animation:splashLoading 1.5s ease-in-out infinite"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes splashPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(0,212,170,.6), inset 0 2px 0 rgba(255,255,255,.3); }
+  50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(0,212,170,.8), inset 0 2px 0 rgba(255,255,255,.3); }
+}
+@keyframes splashLoading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+</style>
+
+<script>
+// Show splash only in standalone mode (PWA)
+(function() {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const splash = document.getElementById('pwa-splash');
+  
+  if (isStandalone && splash) {
+    splash.style.display = 'flex';
+    
+    // Hide splash after page loads
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.style.display = 'none';
+        }, 400);
+      }, 800); // Show for 800ms minimum
+    });
+  }
+})();
+</script>
+
 <div class="ambient ambient-1"></div>
 <div class="ambient ambient-2"></div>
 
