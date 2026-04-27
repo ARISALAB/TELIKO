@@ -6930,6 +6930,31 @@ function showWrongDeviceScreen(){
   
   // Check if user dismissed it before
   const dismissed = localStorage.getItem('pwa_install_dismissed');
+  const alreadyInstalled = localStorage.getItem('pwa_installed');
+  
+  // Check if app is already installed
+  function isAppInstalled() {
+    // Check localStorage flag
+    if (alreadyInstalled === 'true') {
+      return true;
+    }
+    // Check if running in standalone mode (installed PWA)
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      return true;
+    }
+    // Check for iOS standalone
+    if (window.navigator.standalone === true) {
+      return true;
+    }
+    return false;
+  }
+  
+  // Hide button if already installed
+  if (isAppInstalled()) {
+    console.log('PWA: App already installed, hiding button');
+    if (installBtn) installBtn.style.display = 'none';
+    return;
+  }
   
   // Listen for beforeinstallprompt event
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -6968,6 +6993,7 @@ function showWrongDeviceScreen(){
         if (outcome === 'accepted') {
           console.log('PWA: User accepted install');
           installBtn.style.display = 'none';
+          localStorage.setItem('pwa_installed', 'true');
         } else {
           console.log('PWA: User dismissed install');
         }
@@ -6978,6 +7004,13 @@ function showWrongDeviceScreen(){
       }
     });
   }
+  
+  // Listen for successful installation
+  window.addEventListener('appinstalled', (evt) => {
+    console.log('PWA: App successfully installed');
+    if (installBtn) installBtn.style.display = 'none';
+    localStorage.setItem('pwa_installed', 'true');
+  });
   
   // Update text when language changes
   const originalSetLang = window.setLang;
@@ -7008,7 +7041,9 @@ function showWrongDeviceScreen(){
     serviceWorkerSupported: 'serviceWorker' in navigator,
     manifestPresent: !!document.querySelector('link[rel="manifest"]'),
     https: location.protocol === 'https:',
-    dismissed: dismissed
+    dismissed: dismissed,
+    installed: isAppInstalled(),
+    standalone: window.matchMedia('(display-mode: standalone)').matches
   });
 })();
 </script>
