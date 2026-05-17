@@ -965,10 +965,6 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
       <div class="form-group"><label>Payment</label>
         <select id="edit-exp-pay">
-          <option value="Μετρητά">Cash</option>
-          <option value="Κάρτα">Card</option>
-          <option value="Επί Πιστώσει">On Credit</option>
-          <option value="Πιστωτικό Τιμολόγιο">📋 Πιστωτικό Τιμολόγιο (επιστροφή)</option>
         </select>
       </div>
       <div class="form-group"><label>Invoice No.</label><input id="edit-exp-inv" placeholder="e.g. INV-00123"/></div>
@@ -1625,11 +1621,6 @@ footer a{color:var(--accent);text-decoration:none}
         </div>
         <div class="form-group"><label data-el="lbl-payment">Payment Method</label>
           <select id="exp-pay">
-            <option value="" data-el="opt-select3">— Select —</option>
-            <option value="Μετρητά" data-el="opt-cash">Cash</option>
-            <option value="Κάρτα" data-el="opt-card">Card</option>
-            <option value="Επί Πιστώσει" data-el="opt-credit">On Credit</option>
-            <option value="Πιστωτικό Τιμολόγιο">📋 Πιστωτικό Τιμολόγιο (επιστροφή)</option>
           </select>
         </div>
         <div class="form-group"><label data-el="lbl-invoice">Invoice No.</label><input id="exp-inv" data-placeholder-el="ph-invoice" placeholder="e.g. INV-00123"/></div>
@@ -3073,7 +3064,21 @@ function setLang(l){
   closeLangDD();
   applyTranslations();
 }
+function populatePaymentSelects(){
+  const opts=()=>`
+    <option value="">${t('opt-select3')}</option>
+    <option value="Μετρητά">${t('opt-cash')}</option>
+    <option value="Κάρτα">${t('opt-card')}</option>
+    <option value="Επί Πιστώσει">${t('opt-credit')}</option>
+    <option value="Πιστωτικό Τιμολόγιο">${t('Πιστωτικό Τιμολόγιο')}</option>`;
+  const sel=document.getElementById('exp-pay');
+  if(sel){const v=sel.value;sel.innerHTML=opts();sel.value=v;}
+  const editSel=document.getElementById('edit-exp-pay');
+  if(editSel){const v=editSel.value;editSel.innerHTML=opts().replace('<option value="">'+t('opt-select3')+'</option>','');editSel.value=v;}
+}
+
 function applyTranslations(){
+  populatePaymentSelects();
   document.querySelectorAll('[data-el]').forEach(el=>{
     const key=el.getAttribute('data-el');const val=t(key);
     if(val&&val!==key)el.innerHTML=val;
@@ -3211,7 +3216,7 @@ function onPageEnter(page){
   if(page==='expenses'){
     if(!document.getElementById('exp-date').value)document.getElementById('exp-date').value=d;
     if(!document.getElementById('exp-filter-date').value)document.getElementById('exp-filter-date').value=d;
-    populateSupplierSelect();renderExpenseTable();renderExpenseSummary();
+    populatePaymentSelects();populateSupplierSelect();renderExpenseTable();renderExpenseSummary();
   }
   if(page==='suppliers'){renderSuppliers();populateSupTypeDrop();}
   if(page==='credit')renderCreditPage();
