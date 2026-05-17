@@ -842,18 +842,12 @@ footer a{color:var(--accent);text-decoration:none}
       </button>
     </div>
     <div id="modal-supplier-body"></div>
-    <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-      <button class="btn btn-sm" onclick="openCreditNoteFromSupplier()" style="gap:6px;background:rgba(0,212,170,.1);color:var(--accent);border:1px solid rgba(0,212,170,.25);font-weight:600">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 010 8h-1"/></svg>
-        Πιστωτικό Τιμολόγιο
+    <div style="margin-top:18px;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-secondary btn-sm" onclick="printSupplierTransactions()" style="gap:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        PDF
       </button>
-      <div style="display:flex;gap:8px">
-        <button class="btn btn-secondary btn-sm" onclick="printSupplierTransactions()" style="gap:6px">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
-        <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-supplier')" data-el="btn-close">Close</button>
-      </div>
+      <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-supplier')" data-el="btn-close">Close</button>
     </div>
   </div>
 </div>
@@ -974,6 +968,7 @@ footer a{color:var(--accent);text-decoration:none}
           <option value="Μετρητά">Cash</option>
           <option value="Κάρτα">Card</option>
           <option value="Επί Πιστώσει">On Credit</option>
+          <option value="Πιστωτικό Τιμολόγιο">📋 Πιστωτικό Τιμολόγιο (επιστροφή)</option>
         </select>
       </div>
       <div class="form-group"><label>Invoice No.</label><input id="edit-exp-inv" placeholder="e.g. INV-00123"/></div>
@@ -1372,65 +1367,6 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </div>
 
-<!-- MODAL: CREDIT NOTE (Πιστωτικό Τιμολόγιο) -->
-<div class="modal-overlay" id="modal-credit-note">
-  <div class="modal" style="max-width:480px">
-    <div class="modal-title">
-      <span id="credit-note-modal-title">📋 Πιστωτικό Τιμολόγιο</span>
-      <button class="modal-close" onclick="closeModal('modal-credit-note')">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg>
-      </button>
-    </div>
-    <div style="background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.2);border-radius:var(--radius-lg);padding:12px 14px;margin-bottom:18px;font-size:12.5px;color:var(--accent)">
-      ℹ️ Το πιστωτικό τιμολόγιο αφαιρεί ποσό από το υπόλοιπο του προμηθευτή (επιστροφή εμπορευμάτων ή πίστωση).
-    </div>
-    <input type="hidden" id="credit-note-supplier"/>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Ημερομηνία</label>
-        <input type="date" id="cn-date"/>
-      </div>
-      <div class="form-group">
-        <label>Αρ. Πιστωτικού Τιμολογίου</label>
-        <input id="cn-inv" placeholder="π.χ. CN-00123"/>
-      </div>
-      <div class="form-group">
-        <label>Τύπος</label>
-        <select id="cn-type">
-          <option value="FC">Food Cost (FC)</option>
-          <option value="Λειτουργικά">Λειτουργικά</option>
-          <option value="Ενέργεια">Ενέργεια</option>
-          <option value="Συντήρηση">Συντήρηση</option>
-          <option value="Άλλο">Άλλο</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Μέθοδος Αντιστάθμισης</label>
-        <select id="cn-pay">
-          <option value="Επί Πιστώσει">Επί Πιστώσει (μείωση υπολοίπου)</option>
-          <option value="Μετρητά">Μετρητά (επιστροφή χρημάτων)</option>
-          <option value="Κάρτα">Κάρτα/Τράπεζα (επιστροφή)</option>
-        </select>
-      </div>
-      <div class="form-group" style="grid-column:1/-1">
-        <label>Ποσό Πίστωσης (€)</label>
-        <input type="number" id="cn-amount" step="0.01" min="0" placeholder="0.00" style="font-size:20px;padding:14px;font-weight:700;color:var(--accent)"/>
-      </div>
-      <div class="form-group" style="grid-column:1/-1">
-        <label>Αιτία (προαιρετικό)</label>
-        <input id="cn-reason" placeholder="π.χ. Επιστροφή λανθασμένης παραγγελίας"/>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end">
-      <button class="btn btn-secondary" onclick="closeModal('modal-credit-note')">Άκυρο</button>
-      <button class="btn btn-success" onclick="saveCreditNote()" style="gap:6px;background:rgba(0,212,170,.15);color:var(--accent);border:1px solid rgba(0,212,170,.3)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Καταχώρηση Πιστωτικού
-      </button>
-    </div>
-  </div>
-</div>
-
 <!-- ===== PAGES ===== -->
 <main>
 
@@ -1693,6 +1629,7 @@ footer a{color:var(--accent);text-decoration:none}
             <option value="Μετρητά" data-el="opt-cash">Cash</option>
             <option value="Κάρτα" data-el="opt-card">Card</option>
             <option value="Επί Πιστώσει" data-el="opt-credit">On Credit</option>
+            <option value="Πιστωτικό Τιμολόγιο">📋 Πιστωτικό Τιμολόγιο (επιστροφή)</option>
           </select>
         </div>
         <div class="form-group"><label data-el="lbl-invoice">Invoice No.</label><input id="exp-inv" data-placeholder-el="ph-invoice" placeholder="e.g. INV-00123"/></div>
@@ -1726,6 +1663,7 @@ footer a{color:var(--accent);text-decoration:none}
           <tr class="tfoot"><td colspan="5" data-el="tf-total-card">Total Card</td><td id="exp-tot-card" class="mono">0,00 €</td><td></td></tr>
           <tr class="tfoot"><td colspan="5"><strong data-el="tf-total-cashcard">Total Cash + Card</strong></td><td id="exp-tot-cashcard" class="mono"><strong>0,00 €</strong></td><td></td></tr>
           <tr class="tfoot"><td colspan="5" data-el="tf-credit">On Credit</td><td id="exp-tot-credit" class="mono">0,00 €</td><td></td></tr>
+          <tr class="tfoot" id="exp-tot-cn-row" style="display:none"><td colspan="5" style="color:var(--accent)">📋 Πιστωτικά Τιμολόγια (αφαίρεση)</td><td id="exp-tot-cn" class="mono amount-pos">0,00 €</td><td></td></tr>
         </tfoot>
       </table>
     </div>
@@ -3167,8 +3105,6 @@ const DB={
   payroll(){return this.get('fos_payroll')||[]},savePayroll(d){this.set('fos_payroll',d)},
   creditPayments(){return this.get('fos_credit_payments')||[]},
   saveCreditPayments(d){this.set('fos_credit_payments',d)},
-  creditNotes(){return this.get('fos_credit_notes')||[]},
-  saveCreditNotes(d){this.set('fos_credit_notes',d)},
 };
 
 // ── CURRENCY ──
@@ -3630,29 +3566,41 @@ function renderExpenseTable(){
   const d=document.getElementById('exp-filter-date').value;
   const rows=DB.expenses().filter(x=>x.date===d).sort((a,b)=>a.time.localeCompare(b.time));
   const tb=document.getElementById('expense-tbody');
-  const payBadge={'Μετρητά':'badge-gray','Κάρτα':'badge-blue','Επί Πιστώσει':'badge-amber'};
+  const payBadge={'Μετρητά':'badge-gray','Κάρτα':'badge-blue','Επί Πιστώσει':'badge-amber','Πιστωτικό Τιμολόγιο':'badge-green'};
   if(!rows.length){
     tb.innerHTML=`<tr><td colspan="7"><div class="empty"><p>${t('empty-no-records')}</p></div></td></tr>`;
   }else{
-    tb.innerHTML=rows.map(r=>`<tr>
+    tb.innerHTML=rows.map(r=>{
+      const isCreditNote=r.pay==='Πιστωτικό Τιμολόγιο';
+      const amtClass=isCreditNote?'amount-pos':'amount-neg';
+      const amtPrefix=isCreditNote?'-':'';
+      const payLabel=isCreditNote?'📋 Πιστωτικό':r.pay;
+      return`<tr${isCreditNote?' style="background:rgba(0,212,170,.04)"':''}>
       <td class="mono">${r.time}</td><td><strong>${r.supplier}</strong></td>
       <td><span class="badge badge-blue">${r.type}</span></td>
-      <td><span class="badge ${payBadge[r.pay]||'badge-gray'}">${t(r.pay)}</span></td>
+      <td><span class="badge ${payBadge[r.pay]||'badge-gray'}">${payLabel}</span></td>
       <td class="mono">${r.inv||'—'}</td>
-      <td class="amount-neg mono" style="font-weight:700">${fmt(r.amount)}</td>
+      <td class="mono ${amtClass}" style="font-weight:700">${amtPrefix}${fmt(r.amount)}</td>
       <td style="display:flex;gap:4px">
         <button class="btn-icon" style="color:var(--accent2)" onclick="openEditExpense('${r.id}')"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5H6a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-5"/><path d="M15.5 2.5a2 2 0 013 3L11 13l-4 1 1-4 7.5-7.5z"/></svg></button>
         <button class="btn-icon" onclick="deleteExpense('${r.id}')"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 17 6"/><path d="M8 6V4h4v2M19 6l-1 12a2 2 0 01-2 2H4a2 2 0 01-2-2L1 6"/></svg></button>
       </td>
-    </tr>`).join('');
+    </tr>`;
+    }).join('');
   }
   const cash=rows.filter(x=>x.pay==='Μετρητά').reduce((s,x)=>s+x.amount,0);
   const card=rows.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
   const credit=rows.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
+  const creditNoteTotal=rows.filter(x=>x.pay==='Πιστωτικό Τιμολόγιο').reduce((s,x)=>s+x.amount,0);
   document.getElementById('exp-tot-cash').textContent=fmtE(cash);
   document.getElementById('exp-tot-card').textContent=fmtE(card);
   document.getElementById('exp-tot-cashcard').innerHTML=`<strong>${fmtE(cash+card)}</strong>`;
   document.getElementById('exp-tot-credit').textContent=fmtE(credit);
+  // Show credit notes row if any
+  const cnRow=document.getElementById('exp-tot-cn-row');
+  if(cnRow)cnRow.style.display=creditNoteTotal>0?'':'none';
+  const cnEl=document.getElementById('exp-tot-cn');
+  if(cnEl)cnEl.textContent=fmtE(creditNoteTotal);
   renderExpenseSummary();
 }
 function renderExpenseSummary(){
@@ -3807,15 +3755,14 @@ function renderSuppliers(){
     const exp=DB.expenses().filter(x=>x.supplier===s.name);
     const creditTotal=exp.filter(x=>x.pay==='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
     const settled=DB.creditPayments().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
-    const creditNotesTotal=DB.creditNotes().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
-    const balance=Math.max(0,creditTotal-settled-creditNotesTotal);
+    const creditNotesReduction=exp.filter(x=>x.pay==='Πιστωτικό Τιμολόγιο').reduce((a,x)=>a+x.amount,0);
+    const balance=Math.max(0,creditTotal-settled-creditNotesReduction);
     return `<tr>
       <td><strong>${s.name}</strong></td><td class="mono">${s.phone||'—'}</td><td class="mono">${s.afm||'—'}</td>
       <td><span class="badge badge-blue">${s.type||'—'}</span></td>
       <td class="mono ${balance>0?'amount-neg':'amount-pos'}">${balance>0?fmtE(balance):'✓ '+fmtE(0)}</td>
       <td style="display:flex;gap:6px">
         <button class="btn btn-secondary btn-sm" onclick="showSupplierTransactions('${s.id}')">${t('btn-transactions')}</button>
-        <button class="btn btn-sm" onclick="openCreditNote('${s.name}')" style="background:rgba(0,212,170,.08);color:var(--accent);border:1px solid rgba(0,212,170,.2);font-size:10.5px" title="Πιστωτικό Τιμολόγιο">📋 Πιστωτικό</button>
         <button class="btn-icon" onclick="deleteSupplier('${s.id}')"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 17 6"/><path d="M8 6V4h4v2M19 6l-1 12a2 2 0 01-2 2H4a2 2 0 01-2-2L1 6"/></svg></button>
       </td></tr>`;
   }).join('');
@@ -3829,13 +3776,11 @@ function showSupplierTransactions(id){
 
   const exp=DB.expenses().filter(x=>x.supplier===s.name).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
   const settlements=DB.creditPayments().filter(x=>x.supplier===s.name).sort((a,b)=>a.date.localeCompare(b.date));
-  const creditNotes=DB.creditNotes().filter(x=>x.supplier===s.name).sort((a,b)=>a.date.localeCompare(b.date));
 
-  // Build combined list including credit notes
+  // Build combined list
   const allTxns=[
     ...exp.map(r=>({...r,_type:'expense'})),
-    ...settlements.map(r=>({...r,_type:'settlement'})),
-    ...creditNotes.map(r=>({...r,_type:'creditnote'}))
+    ...settlements.map(r=>({...r,_type:'settlement'}))
   ].sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
 
   let creditBalance=0;
@@ -3844,31 +3789,28 @@ function showSupplierTransactions(id){
   const rows=allTxns.map(r=>{
     if(r._type==='expense'){
       const onCredit=r.pay==='Επί Πιστώσει';
-      if(onCredit)creditBalance+=r.amount;
-      return `<tr>
+      const isCreditNote=r.pay==='Πιστωτικό Τιμολόγιο';
+      if(onCredit) creditBalance+=r.amount;
+      if(isCreditNote) creditBalance=Math.max(0,creditBalance-r.amount);
+      const badgeClass=isCreditNote?'badge-green':payBadge[r.pay]||'badge-gray';
+      const payLabel=isCreditNote?'📋 Πιστωτικό':t(r.pay);
+      const amtClass=isCreditNote?'amount-pos':'amount-neg';
+      const amtPrefix=isCreditNote?'-':'';
+      const showBal=onCredit||isCreditNote;
+      return `<tr${isCreditNote?' style="background:rgba(0,212,170,.05)"':''}>
         <td>${r.date}</td><td class="mono">${r.time}</td>
-        <td><span class="badge ${payBadge[r.pay]||'badge-gray'}">${t(r.pay)}</span></td>
+        <td><span class="badge ${badgeClass}">${payLabel}</span></td>
         <td class="mono">${r.inv||'—'}</td>
-        <td class="mono amount-neg">${fmtE(r.amount)}</td>
-        <td class="mono ${onCredit?'amount-neg':''}">${onCredit?fmtE(creditBalance):'—'}</td>
-      </tr>`;
-    } else if(r._type==='creditnote'){
-      // Credit note — reduces balance (green row)
-      creditBalance=Math.max(0,creditBalance-r.amount);
-      return `<tr style="background:rgba(0,212,170,.06)">
-        <td>${r.date}</td><td class="mono">${r.time||'—'}</td>
-        <td><span class="badge badge-green">📋 Πιστωτικό</span></td>
-        <td class="mono" style="color:var(--accent)">${r.inv||'CN'}</td>
-        <td class="mono amount-pos">-${fmtE(r.amount)}</td>
-        <td class="mono" style="color:${creditBalance>0?'var(--danger)':'var(--accent)'}">${fmtE(creditBalance)}</td>
+        <td class="mono ${amtClass}">${amtPrefix}${fmtE(r.amount)}</td>
+        <td class="mono ${showBal?(creditBalance>0?'amount-neg':'amount-pos'):''}">${showBal?fmtE(creditBalance):'—'}</td>
       </tr>`;
     } else {
       // Settlement payment — reduces credit balance
       creditBalance=Math.max(0,creditBalance-r.amount);
       const payLabel=r.pay==='Κάρτα'?(lang==='el'?'Τράπεζα':'Bank'):(lang==='el'?'Μετρητά':'Cash');
-      return `<tr style="background:rgba(0,184,255,.04)">
+      return `<tr style="background:rgba(0,212,170,.05)">
         <td>${r.date}</td><td class="mono">${r.time||'—'}</td>
-        <td><span class="badge badge-blue">✓ ${payLabel}</span></td>
+        <td><span class="badge badge-green">✓ ${payLabel}</span></td>
         <td class="mono" style="color:var(--ink3)">${lang==='el'?'Εξόφληση':'Settlement'}</td>
         <td class="mono amount-pos">-${fmtE(r.amount)}</td>
         <td class="mono" style="color:${creditBalance>0?'var(--danger)':'var(--accent)'}">${fmtE(creditBalance)}</td>
@@ -3876,11 +3818,11 @@ function showSupplierTransactions(id){
     }
   }).join('');
 
-  const totalInvoiced=exp.reduce((s,x)=>s+x.amount,0);
+  const totalInvoiced=exp.reduce((s,x)=>x.pay!=='Πιστωτικό Τιμολόγιο'?s+x.amount:s,0);
   const totalSettled=settlements.reduce((s,x)=>s+x.amount,0);
-  const totalCreditNotes=creditNotes.reduce((s,x)=>s+x.amount,0);
+  const totalCreditNoteExp=exp.filter(x=>x.pay==='Πιστωτικό Τιμολόγιο').reduce((s,x)=>s+x.amount,0);
   const totalCredit=exp.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
-  const outstanding=Math.max(0,totalCredit-totalSettled-totalCreditNotes);
+  const outstanding=Math.max(0,totalCredit-totalSettled-totalCreditNoteExp);
 
   document.getElementById('modal-supplier-body').innerHTML=`
     <div class="table-wrap" style="margin-bottom:12px">
@@ -3893,7 +3835,7 @@ function showSupplierTransactions(id){
       <tfoot>
         <tr class="tfoot"><td colspan="4">${t('tbl-supplier-total')}</td><td>${fmtE(totalInvoiced)}</td><td></td></tr>
         <tr class="tfoot"><td colspan="4">${lang==='el'?'Συνολικές Εξοφλήσεις':'Total Settlements'}</td><td style="color:var(--accent)">-${fmtE(totalSettled)}</td><td></td></tr>
-        ${totalCreditNotes>0?`<tr class="tfoot"><td colspan="4">${lang==='el'?'Πιστωτικά Τιμολόγια':'Credit Notes'}</td><td style="color:var(--accent)">-${fmtE(totalCreditNotes)}</td><td></td></tr>`:''}
+        ${totalCreditNoteExp>0?`<tr class="tfoot"><td colspan="4" style="color:var(--accent)">📋 ${lang==='el'?'Πιστωτικά Τιμολόγια':'Credit Notes'}</td><td style="color:var(--accent)">-${fmtE(totalCreditNoteExp)}</td><td></td></tr>`:''}
         <tr class="tfoot" style="font-size:14px"><td colspan="4"><strong>${lang==='el'?'Ανεξόφλητο Υπόλοιπο':'Outstanding Balance'}</strong></td><td colspan="2" style="color:${outstanding>0?'var(--danger)':'var(--accent)'}"><strong>${fmtE(outstanding)}</strong></td></tr>
       </tfoot></table>
     </div>`;
@@ -4047,75 +3989,6 @@ function printSupplierTransactions(){
   win.document.write(html);
   win.document.close();
   win.onload=()=>{setTimeout(()=>{win.focus();win.print();},300);};
-}
-
-// ── CREDIT NOTES (Πιστωτικά Τιμολόγια) ──
-function openCreditNote(supplierName){
-  document.getElementById('credit-note-supplier').value=supplierName;
-  document.getElementById('credit-note-modal-title').textContent='📋 Πιστωτικό Τιμολόγιο — '+supplierName;
-  document.getElementById('cn-date').value=today();
-  document.getElementById('cn-inv').value='';
-  document.getElementById('cn-amount').value='';
-  document.getElementById('cn-reason').value='';
-  document.getElementById('cn-pay').value='Επί Πιστώσει';
-  openModal('modal-credit-note');
-}
-
-function openCreditNoteFromSupplier(){
-  // Called from inside the supplier transactions modal
-  const suppName=document.getElementById('modal-supplier-name').textContent.replace(/^(Transactions: |Συναλλαγές: )/,'');
-  closeModal('modal-supplier');
-  openCreditNote(suppName);
-}
-
-function saveCreditNote(){
-  if(checkDemoLimit())return;
-  const supplier=document.getElementById('credit-note-supplier').value;
-  const d=document.getElementById('cn-date').value;
-  const inv=document.getElementById('cn-inv').value.trim();
-  const type=document.getElementById('cn-type').value;
-  const pay=document.getElementById('cn-pay').value;
-  const amount=parseFloat(document.getElementById('cn-amount').value)||0;
-  const reason=document.getElementById('cn-reason').value.trim();
-
-  if(!d){notify('Επιλέξτε ημερομηνία','danger');return;}
-  if(!supplier){notify('Δεν βρέθηκε προμηθευτής','danger');return;}
-  if(amount<=0){notify('Εισάγετε ποσό πίστωσης','danger');return;}
-
-  // Validate: credit note cannot exceed outstanding balance
-  const exp=DB.expenses().filter(x=>x.supplier===supplier);
-  const totalCredit=exp.filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
-  const settled=DB.creditPayments().filter(x=>x.supplier===supplier).reduce((s,x)=>s+x.amount,0);
-  const existingCN=DB.creditNotes().filter(x=>x.supplier===supplier).reduce((s,x)=>s+x.amount,0);
-  const outstanding=Math.max(0,totalCredit-settled-existingCN);
-
-  if(pay==='Επί Πιστώσει'&&amount>outstanding+0.01){
-    if(!confirm(`Το ποσό (${fmtE(amount)}) υπερβαίνει το ανεξόφλητο υπόλοιπο (${fmtE(outstanding)}). Συνέχεια;`))return;
-  }
-
-  const data=DB.creditNotes();
-  data.push({
-    id:uid(),
-    date:d,
-    time:timeNow(),
-    supplier,
-    inv:inv||('CN-'+Date.now().toString().slice(-6)),
-    type,
-    pay,
-    amount,
-    reason
-  });
-  DB.saveCreditNotes(data);
-  closeModal('modal-credit-note');
-  renderSuppliers();
-  notify(`✓ Πιστωτικό τιμολόγιο ${fmtE(amount)} καταχωρήθηκε για ${supplier}`);
-}
-
-function deleteCreditNote(id){
-  if(!confirm(t('confirm-delete')))return;
-  DB.saveCreditNotes(DB.creditNotes().filter(x=>x.id!==id));
-  renderSuppliers();
-  notify(t('notify-deleted'),'danger');
 }
 
 // ── PAYROLL ──
@@ -4930,8 +4803,6 @@ function backupData(){
     suppliers:DB.suppliers(),
     employees:DB.employees(),
     payroll:DB.payroll(),
-    creditNotes:DB.creditNotes(),
-    creditPayments:DB.creditPayments(),
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -4956,8 +4827,6 @@ function restoreData(event){
       if(data.suppliers)DB.saveSuppliers(data.suppliers);
       if(data.employees)DB.saveEmployees(data.employees);
       if(data.payroll)DB.savePayroll(data.payroll);
-      if(data.creditNotes)DB.saveCreditNotes(data.creditNotes);
-      if(data.creditPayments)DB.saveCreditPayments(data.creditPayments);
       if(data.currency){CURRENCY=data.currency;updateCurrencyUI();}
       notify('Backup restored successfully!');
       nav(currentPage);updateHomeStats();
@@ -6460,15 +6329,16 @@ function renderWallet(){
   const creditPaysCard=allCreditPayments.filter(x=>x.pay==='Κάρτα').reduce((s,x)=>s+x.amount,0);
   const cardBal=cardIn-cardOut-creditPaysCard;
 
-  // Outstanding credit = all credit invoices minus all settlements AND credit notes (ALL TIME, not filtered by date)
+  // Outstanding credit = all credit invoices minus settlements and credit note expenses (ALL TIME)
   const allCreditInvoices=DB.expenses().filter(x=>x.pay==='Επί Πιστώσει').reduce((s,x)=>s+x.amount,0);
   const allSettlements=DB.creditPayments().reduce((s,x)=>s+x.amount,0);
-  const allCreditNotes=DB.creditNotes().reduce((s,x)=>s+x.amount,0);
-  const creditTotal=Math.max(0,allCreditInvoices-allSettlements-allCreditNotes);
+  const allCreditNoteExp=DB.expenses().filter(x=>x.pay==='Πιστωτικό Τιμολόγιο').reduce((s,x)=>s+x.amount,0);
+  const creditTotal=Math.max(0,allCreditInvoices-allSettlements-allCreditNoteExp);
   const creditCount=DB.suppliers().filter(s=>{
-    const inv=DB.expenses().filter(x=>x.supplier===s.name&&x.pay==='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
+    const supExp=DB.expenses().filter(x=>x.supplier===s.name);
+    const inv=supExp.filter(x=>x.pay==='Επί Πιστώσει').reduce((a,x)=>a+x.amount,0);
     const paid=DB.creditPayments().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
-    const cn=DB.creditNotes().filter(x=>x.supplier===s.name).reduce((a,x)=>a+x.amount,0);
+    const cn=supExp.filter(x=>x.pay==='Πιστωτικό Τιμολόγιο').reduce((a,x)=>a+x.amount,0);
     return inv-paid-cn>0;
   }).length;
 
