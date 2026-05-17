@@ -5866,11 +5866,13 @@ function renderCreditPage(){
   const creditSuppliers=suppliers.map(s=>{
     const exp=allExp.filter(x=>x.supplier===s.name);
     const creditEntries=exp.filter(x=>x.pay==='Επί Πιστώσει').sort((a,b)=>a.date.localeCompare(b.date));
+    const creditNoteEntries=exp.filter(x=>x.pay==='Πιστωτικό Τιμολόγιο').sort((a,b)=>a.date.localeCompare(b.date));
     const totalCredit=creditEntries.reduce((a,x)=>a+x.amount,0);
+    const totalCreditNotes=creditNoteEntries.reduce((a,x)=>a+x.amount,0);
     const payments=allPayments.filter(x=>x.supplier===s.name);
     const totalPaid=payments.reduce((a,x)=>a+x.amount,0);
-    const balance=Math.max(0,totalCredit-totalPaid);
-    return{s,creditEntries,payments,totalCredit,totalPaid,balance};
+    const balance=Math.max(0,totalCredit-totalPaid-totalCreditNotes);
+    return{s,creditEntries,creditNoteEntries,payments,totalCredit,totalCreditNotes,totalPaid,balance};
   }).filter(x=>x.totalCredit>0).sort((a,b)=>b.balance-a.balance);
 
   const totalBalance=creditSuppliers.reduce((s,x)=>s+x.balance,0);
@@ -5887,40 +5889,66 @@ function renderCreditPage(){
     return;
   }
 
-  el.innerHTML=creditSuppliers.map(({s,creditEntries,payments,totalCredit,totalPaid,balance})=>{
-    const invoiceRows=creditEntries.map(r=>`<tr>
-      <td style="padding:8px 16px">${r.date}</td>
-      <td style="padding:8px 16px">${r.inv||'—'}</td>
-      <td style="padding:8px 16px"><span class="badge badge-amber">${lang==='el'?'Επί Πιστώσει':'On Credit'}</span></td>
-      <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--danger);font-weight:600">${fmtE(r.amount)}</td>
-    </tr>`).join('');
+  el.innerHTML=creditSuppliers.map(({s,creditEntries,creditNoteEntries,payments,totalCredit,totalCreditNotes,totalPaid,balance})=>{
+    // Build combined timeline sorted by date
+    const allRows=[
+      ...creditEntries.map(r=>({...r,_type:'invoice'})),
+      ...creditNoteEntries.map(r=>({...r,_type:'creditnote'})),
+      ...payments.map(r=>({...r,_type:'payment'}))
+    ].sort((a,b)=>a.date.localeCompare(b.date));
 
-    const paymentRows=payments.map(p=>`<tr style="background:rgba(0,212,170,.04)">
-      <td style="padding:8px 16px">${p.date}</td>
-      <td style="padding:8px 16px;color:var(--ink3)">—</td>
-      <td style="padding:8px 16px"><span class="badge badge-green">✓ ${p.pay==='Κάρτα'?(lang==='el'?'Τράπεζα':'Bank'):(lang==='el'?'Μετρητά':'Cash')}</span></td>
-      <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--accent);font-weight:600">-${fmtE(p.amount)}</td>
-    </tr>`).join('');
+    let runBal=0;
+    const tableRows=allRows.map(r=>{
+      if(r._type==='invoice'){
+        runBal+=r.amount;
+        return`<tr>
+          <td style="padding:8px 16px">${r.date}</td>
+          <td style="padding:8px 16px">${r.inv||'—'}</td>
+          <td style="padding:8px 16px"><span class="badge badge-amber">${lang==='el'?'Επί Πιστώσει':lang==='es'?'A crédito':lang==='it'?'A credito':lang==='fr'?'À crédit':lang==='de'?'Auf Kredit':'On Credit'}</span></td>
+          <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--danger);font-weight:600">${fmtE(r.amount)}</td>
+          <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:${runBal>0?'var(--danger)':'var(--accent)'};font-weight:600">${fmtE(runBal)}</td>
+        </tr>`;
+      } else if(r._type==='creditnote'){
+        runBal=Math.max(0,runBal-r.amount);
+        return`<tr style="background:rgba(0,212,170,.05)">
+          <td style="padding:8px 16px">${r.date}</td>
+          <td style="padding:8px 16px;color:var(--accent)">${r.inv||'—'}</td>
+          <td style="padding:8px 16px"><span class="badge badge-green">📋 ${lang==='el'?'Πιστωτικό':lang==='es'?'Nota crédito':lang==='it'?'Nota credito':lang==='fr'?'Avoir':lang==='de'?'Gutschrift':'Credit Note'}</span></td>
+          <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--accent);font-weight:600">-${fmtE(r.amount)}</td>
+          <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:${runBal>0?'var(--danger)':'var(--accent)'};font-weight:600">${fmtE(runBal)}</td>
+        </tr>`;
+      } else {
+        runBal=Math.max(0,runBal-r.amount);
+        return`<tr style="background:rgba(0,184,255,.04)">
+          <td style="padding:8px 16px">${r.date}</td>
+          <td style="padding:8px 16px;color:var(--ink3)">—</td>
+          <td style="padding:8px 16px"><span class="badge badge-blue">✓ ${r.pay==='Κάρτα'?(lang==='el'?'Τράπεζα':lang==='es'?'Banco':lang==='it'?'Banca':lang==='fr'?'Banque':lang==='de'?'Bank':'Bank'):(lang==='el'?'Μετρητά':lang==='es'?'Efectivo':lang==='it'?'Contanti':lang==='fr'?'Espèces':lang==='de'?'Bargeld':'Cash')}</span></td>
+          <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:var(--accent2);font-weight:600">-${fmtE(r.amount)}</td>
+          <td style="padding:8px 16px;text-align:right;font-family:var(--mono);color:${runBal>0?'var(--danger)':'var(--accent)'};font-weight:600">${fmtE(runBal)}</td>
+        </tr>`;
+      }
+    }).join('');
 
     const isFullyPaid=balance<=0;
 
     return`<div class="credit-supplier-block" style="${isFullyPaid?'opacity:.6':''}">
       <div class="credit-supplier-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
         <div>
-          <div class="credit-supplier-name">${s.name} ${isFullyPaid?'<span style="font-size:11px;color:var(--accent);font-weight:700">✓ ΕΞΟΦΛΗΜΕΝΟ</span>':''}</div>
+          <div class="credit-supplier-name">${s.name} ${isFullyPaid?`<span style="font-size:11px;color:var(--accent);font-weight:700">✓ ${lang==='el'?'ΕΞΟΦΛΗΜΕΝΟ':lang==='es'?'SALDADO':lang==='it'?'SALDATO':lang==='fr'?'SOLDÉ':lang==='de'?'BEZAHLT':'SETTLED'}</span>`:''}</div>
           <div style="font-size:11.5px;color:var(--ink3);margin-top:3px">
-            ${s.type?`${s.type} · `:''}${creditEntries.length} ${lang==='el'?'τιμολόγια':'invoice(s)'}
-            ${payments.length?` · ${payments.length} ${lang==='el'?'πληρωμές':'payment(s)'}  `:''}
+            ${s.type?`${s.type} · `:''}${creditEntries.length} ${lang==='el'?'τιμολόγια':lang==='es'?'facturas':lang==='it'?'fatture':lang==='fr'?'factures':lang==='de'?'Rechnungen':'invoice(s)'}
+            ${payments.length?` · ${payments.length} ${lang==='el'?'πληρωμές':lang==='es'?'pagos':lang==='it'?'pagamenti':lang==='fr'?'paiements':lang==='de'?'Zahlungen':'payment(s)'}`:''} 
+            ${creditNoteEntries.length?` · <span style="color:var(--accent)">${creditNoteEntries.length} ${lang==='el'?'πιστωτικά':lang==='es'?'notas crédito':lang==='it'?'note credito':lang==='fr'?'avoirs':lang==='de'?'Gutschriften':'credit note(s)'}</span>`:''}
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           ${!isFullyPaid?`<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openSettle('${s.name}',${balance})" style="gap:5px;background:var(--accent);color:#000;border-color:var(--accent)">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            ${lang==='el'?'Εξόφληση':'Settle'}
+            ${lang==='el'?'Εξόφληση':lang==='es'?'Liquidar':lang==='it'?'Salda':lang==='fr'?'Régler':lang==='de'?'Bezahlen':'Settle'}
           </button>`:''}
           <div style="text-align:right">
             <div class="credit-supplier-bal" style="color:${isFullyPaid?'var(--accent)':'var(--danger)'}">${fmtE(balance)}</div>
-            <div style="font-size:11px;color:var(--ink3);margin-top:2px">${isFullyPaid?(lang==='el'?'εξοφλημένο':'settled'):(lang==='el'?'ανεξόφλητο':'outstanding')}</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:2px">${isFullyPaid?(lang==='el'?'εξοφλημένο':lang==='es'?'saldado':lang==='it'?'saldato':lang==='fr'?'soldé':lang==='de'?'bezahlt':'settled'):(lang==='el'?'ανεξόφλητο':lang==='es'?'pendiente':lang==='it'?'in sospeso':lang==='fr'?'impayé':lang==='de'?'ausstehend':'outstanding')}</div>
           </div>
         </div>
       </div>
@@ -5928,16 +5956,32 @@ function renderCreditPage(){
         <div class="table-wrap" style="border-radius:0;border:none;border-top:1px solid var(--border)">
           <table>
             <thead><tr>
-              <th>${lang==='el'?'Ημερομηνία':'Date'}</th>
-              <th>${lang==='el'?'Τιμολόγιο':'Invoice'}</th>
-              <th>${lang==='el'?'Κατάσταση':'Status'}</th>
-              <th style="text-align:right">${lang==='el'?'Ποσό':'Amount'}</th>
+              <th>${lang==='el'?'Ημερομηνία':lang==='es'?'Fecha':lang==='it'?'Data':lang==='fr'?'Date':lang==='de'?'Datum':'Date'}</th>
+              <th>${lang==='el'?'Τιμολόγιο':lang==='es'?'Factura':lang==='it'?'Fattura':lang==='fr'?'Facture':lang==='de'?'Rechnung':'Invoice'}</th>
+              <th>${lang==='el'?'Κατάσταση':lang==='es'?'Estado':lang==='it'?'Stato':lang==='fr'?'Statut':lang==='de'?'Status':'Status'}</th>
+              <th style="text-align:right">${lang==='el'?'Ποσό':lang==='es'?'Importe':lang==='it'?'Importo':lang==='fr'?'Montant':lang==='de'?'Betrag':'Amount'}</th>
+              <th style="text-align:right">${lang==='el'?'Υπόλοιπο':lang==='es'?'Saldo':lang==='it'?'Saldo':lang==='fr'?'Solde':lang==='de'?'Saldo':'Balance'}</th>
             </tr></thead>
-            <tbody>${invoiceRows}${paymentRows}</tbody>
+            <tbody>${tableRows}</tbody>
             <tfoot>
               <tr class="tfoot">
-                <td colspan="3" style="padding:10px 16px"><strong>${lang==='el'?'Υπόλοιπο':'Balance'}</strong></td>
-                <td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:${isFullyPaid?'var(--accent)':'var(--danger)'}"><strong>${fmtE(balance)}</strong></td>
+                <td colspan="2" style="padding:10px 16px">${lang==='el'?'Τιμολόγια':lang==='es'?'Facturas':lang==='it'?'Fatture':lang==='fr'?'Factures':lang==='de'?'Rechnungen':'Invoices'}</td>
+                <td colspan="2" style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--danger)">${fmtE(totalCredit)}</td>
+                <td></td>
+              </tr>
+              ${totalCreditNotes>0?`<tr class="tfoot">
+                <td colspan="2" style="padding:10px 16px;color:var(--accent)">📋 ${lang==='el'?'Πιστωτικά':lang==='es'?'Notas crédito':lang==='it'?'Note credito':lang==='fr'?'Avoirs':lang==='de'?'Gutschriften':'Credit Notes'}</td>
+                <td colspan="2" style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--accent)">-${fmtE(totalCreditNotes)}</td>
+                <td></td>
+              </tr>`:''}
+              ${totalPaid>0?`<tr class="tfoot">
+                <td colspan="2" style="padding:10px 16px">${lang==='el'?'Εξοφλήσεις':lang==='es'?'Pagos':lang==='it'?'Pagamenti':lang==='fr'?'Paiements':lang==='de'?'Zahlungen':'Settlements'}</td>
+                <td colspan="2" style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--accent2)">-${fmtE(totalPaid)}</td>
+                <td></td>
+              </tr>`:''}
+              <tr class="tfoot" style="font-size:14px">
+                <td colspan="3" style="padding:10px 16px"><strong>${lang==='el'?'Ανεξόφλητο Υπόλοιπο':lang==='es'?'Saldo Pendiente':lang==='it'?'Saldo In Sospeso':lang==='fr'?'Solde Impayé':lang==='de'?'Ausstehender Betrag':'Outstanding Balance'}</strong></td>
+                <td colspan="2" style="padding:10px 16px;text-align:right;font-family:var(--mono);color:${isFullyPaid?'var(--accent)':'var(--danger)'}"><strong>${fmtE(balance)}</strong></td>
               </tr>
             </tfoot>
           </table>
