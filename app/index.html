@@ -3684,7 +3684,7 @@ function deleteExpense(id){
   DB.saveExpenses(DB.expenses().filter(x=>x.id!==id));renderExpenseTable();renderExpenseSummary();notify(t('notify-deleted'),'danger');
 }
 
-// ── INVOICE OCR (Google Gemini Vision — FREE) ──
+// ── INVOICE OCR (Mistral Vision — FREE) ──
 let _ocrImageBase64=null;
 let _ocrImageType='image/jpeg';
 let _ocrStream=null;
@@ -3695,7 +3695,6 @@ function switchOcrTab(tab){
   const isCamera=tab==='camera';
   document.getElementById('ocr-panel-camera').style.display=isCamera?'block':'none';
   document.getElementById('ocr-panel-upload').style.display=isCamera?'none':'block';
-  // style tabs
   const btnCam=document.getElementById('ocr-tab-camera');
   const btnUp=document.getElementById('ocr-tab-upload');
   btnCam.style.background=isCamera?'rgba(0,184,255,.12)':'var(--surface2)';
@@ -3740,17 +3739,12 @@ function stopOcrCamera(){
 
 async function startOcrCamera(){
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
-    notify('Η κάμερα δεν υποστηρίζεται σε αυτόν τον browser. Χρησιμοποιήστε Chrome ή Safari.','danger');
-    return;
+    notify('Η κάμερα δεν υποστηρίζεται. Χρησιμοποιήστε Chrome ή Safari.','danger');return;
   }
   try{
-    // Try back camera first (mobile), fallback to any
     let stream;
-    try{
-      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}});
-    }catch{
-      stream=await navigator.mediaDevices.getUserMedia({video:true});
-    }
+    try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}});}
+    catch{stream=await navigator.mediaDevices.getUserMedia({video:true});}
     _ocrStream=stream;
     const video=document.getElementById('ocr-video');
     video.srcObject=stream;
@@ -3759,8 +3753,6 @@ async function startOcrCamera(){
     document.getElementById('ocr-cam-placeholder').style.display='none';
     document.getElementById('ocr-start-btn').style.display='none';
     document.getElementById('ocr-capture-btn').style.display='flex';
-
-    // Populate camera list if multiple
     try{
       const devices=await navigator.mediaDevices.enumerateDevices();
       const cameras=devices.filter(d=>d.kind==='videoinput');
@@ -3770,10 +3762,9 @@ async function startOcrCamera(){
         sel.style.display='block';
       }
     }catch{}
-
   }catch(err){
-    if(err.name==='NotAllowedError')notify('Δεν δόθηκε άδεια κάμερας. Επιτρέψτε την πρόσβαση στον browser.','danger');
-    else if(err.name==='NotFoundError')notify('Δεν βρέθηκε κάμερα στη συσκευή.','danger');
+    if(err.name==='NotAllowedError')notify('Δεν δόθηκε άδεια κάμερας.','danger');
+    else if(err.name==='NotFoundError')notify('Δεν βρέθηκε κάμερα.','danger');
     else notify('Σφάλμα κάμερας: '+err.message,'danger');
   }
 }
@@ -3794,18 +3785,14 @@ function captureOcrPhoto(){
   const canvas=document.getElementById('ocr-canvas');
   canvas.width=video.videoWidth||640;
   canvas.height=video.videoHeight||480;
-  const ctx=canvas.getContext('2d');
-  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
   const dataUrl=canvas.toDataURL('image/jpeg',0.92);
   _ocrImageBase64=dataUrl.split(',')[1];
   _ocrImageType='image/jpeg';
-  // Show preview
-  const img=document.getElementById('ocr-preview-img');
-  img.src=dataUrl;
-  document.getElementById('ocr-preview-name').textContent='Φωτογραφία από κάμερα · '+canvas.width+'×'+canvas.height;
+  document.getElementById('ocr-preview-img').src=dataUrl;
+  document.getElementById('ocr-preview-name').textContent='Φωτογραφία · '+canvas.width+'×'+canvas.height;
   document.getElementById('ocr-preview-wrap').style.display='block';
   document.getElementById('ocr-analyze-btn').style.display='flex';
-  // Stop camera
   stopOcrCamera();
 }
 
@@ -3829,16 +3816,13 @@ function handleOcrFile(e){
 }
 
 function processOcrFile(file){
-  if(!file.type.startsWith('image/')){
-    notify('Παρακαλώ επιλέξτε εικόνα (JPG, PNG)','danger');return;
-  }
+  if(!file.type.startsWith('image/')){notify('Επιλέξτε εικόνα (JPG, PNG)','danger');return;}
   _ocrImageType=file.type;
   const reader=new FileReader();
   reader.onload=e=>{
     const result=e.target.result;
     _ocrImageBase64=result.split(',')[1];
-    const img=document.getElementById('ocr-preview-img');
-    img.src=result;
+    document.getElementById('ocr-preview-img').src=result;
     document.getElementById('ocr-preview-name').textContent=file.name+' ('+Math.round(file.size/1024)+' KB)';
     document.getElementById('ocr-preview-wrap').style.display='block';
     document.getElementById('ocr-analyze-btn').style.display='flex';
@@ -3847,7 +3831,7 @@ function processOcrFile(file){
 }
 
 async function runOcrAnalysis(){
-  const apiKey='AIzaSyBknut-_789v8xVN9r4JORrSUdle6GDG_U';
+  const apiKey='au73aQK2hxrhhDYYeEEFFKADybbmJZQw';
   if(!_ocrImageBase64){notify('Τραβήξτε φωτογραφία ή επιλέξτε αρχείο','danger');return;}
 
   closeOcrModal();
@@ -3859,63 +3843,56 @@ async function runOcrAnalysis(){
   },1200);
 
   const suppliers=DB.suppliers().map(s=>s.name);
-  const suppList=suppliers.length?suppliers.join(', '):'(κανένας καταχωρημένος)';
+  const suppList=suppliers.length?suppliers.join(', '):'(κανένας)';
 
-  const prompt=`Είσαι ειδικός ανάλυσης τιμολογίων. Ανάλυσε αυτή την εικόνα τιμολογίου.
+  const prompt=`Ανάλυσε αυτό το τιμολόγιο. Οι προμηθευτές στο σύστημα: ${suppList}
 
-Οι διαθέσιμοι προμηθευτές στο σύστημα είναι: ${suppList}
-
-Επίστρεψε ΜΟΝΟ έγκυρο JSON (χωρίς markdown, χωρίς backticks) με αυτά τα πεδία:
-{
-  "supplier": "όνομα προμηθευτή (αντιστοίχισε με τη λίστα αν υπάρχει)",
-  "invoice_number": "αριθμός τιμολογίου",
-  "date": "ημερομηνία σε μορφή YYYY-MM-DD",
-  "amount": αριθμητική τιμή (συνολικό ποσό),
-  "type": "FC ή Λειτουργικά ή Ενέργεια ή Συντήρηση ή Άλλο",
-  "confidence": "high ή medium ή low",
-  "notes": "παρατηρήσεις αν υπάρχουν"
-}`;
+Επίστρεψε ΜΟΝΟ JSON χωρίς markdown:
+{"supplier":"όνομα","invoice_number":"αριθμός","date":"YYYY-MM-DD","amount":0.00,"type":"FC ή Λειτουργικά ή Ενέργεια ή Συντήρηση ή Άλλο","confidence":"high/medium/low","notes":""}`;
 
   try{
-    const resp=await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
-      {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          contents:[{parts:[
-            {inline_data:{mime_type:_ocrImageType,data:_ocrImageBase64}},
-            {text:prompt}
-          ]}],
-          generationConfig:{temperature:0.1,maxOutputTokens:600}
-        })
-      }
-    );
+    const resp=await fetch('https://api.mistral.ai/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+apiKey
+      },
+      body:JSON.stringify({
+        model:'mistral-small-latest',
+        messages:[{
+          role:'user',
+          content:[
+            {type:'image_url',image_url:{url:'data:'+_ocrImageType+';base64,'+_ocrImageBase64}},
+            {type:'text',text:prompt}
+          ]
+        }],
+        max_tokens:400,
+        temperature:0.1
+      })
+    });
 
     clearInterval(ltimer);
     document.getElementById('ocr-loading').style.display='none';
 
     if(!resp.ok){
       const err=await resp.json().catch(()=>({}));
-      const msg=err.error?.message||('HTTP '+resp.status);
-      if(resp.status===400)notify('Gemini: Μη έγκυρο API Key. Ελέγξτε τις Ρυθμίσεις.','danger');
-      else if(resp.status===429)notify('Gemini: Υπέρβαση ορίου. Δοκιμάστε σε λίγο.','danger');
-      else notify('Gemini Error: '+msg,'danger');
+      const msg=err.message||('HTTP '+resp.status);
+      if(resp.status===401)notify('Mistral: Μη έγκυρο API Key','danger');
+      else if(resp.status===429)notify('Mistral: Υπέρβαση ορίου. Δοκιμάστε σε λίγο.','danger');
+      else notify('Σφάλμα: '+msg,'danger');
       return;
     }
 
     const data=await resp.json();
-    const raw=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    const raw=data.choices?.[0]?.message?.content||'';
     let parsed;
     try{
-      const clean=raw.replace(/```json|```/g,'').trim();
-      parsed=JSON.parse(clean);
+      parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     }catch{
       notify('Δεν εντοπίστηκαν στοιχεία. Δοκιμάστε καθαρότερη φωτογραφία.','danger');return;
     }
 
     let filled=0;
-
     if(parsed.date&&/^\d{4}-\d{2}-\d{2}$/.test(parsed.date)){
       document.getElementById('exp-date').value=parsed.date;
       document.getElementById('exp-filter-date').value=parsed.date;
@@ -3923,24 +3900,19 @@ async function runOcrAnalysis(){
     }
     if(parsed.supplier){
       const supSel=document.getElementById('exp-supplier');
-      const opts=[...supSel.options];
       const q=parsed.supplier.toLowerCase();
-      const match=opts.find(o=>o.value&&(o.value.toLowerCase()===q||q.includes(o.value.toLowerCase())||o.value.toLowerCase().includes(q)));
+      const match=[...supSel.options].find(o=>o.value&&(o.value.toLowerCase()===q||q.includes(o.value.toLowerCase())||o.value.toLowerCase().includes(q)));
       if(match){supSel.value=match.value;filled++;}
     }
-    if(parsed.invoice_number){
-      document.getElementById('exp-inv').value=parsed.invoice_number;filled++;
-    }
-    if(parsed.amount&&parsed.amount>0){
-      document.getElementById('exp-amount').value=parseFloat(parsed.amount).toFixed(2);filled++;
-    }
+    if(parsed.invoice_number){document.getElementById('exp-inv').value=parsed.invoice_number;filled++;}
+    if(parsed.amount&&parsed.amount>0){document.getElementById('exp-amount').value=parseFloat(parsed.amount).toFixed(2);filled++;}
     if(parsed.type){
-      const typeMap={'FC':'FC','Λειτουργικά':'Λειτουργικά','Ενέργεια':'Ενέργεια','Συντήρηση':'Συντήρηση','Άλλο':'Άλλο'};
-      if(typeMap[parsed.type])document.getElementById('exp-type').value=typeMap[parsed.type];
+      const tm={'FC':'FC','Λειτουργικά':'Λειτουργικά','Ενέργεια':'Ενέργεια','Συντήρηση':'Συντήρηση','Άλλο':'Άλλο'};
+      if(tm[parsed.type])document.getElementById('exp-type').value=tm[parsed.type];
     }
 
     const conf=parsed.confidence==='high'?'✅ Υψηλή':parsed.confidence==='medium'?'⚡ Μέτρια':'⚠️ Χαμηλή';
-    document.getElementById('ocr-result-text').textContent=`${filled} στοιχεία εντοπίστηκαν · Αξιοπιστία: ${conf}${parsed.notes?' · '+parsed.notes:''}`;
+    document.getElementById('ocr-result-text').textContent=`${filled} στοιχεία · Αξιοπιστία: ${conf}${parsed.notes?' · '+parsed.notes:''}`;
     document.getElementById('ocr-result-banner').style.display='block';
     document.querySelector('#page-expenses .card').scrollIntoView({behavior:'smooth',block:'start'});
     if(filled===0)notify('Δεν εντοπίστηκαν στοιχεία. Δοκιμάστε καθαρότερη φωτογραφία.','danger');
@@ -3951,7 +3923,6 @@ async function runOcrAnalysis(){
     notify('Σφάλμα σύνδεσης: '+err.message,'danger');
   }
 }
-
 
 function renderExpenseTable(){
   const d=document.getElementById('exp-filter-date').value;
