@@ -1663,7 +1663,7 @@ footer a{color:var(--accent);text-decoration:none}
           <tr class="tfoot"><td colspan="5" data-el="tf-total-card">Total Card</td><td id="exp-tot-card" class="mono">0,00 €</td><td></td></tr>
           <tr class="tfoot"><td colspan="5"><strong data-el="tf-total-cashcard">Total Cash + Card</strong></td><td id="exp-tot-cashcard" class="mono"><strong>0,00 €</strong></td><td></td></tr>
           <tr class="tfoot"><td colspan="5" data-el="tf-credit">On Credit</td><td id="exp-tot-credit" class="mono">0,00 €</td><td></td></tr>
-          <tr class="tfoot" id="exp-tot-cn-row" style="display:none"><td colspan="5" style="color:var(--accent)">📋 Πιστωτικά Τιμολόγια (αφαίρεση)</td><td id="exp-tot-cn" class="mono amount-pos">0,00 €</td><td></td></tr>
+          <tr class="tfoot" id="exp-tot-cn-row" style="display:none"><td colspan="5" id="exp-tot-cn-label" style="color:var(--accent)">📋 Credit Note</td><td id="exp-tot-cn" class="mono amount-pos">0,00 €</td><td></td></tr>
         </tfoot>
       </table>
     </div>
@@ -2240,7 +2240,7 @@ const T = {
     'ph-emp-name':'π.χ. Γιώργος Παπαδόπουλος','ph-emp-role':'π.χ. Σερβιτόρος',
     'ph-inc-desc':'π.χ. Πωλήσεις ημέρας','ph-invoice':'π.χ. ΤΔΑ-00123',
     'ph-sup-name':'π.χ. Αφοί Γεωργίου','ph-sup-type':'π.χ. Τρόφιμα, Υπηρεσίες','ph-sup-search':'Αναζήτηση προμηθευτή...',
-    'Μετρητά':'Μετρητά','Κάρτα':'Κάρτα','Επί Πιστώσει':'Επί Πιστώσει',
+    'Μετρητά':'Μετρητά','Κάρτα':'Κάρτα','Επί Πιστώσει':'Επί Πιστώσει','Πιστωτικό Τιμολόγιο':'📋 Πιστωτικό (επιστροφή)',
     'lbl-days':'Ημέρες','lbl-rate':'Ημερ.(€)','lbl-subtotal':'Σύνολο(€)',
     'notify-income-added':'Έσοδο καταχωρήθηκε!','notify-expense-added':'Έξοδο καταχωρήθηκε!',
     'notify-supplier-added':'Προμηθευτής προστέθηκε!','notify-employee-added':'Υπάλληλος προστέθηκε!',
@@ -2402,7 +2402,7 @@ const T = {
     'ph-emp-name':'e.g. John Smith','ph-emp-role':'e.g. Waiter',
     'ph-inc-desc':'e.g. Daily sales','ph-invoice':'e.g. INV-00123',
     'ph-sup-name':'e.g. Smith Bros.','ph-sup-type':'e.g. Food, Services','ph-sup-search':'Search supplier...',
-    'Μετρητά':'Cash','Κάρτα':'Card','Επί Πιστώσει':'On Credit',
+    'Μετρητά':'Cash','Κάρτα':'Card','Επί Πιστώσει':'On Credit','Πιστωτικό Τιμολόγιο':'📋 Credit Note (return)',
     'lbl-days':'Days','lbl-rate':'Rate(€)','lbl-subtotal':'Total(€)',
     'notify-income-added':'Revenue recorded!','notify-expense-added':'Expense recorded!',
     'notify-supplier-added':'Supplier added!','notify-employee-added':'Employee added!',
@@ -2548,7 +2548,7 @@ const T = {
     'pay-tab-summary-lbl':'Resumen del Período',
     'pay-mode-day-lbl':'Por Día',
     'pay-mode-hour-lbl':'Por Horas',
-    'Μετρητά':'Efectivo','Κάρτα':'Tarjeta','Επί Πιστώσει':'A crédito',
+    'Μετρητά':'Efectivo','Κάρτα':'Tarjeta','Επί Πιστώσει':'A crédito','Πιστωτικό Τιμολόγιο':'📋 Nota de crédito (devolución)',
     'notify-income-added':'¡Ingreso registrado!','notify-expense-added':'¡Gasto registrado!',
     'notify-supplier-added':'¡Proveedor añadido!','notify-deleted':'Eliminado',
     'notify-sel-date':'Seleccione una fecha','notify-fill-amount':'Ingrese importe',
@@ -2695,7 +2695,7 @@ const T = {
     'pay-tab-summary-lbl':'Riepilogo Periodo',
     'pay-mode-day-lbl':'Per Giorno',
     'pay-mode-hour-lbl':'Per Ore',
-    'Μετρητά':'Contanti','Κάρτα':'Carta','Επί Πιστώσει':'A credito',
+    'Μετρητά':'Contanti','Κάρτα':'Carta','Επί Πιστώσει':'A credito','Πιστωτικό Τιμολόγιο':'📋 Nota di credito (reso)',
     'notify-income-added':'Ricavo registrato!','notify-expense-added':'Spesa registrata!',
     'notify-supplier-added':'Fornitore aggiunto!','notify-deleted':'Eliminato',
     'notify-sel-date':'Seleziona una data','notify-fill-amount':'Inserisci importo',
@@ -2842,7 +2842,7 @@ const T = {
     'pay-tab-summary-lbl':'Résumé de Période',
     'pay-mode-day-lbl':'Par Jour',
     'pay-mode-hour-lbl':'Par Heures',
-    'Μετρητά':'Espèces','Κάρτα':'Carte','Επί Πιστώσει':'À crédit',
+    'Μετρητά':'Espèces','Κάρτα':'Carte','Επί Πιστώσει':'À crédit','Πιστωτικό Τιμολόγιο':'📋 Avoir (retour)',
     'notify-income-added':'Revenu enregistré !','notify-expense-added':'Dépense enregistrée !',
     'notify-supplier-added':'Fournisseur ajouté !','notify-deleted':'Supprimé',
     'notify-sel-date':'Sélectionnez une date','notify-fill-amount':'Saisissez un montant',
@@ -2989,7 +2989,7 @@ const T = {
     'pay-tab-summary-lbl':'Periodenübersicht',
     'pay-mode-day-lbl':'Pro Tag',
     'pay-mode-hour-lbl':'Pro Stunde',
-    'Μετρητά':'Bargeld','Κάρτα':'Karte','Επί Πιστώσει':'Auf Kredit',
+    'Μετρητά':'Bargeld','Κάρτα':'Karte','Επί Πιστώσει':'Auf Kredit','Πιστωτικό Τιμολόγιο':'📋 Gutschrift (Rückgabe)',
     'notify-income-added':'Einnahme erfasst!','notify-expense-added':'Ausgabe erfasst!',
     'notify-supplier-added':'Lieferant hinzugefügt!','notify-deleted':'Gelöscht',
     'notify-sel-date':'Datum auswählen','notify-fill-amount':'Betrag eingeben',
@@ -3574,7 +3574,7 @@ function renderExpenseTable(){
       const isCreditNote=r.pay==='Πιστωτικό Τιμολόγιο';
       const amtClass=isCreditNote?'amount-pos':'amount-neg';
       const amtPrefix=isCreditNote?'-':'';
-      const payLabel=isCreditNote?'📋 Πιστωτικό':r.pay;
+      const payLabel=isCreditNote?t('Πιστωτικό Τιμολόγιο'):t(r.pay);
       return`<tr${isCreditNote?' style="background:rgba(0,212,170,.04)"':''}>
       <td class="mono">${r.time}</td><td><strong>${r.supplier}</strong></td>
       <td><span class="badge badge-blue">${r.type}</span></td>
@@ -3601,6 +3601,8 @@ function renderExpenseTable(){
   if(cnRow)cnRow.style.display=creditNoteTotal>0?'':'none';
   const cnEl=document.getElementById('exp-tot-cn');
   if(cnEl)cnEl.textContent=fmtE(creditNoteTotal);
+  const cnLabel=document.getElementById('exp-tot-cn-label');
+  if(cnLabel)cnLabel.textContent=t('Πιστωτικό Τιμολόγιο');
   renderExpenseSummary();
 }
 function renderExpenseSummary(){
@@ -3793,7 +3795,7 @@ function showSupplierTransactions(id){
       if(onCredit) creditBalance+=r.amount;
       if(isCreditNote) creditBalance=Math.max(0,creditBalance-r.amount);
       const badgeClass=isCreditNote?'badge-green':payBadge[r.pay]||'badge-gray';
-      const payLabel=isCreditNote?'📋 Πιστωτικό':t(r.pay);
+      const payLabel=isCreditNote?t('Πιστωτικό Τιμολόγιο'):t(r.pay);
       const amtClass=isCreditNote?'amount-pos':'amount-neg';
       const amtPrefix=isCreditNote?'-':'';
       const showBal=onCredit||isCreditNote;
