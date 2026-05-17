@@ -1392,19 +1392,29 @@ footer a{color:var(--accent);text-decoration:none}
         <video id="ocr-video" autoplay playsinline muted style="width:100%;max-height:300px;display:block;object-fit:cover"></video>
         <!-- Overlay frame guide -->
         <div style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center">
-          <div style="width:80%;height:75%;border:2px solid rgba(0,184,255,.6);border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.3)"></div>
+          <div id="ocr-frame-box" style="width:80%;height:75%;border:2px solid rgba(0,184,255,.6);border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.3);transition:border-color .3s"></div>
         </div>
-        <div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:11px;color:rgba(255,255,255,.7);pointer-events:none">Κεντράρετε το τιμολόγιο στο πλαίσιο</div>
+        <!-- Auto-scan status -->
+        <div id="ocr-scan-status" style="position:absolute;top:10px;left:0;right:0;text-align:center;pointer-events:none;display:none">
+          <span style="background:rgba(0,0,0,.65);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;color:white" id="ocr-scan-label">🔍 Σάρωση...</span>
+        </div>
+        <!-- Countdown ring -->
+        <div id="ocr-countdown-wrap" style="position:absolute;bottom:12px;left:0;right:0;display:none;justify-content:center;align-items:center">
+          <div style="background:rgba(0,0,0,.7);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center">
+            <span id="ocr-countdown-num" style="font-size:22px;font-weight:800;color:var(--accent2)">3</span>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:11px;color:rgba(255,255,255,.6);pointer-events:none" id="ocr-hint-text">Κεντράρετε το τιμολόγιο στο πλαίσιο</div>
       </div>
       <!-- Camera not started yet -->
       <div id="ocr-cam-placeholder" style="border-radius:var(--radius-lg);background:var(--bg3);border:2px dashed rgba(0,184,255,.25);padding:36px 20px;text-align:center;margin-bottom:12px;display:block">
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5" stroke-linecap="round" style="margin:0 auto 12px;display:block;opacity:.6"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Ανοίξτε κάμερα</div>
-        <div style="font-size:12px;color:var(--ink3)">Δουλεύει σε κινητό και υπολογιστή</div>
+        <div style="font-size:12px;color:var(--ink3)">Αυτόματη σάρωση μόλις εντοπιστεί τιμολόγιο</div>
       </div>
       <!-- Camera selector -->
       <select id="ocr-cam-select" style="width:100%;margin-bottom:10px;display:none;font-size:12px" onchange="switchCamera()"></select>
-      <!-- Start / Capture buttons -->
+      <!-- Start / Manual capture / Stop buttons -->
       <div style="display:flex;gap:8px">
         <button id="ocr-start-btn" onclick="startOcrCamera()" style="flex:1;padding:11px;border-radius:var(--radius);border:1.5px solid rgba(0,184,255,.4);background:rgba(0,184,255,.1);color:var(--accent2);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
@@ -1412,7 +1422,10 @@ footer a{color:var(--accent);text-decoration:none}
         </button>
         <button id="ocr-capture-btn" onclick="captureOcrPhoto()" style="flex:1;padding:11px;border-radius:var(--radius);border:none;background:linear-gradient(135deg,var(--accent2),#0070cc);color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:none;align-items:center;justify-content:center;gap:7px">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          📸 Λήψη
+          📸 Λήψη τώρα
+        </button>
+        <button id="ocr-stop-btn" onclick="stopOcrCamera()" style="padding:11px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--ink3);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);display:none;align-items:center;justify-content:center">
+          ✕
         </button>
       </div>
     </div>
@@ -3689,6 +3702,10 @@ let _ocrImageBase64=null;
 let _ocrImageType='image/jpeg';
 let _ocrStream=null;
 let _ocrTab='camera';
+let _ocrAutoTimer=null;
+let _ocrCountdownTimer=null;
+let _ocrScanning=false;
+let _ocrCountdown=0;
 
 function switchOcrTab(tab){
   _ocrTab=tab;
@@ -3709,6 +3726,9 @@ function switchOcrTab(tab){
 function openInvoiceScan(){
   _ocrImageBase64=null;
   _ocrTab='camera';
+  _ocrScanning=false;
+  clearInterval(_ocrAutoTimer);
+  clearInterval(_ocrCountdownTimer);
   document.getElementById('ocr-preview-wrap').style.display='none';
   document.getElementById('ocr-analyze-btn').style.display='none';
   document.getElementById('ocr-panel-camera').style.display='block';
@@ -3717,7 +3737,10 @@ function openInvoiceScan(){
   document.getElementById('ocr-cam-placeholder').style.display='block';
   document.getElementById('ocr-start-btn').style.display='flex';
   document.getElementById('ocr-capture-btn').style.display='none';
+  document.getElementById('ocr-stop-btn').style.display='none';
   document.getElementById('ocr-cam-select').style.display='none';
+  document.getElementById('ocr-scan-status').style.display='none';
+  document.getElementById('ocr-countdown-wrap').style.display='none';
   if(document.getElementById('ocr-file-input'))document.getElementById('ocr-file-input').value='';
   openModal('modal-invoice-scan');
 }
@@ -3728,13 +3751,19 @@ function closeOcrModal(){
 }
 
 function stopOcrCamera(){
+  clearInterval(_ocrAutoTimer);
+  clearInterval(_ocrCountdownTimer);
+  _ocrScanning=false;
   if(_ocrStream){_ocrStream.getTracks().forEach(t=>t.stop());_ocrStream=null;}
   const video=document.getElementById('ocr-video');
-  if(video){video.srcObject=null;}
+  if(video)video.srcObject=null;
   document.getElementById('ocr-video-wrap').style.display='none';
   document.getElementById('ocr-cam-placeholder').style.display='block';
   document.getElementById('ocr-start-btn').style.display='flex';
   document.getElementById('ocr-capture-btn').style.display='none';
+  document.getElementById('ocr-stop-btn').style.display='none';
+  document.getElementById('ocr-scan-status').style.display='none';
+  document.getElementById('ocr-countdown-wrap').style.display='none';
 }
 
 async function startOcrCamera(){
@@ -3753,6 +3782,8 @@ async function startOcrCamera(){
     document.getElementById('ocr-cam-placeholder').style.display='none';
     document.getElementById('ocr-start-btn').style.display='none';
     document.getElementById('ocr-capture-btn').style.display='flex';
+    document.getElementById('ocr-stop-btn').style.display='flex';
+    // Populate camera list
     try{
       const devices=await navigator.mediaDevices.enumerateDevices();
       const cameras=devices.filter(d=>d.kind==='videoinput');
@@ -3762,6 +3793,8 @@ async function startOcrCamera(){
         sel.style.display='block';
       }
     }catch{}
+    // Start auto-scan after 2 seconds stabilization
+    setTimeout(()=>startAutoScan(),2000);
   }catch(err){
     if(err.name==='NotAllowedError')notify('Δεν δόθηκε άδεια κάμερας.','danger');
     else if(err.name==='NotFoundError')notify('Δεν βρέθηκε κάμερα.','danger');
@@ -3769,18 +3802,114 @@ async function startOcrCamera(){
   }
 }
 
+function startAutoScan(){
+  if(!_ocrStream)return;
+  _ocrScanning=true;
+  const statusEl=document.getElementById('ocr-scan-status');
+  const labelEl=document.getElementById('ocr-scan-label');
+  const frameBox=document.getElementById('ocr-frame-box');
+  const hintEl=document.getElementById('ocr-hint-text');
+  statusEl.style.display='block';
+  labelEl.textContent='🔍 Αναμονή τιμολογίου...';
+  // Every 3 seconds take a frame and check if it has invoice content
+  _ocrAutoTimer=setInterval(async()=>{
+    if(!_ocrStream||_ocrScanning===false)return;
+    const snapshot=captureFrameBase64();
+    if(!snapshot)return;
+    labelEl.textContent='🔍 Ανίχνευση...';
+    frameBox.style.borderColor='rgba(245,158,11,.8)';
+    const detected=await quickDetect(snapshot);
+    if(detected){
+      // Invoice detected — start countdown
+      clearInterval(_ocrAutoTimer);
+      frameBox.style.borderColor='rgba(0,212,170,.9)';
+      labelEl.textContent='✅ Τιμολόγιο εντοπίστηκε!';
+      hintEl.textContent='Κρατήστε σταθερά...';
+      startCountdown(snapshot);
+    } else {
+      frameBox.style.borderColor='rgba(0,184,255,.6)';
+      labelEl.textContent='🔍 Αναμονή τιμολογίου...';
+    }
+  },3000);
+}
+
+function captureFrameBase64(){
+  const video=document.getElementById('ocr-video');
+  const canvas=document.getElementById('ocr-canvas');
+  if(!video||!video.videoWidth)return null;
+  canvas.width=video.videoWidth;
+  canvas.height=video.videoHeight;
+  canvas.getContext('2d').drawImage(video,0,0);
+  const dataUrl=canvas.toDataURL('image/jpeg',0.85);
+  return dataUrl.split(',')[1];
+}
+
+async function quickDetect(b64){
+  // Send a very cheap quick check to Mistral — just detect if it's an invoice
+  const apiKey='au73aQK2hxrhhDYYeEEFFKADybbmJZQw';
+  try{
+    const resp=await fetch('https://api.mistral.ai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify({
+        model:'mistral-small-latest',
+        messages:[{role:'user',content:[
+          {type:'image_url',image_url:{url:'data:image/jpeg;base64,'+b64}},
+          {type:'text',text:'Is this image a clear invoice or receipt with readable text? Reply only YES or NO.'}
+        ]}],
+        max_tokens:5,temperature:0
+      })
+    });
+    if(!resp.ok)return false;
+    const data=await resp.json();
+    const ans=(data.choices?.[0]?.message?.content||'').trim().toUpperCase();
+    return ans.startsWith('YES');
+  }catch{return false;}
+}
+
+function startCountdown(snapshot){
+  _ocrCountdown=3;
+  const wrap=document.getElementById('ocr-countdown-wrap');
+  const numEl=document.getElementById('ocr-countdown-num');
+  const hintEl=document.getElementById('ocr-hint-text');
+  wrap.style.display='flex';
+  numEl.textContent=_ocrCountdown;
+  _ocrCountdownTimer=setInterval(()=>{
+    _ocrCountdown--;
+    numEl.textContent=_ocrCountdown;
+    if(_ocrCountdown<=0){
+      clearInterval(_ocrCountdownTimer);
+      wrap.style.display='none';
+      hintEl.textContent='Ανάλυση...';
+      // Use the snapshot we already have
+      _ocrImageBase64=snapshot;
+      _ocrImageType='image/jpeg';
+      document.getElementById('ocr-preview-img').src='data:image/jpeg;base64,'+snapshot;
+      document.getElementById('ocr-preview-name').textContent='Αυτόματη λήψη';
+      document.getElementById('ocr-preview-wrap').style.display='block';
+      stopOcrCamera();
+      runOcrAnalysis();
+    }
+  },1000);
+}
+
 async function switchCamera(){
   const deviceId=document.getElementById('ocr-cam-select').value;
+  clearInterval(_ocrAutoTimer);
   if(_ocrStream){_ocrStream.getTracks().forEach(t=>t.stop());}
   try{
     const stream=await navigator.mediaDevices.getUserMedia({video:{deviceId:{exact:deviceId}}});
     _ocrStream=stream;
     document.getElementById('ocr-video').srcObject=stream;
     await document.getElementById('ocr-video').play();
+    setTimeout(()=>startAutoScan(),2000);
   }catch(err){notify('Σφάλμα αλλαγής κάμερας','danger');}
 }
 
 function captureOcrPhoto(){
+  // Manual capture
+  clearInterval(_ocrAutoTimer);
+  clearInterval(_ocrCountdownTimer);
   const video=document.getElementById('ocr-video');
   const canvas=document.getElementById('ocr-canvas');
   canvas.width=video.videoWidth||640;
@@ -3790,7 +3919,7 @@ function captureOcrPhoto(){
   _ocrImageBase64=dataUrl.split(',')[1];
   _ocrImageType='image/jpeg';
   document.getElementById('ocr-preview-img').src=dataUrl;
-  document.getElementById('ocr-preview-name').textContent='Φωτογραφία · '+canvas.width+'×'+canvas.height;
+  document.getElementById('ocr-preview-name').textContent='Χειροκίνητη λήψη · '+canvas.width+'×'+canvas.height;
   document.getElementById('ocr-preview-wrap').style.display='block';
   document.getElementById('ocr-analyze-btn').style.display='flex';
   stopOcrCamera();
