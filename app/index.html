@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a0d1a'/><rect x='7' y='20' width='18' height='1.5' rx='1' fill='%2300d4aa' opacity='.5'/><rect x='8' y='11' width='5' height='9' rx='1' fill='%2300d4aa'/><rect x='14' y='14' width='5' height='6' rx='1' fill='%2300b8ff' opacity='.85'/><rect x='20' y='16' width='4' height='4' rx='1' fill='%2300d4aa' opacity='.7'/><polyline points='10.5,11 16.5,14.5 22,16.5' fill='none' stroke='white' stroke-width='1.2' stroke-linecap='round' opacity='.6'/><circle cx='10.5' cy='11' r='1' fill='white' opacity='.8'/><circle cx='16.5' cy='14.5' r='1' fill='white' opacity='.8'/><circle cx='22' cy='16.5' r='1' fill='white' opacity='.8'/></svg>">
-<link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0a0d1a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -267,6 +265,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 .section-title{font-family:var(--display);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.2px}
 hr.divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── SUMMARY ROWS ── */
 .summary-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
@@ -1363,6 +1362,91 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </div>
 
+<!-- MODAL: INVOICE SCAN (OCR) -->
+<div class="modal-overlay" id="modal-invoice-scan">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-title">
+      <span style="display:flex;align-items:center;gap:8px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Σάρωση Τιμολογίου με AI
+      </span>
+      <button class="modal-close" onclick="closeOcrModal()"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+
+    <!-- TAB buttons -->
+    <div style="display:flex;gap:6px;margin-bottom:16px">
+      <button id="ocr-tab-camera" onclick="switchOcrTab('camera')" style="flex:1;padding:9px;border-radius:var(--radius);border:1.5px solid rgba(0,184,255,.4);background:rgba(0,184,255,.12);color:var(--accent2);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Κάμερα
+      </button>
+      <button id="ocr-tab-upload" onclick="switchOcrTab('upload')" style="flex:1;padding:9px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface2);color:var(--ink3);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:6px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Ανέβασμα Αρχείου
+      </button>
+    </div>
+
+    <!-- CAMERA TAB -->
+    <div id="ocr-panel-camera">
+      <!-- Live video -->
+      <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;background:#000;margin-bottom:12px" id="ocr-video-wrap">
+        <video id="ocr-video" autoplay playsinline muted style="width:100%;max-height:300px;display:block;object-fit:cover"></video>
+        <!-- Overlay frame guide -->
+        <div style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center">
+          <div style="width:80%;height:75%;border:2px solid rgba(0,184,255,.6);border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.3)"></div>
+        </div>
+        <div style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:11px;color:rgba(255,255,255,.7);pointer-events:none">Κεντράρετε το τιμολόγιο στο πλαίσιο</div>
+      </div>
+      <!-- Camera not started yet -->
+      <div id="ocr-cam-placeholder" style="border-radius:var(--radius-lg);background:var(--bg3);border:2px dashed rgba(0,184,255,.25);padding:36px 20px;text-align:center;margin-bottom:12px;display:block">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5" stroke-linecap="round" style="margin:0 auto 12px;display:block;opacity:.6"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Ανοίξτε κάμερα</div>
+        <div style="font-size:12px;color:var(--ink3)">Δουλεύει σε κινητό και υπολογιστή</div>
+      </div>
+      <!-- Camera selector -->
+      <select id="ocr-cam-select" style="width:100%;margin-bottom:10px;display:none;font-size:12px" onchange="switchCamera()"></select>
+      <!-- Start / Capture buttons -->
+      <div style="display:flex;gap:8px">
+        <button id="ocr-start-btn" onclick="startOcrCamera()" style="flex:1;padding:11px;border-radius:var(--radius);border:1.5px solid rgba(0,184,255,.4);background:rgba(0,184,255,.1);color:var(--accent2);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:7px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+          Εκκίνηση Κάμερας
+        </button>
+        <button id="ocr-capture-btn" onclick="captureOcrPhoto()" style="flex:1;padding:11px;border-radius:var(--radius);border:none;background:linear-gradient(135deg,var(--accent2),#0070cc);color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:none;align-items:center;justify-content:center;gap:7px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          📸 Λήψη
+        </button>
+      </div>
+    </div>
+
+    <!-- UPLOAD TAB -->
+    <div id="ocr-panel-upload" style="display:none">
+      <div id="ocr-upload-area" style="border:2px dashed rgba(0,184,255,.3);border-radius:var(--radius-xl);padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px" onclick="document.getElementById('ocr-file-input').click()" onmouseover="this.style.borderColor='var(--accent2)';this.style.background='rgba(0,184,255,.05)'" onmouseout="this.style.borderColor='rgba(0,184,255,.3)';this.style.background='transparent'" ondragover="event.preventDefault();this.style.borderColor='var(--accent2)'" ondrop="handleOcrDrop(event)">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5" stroke-linecap="round" style="margin:0 auto 12px;display:block;opacity:.7"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px">Σύρετε αρχείο ή κλικ για επιλογή</div>
+        <div style="font-size:12px;color:var(--ink3)">JPG · PNG</div>
+        <input type="file" id="ocr-file-input" accept="image/*" style="display:none" onchange="handleOcrFile(event)"/>
+      </div>
+    </div>
+
+    <!-- hidden canvas for capture -->
+    <canvas id="ocr-canvas" style="display:none"></canvas>
+
+    <!-- Preview -->
+    <div id="ocr-preview-wrap" style="display:none;margin:12px 0;text-align:center">
+      <div style="position:relative;display:inline-block">
+        <img id="ocr-preview-img" style="max-width:100%;max-height:200px;border-radius:var(--radius-lg);border:1px solid var(--border);object-fit:contain"/>
+        <button onclick="resetOcrPreview()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;color:white;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">×</button>
+      </div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="ocr-preview-name"></div>
+    </div>
+
+    <!-- Analyze button -->
+    <button id="ocr-analyze-btn" onclick="runOcrAnalysis()" style="width:100%;display:none;background:linear-gradient(135deg,var(--accent2),#0070cc);color:white;border:none;padding:13px;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);gap:8px;align-items:center;justify-content:center;margin-top:4px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg>
+      Ανάλυση με AI →
+    </button>
+  </div>
+</div>
+
 <!-- ===== PAGES ===== -->
 <main>
 
@@ -1604,7 +1688,36 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
   <div class="grid-2">
     <div class="card">
-      <div class="card-title" data-el="card-new-expense">New Expense</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+        <div class="card-title" style="margin-bottom:0" data-el="card-new-expense">New Expense</div>
+        <button onclick="openInvoiceScan()" style="display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--radius);border:1.5px solid rgba(0,184,255,.35);background:rgba(0,184,255,.08);color:var(--accent2);font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s" onmouseover="this.style.background='rgba(0,184,255,.16)'" onmouseout="this.style.background='rgba(0,184,255,.08)'">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Σάρωση Τιμολογίου
+        </button>
+      </div>
+
+      <!-- OCR loading bar (hidden by default) -->
+      <div id="ocr-loading" style="display:none;margin-bottom:14px">
+        <div style="background:rgba(0,184,255,.08);border:1px solid rgba(0,184,255,.2);border-radius:var(--radius-lg);padding:14px 16px;display:flex;align-items:center;gap:12px">
+          <div style="width:28px;height:28px;border:2.5px solid rgba(0,184,255,.2);border-top-color:var(--accent2);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0"></div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--accent2)" id="ocr-loading-text">Ανάλυση τιμολογίου...</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:2px">Το AI διαβάζει τα στοιχεία αυτόματα</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCR result banner (hidden by default) -->
+      <div id="ocr-result-banner" style="display:none;margin-bottom:14px">
+        <div style="background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.25);border-radius:var(--radius-lg);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span style="font-size:12.5px;font-weight:600;color:var(--accent)" id="ocr-result-text">Στοιχεία εντοπίστηκαν!</span>
+          </div>
+          <button onclick="document.getElementById('ocr-result-banner').style.display='none'" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px;line-height:1">×</button>
+        </div>
+      </div>
+
       <div class="form-grid">
         <div class="form-group"><label data-el="lbl-date2">Date</label><input type="date" id="exp-date"/></div>
         <div class="form-group"><label data-el="lbl-supplier">Supplier</label><select id="exp-supplier"><option value="" data-el="opt-select">— Select —</option></select></div>
@@ -3561,12 +3674,285 @@ function addExpense(){
   }
   
   ['exp-inv','exp-amount'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('exp-supplier').value='';
+  document.getElementById('exp-type').value='';
+  document.getElementById('exp-pay').value='';
   document.getElementById('exp-filter-date').value=d;renderExpenseTable();renderExpenseSummary();notify(t('notify-expense-added'));
 }
 function deleteExpense(id){
   if(!confirm(t('confirm-delete')))return;
   DB.saveExpenses(DB.expenses().filter(x=>x.id!==id));renderExpenseTable();renderExpenseSummary();notify(t('notify-deleted'),'danger');
 }
+
+// ── INVOICE OCR (Google Gemini Vision — FREE) ──
+let _ocrImageBase64=null;
+let _ocrImageType='image/jpeg';
+let _ocrStream=null;
+let _ocrTab='camera';
+
+function switchOcrTab(tab){
+  _ocrTab=tab;
+  const isCamera=tab==='camera';
+  document.getElementById('ocr-panel-camera').style.display=isCamera?'block':'none';
+  document.getElementById('ocr-panel-upload').style.display=isCamera?'none':'block';
+  // style tabs
+  const btnCam=document.getElementById('ocr-tab-camera');
+  const btnUp=document.getElementById('ocr-tab-upload');
+  btnCam.style.background=isCamera?'rgba(0,184,255,.12)':'var(--surface2)';
+  btnCam.style.color=isCamera?'var(--accent2)':'var(--ink3)';
+  btnCam.style.borderColor=isCamera?'rgba(0,184,255,.4)':'var(--border)';
+  btnUp.style.background=!isCamera?'rgba(0,184,255,.12)':'var(--surface2)';
+  btnUp.style.color=!isCamera?'var(--accent2)':'var(--ink3)';
+  btnUp.style.borderColor=!isCamera?'rgba(0,184,255,.4)':'var(--border)';
+  if(!isCamera)stopOcrCamera();
+}
+
+function openInvoiceScan(){
+  _ocrImageBase64=null;
+  _ocrTab='camera';
+  document.getElementById('ocr-preview-wrap').style.display='none';
+  document.getElementById('ocr-analyze-btn').style.display='none';
+  document.getElementById('ocr-panel-camera').style.display='block';
+  document.getElementById('ocr-panel-upload').style.display='none';
+  document.getElementById('ocr-video-wrap').style.display='none';
+  document.getElementById('ocr-cam-placeholder').style.display='block';
+  document.getElementById('ocr-start-btn').style.display='flex';
+  document.getElementById('ocr-capture-btn').style.display='none';
+  document.getElementById('ocr-cam-select').style.display='none';
+  if(document.getElementById('ocr-file-input'))document.getElementById('ocr-file-input').value='';
+  openModal('modal-invoice-scan');
+}
+
+function closeOcrModal(){
+  stopOcrCamera();
+  closeModal('modal-invoice-scan');
+}
+
+function stopOcrCamera(){
+  if(_ocrStream){_ocrStream.getTracks().forEach(t=>t.stop());_ocrStream=null;}
+  const video=document.getElementById('ocr-video');
+  if(video){video.srcObject=null;}
+  document.getElementById('ocr-video-wrap').style.display='none';
+  document.getElementById('ocr-cam-placeholder').style.display='block';
+  document.getElementById('ocr-start-btn').style.display='flex';
+  document.getElementById('ocr-capture-btn').style.display='none';
+}
+
+async function startOcrCamera(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    notify('Η κάμερα δεν υποστηρίζεται σε αυτόν τον browser. Χρησιμοποιήστε Chrome ή Safari.','danger');
+    return;
+  }
+  try{
+    // Try back camera first (mobile), fallback to any
+    let stream;
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}});
+    }catch{
+      stream=await navigator.mediaDevices.getUserMedia({video:true});
+    }
+    _ocrStream=stream;
+    const video=document.getElementById('ocr-video');
+    video.srcObject=stream;
+    await video.play();
+    document.getElementById('ocr-video-wrap').style.display='block';
+    document.getElementById('ocr-cam-placeholder').style.display='none';
+    document.getElementById('ocr-start-btn').style.display='none';
+    document.getElementById('ocr-capture-btn').style.display='flex';
+
+    // Populate camera list if multiple
+    try{
+      const devices=await navigator.mediaDevices.enumerateDevices();
+      const cameras=devices.filter(d=>d.kind==='videoinput');
+      const sel=document.getElementById('ocr-cam-select');
+      if(cameras.length>1){
+        sel.innerHTML=cameras.map((c,i)=>`<option value="${c.deviceId}">${c.label||'Κάμερα '+(i+1)}</option>`).join('');
+        sel.style.display='block';
+      }
+    }catch{}
+
+  }catch(err){
+    if(err.name==='NotAllowedError')notify('Δεν δόθηκε άδεια κάμερας. Επιτρέψτε την πρόσβαση στον browser.','danger');
+    else if(err.name==='NotFoundError')notify('Δεν βρέθηκε κάμερα στη συσκευή.','danger');
+    else notify('Σφάλμα κάμερας: '+err.message,'danger');
+  }
+}
+
+async function switchCamera(){
+  const deviceId=document.getElementById('ocr-cam-select').value;
+  if(_ocrStream){_ocrStream.getTracks().forEach(t=>t.stop());}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{deviceId:{exact:deviceId}}});
+    _ocrStream=stream;
+    document.getElementById('ocr-video').srcObject=stream;
+    await document.getElementById('ocr-video').play();
+  }catch(err){notify('Σφάλμα αλλαγής κάμερας','danger');}
+}
+
+function captureOcrPhoto(){
+  const video=document.getElementById('ocr-video');
+  const canvas=document.getElementById('ocr-canvas');
+  canvas.width=video.videoWidth||640;
+  canvas.height=video.videoHeight||480;
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  const dataUrl=canvas.toDataURL('image/jpeg',0.92);
+  _ocrImageBase64=dataUrl.split(',')[1];
+  _ocrImageType='image/jpeg';
+  // Show preview
+  const img=document.getElementById('ocr-preview-img');
+  img.src=dataUrl;
+  document.getElementById('ocr-preview-name').textContent='Φωτογραφία από κάμερα · '+canvas.width+'×'+canvas.height;
+  document.getElementById('ocr-preview-wrap').style.display='block';
+  document.getElementById('ocr-analyze-btn').style.display='flex';
+  // Stop camera
+  stopOcrCamera();
+}
+
+function resetOcrPreview(){
+  _ocrImageBase64=null;
+  document.getElementById('ocr-preview-wrap').style.display='none';
+  document.getElementById('ocr-analyze-btn').style.display='none';
+  document.getElementById('ocr-cam-placeholder').style.display='block';
+  document.getElementById('ocr-start-btn').style.display='flex';
+}
+
+function handleOcrDrop(e){
+  e.preventDefault();
+  const file=e.dataTransfer.files[0];
+  if(file)processOcrFile(file);
+}
+
+function handleOcrFile(e){
+  const file=e.target.files[0];
+  if(file)processOcrFile(file);
+}
+
+function processOcrFile(file){
+  if(!file.type.startsWith('image/')){
+    notify('Παρακαλώ επιλέξτε εικόνα (JPG, PNG)','danger');return;
+  }
+  _ocrImageType=file.type;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const result=e.target.result;
+    _ocrImageBase64=result.split(',')[1];
+    const img=document.getElementById('ocr-preview-img');
+    img.src=result;
+    document.getElementById('ocr-preview-name').textContent=file.name+' ('+Math.round(file.size/1024)+' KB)';
+    document.getElementById('ocr-preview-wrap').style.display='block';
+    document.getElementById('ocr-analyze-btn').style.display='flex';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function runOcrAnalysis(){
+  const apiKey='AIzaSyBHYx-WKSo_50-HIuXb2qHXXo6nw7RgQzc';
+  if(!_ocrImageBase64){notify('Τραβήξτε φωτογραφία ή επιλέξτε αρχείο','danger');return;}
+
+  closeOcrModal();
+  document.getElementById('ocr-loading').style.display='block';
+  const loadingTexts=['Ανάλυση τιμολογίου...','Εντοπισμός στοιχείων...','Εξαγωγή δεδομένων...'];
+  let li=0;
+  const ltimer=setInterval(()=>{
+    document.getElementById('ocr-loading-text').textContent=loadingTexts[li%loadingTexts.length];li++;
+  },1200);
+
+  const suppliers=DB.suppliers().map(s=>s.name);
+  const suppList=suppliers.length?suppliers.join(', '):'(κανένας καταχωρημένος)';
+
+  const prompt=`Είσαι ειδικός ανάλυσης τιμολογίων. Ανάλυσε αυτή την εικόνα τιμολογίου.
+
+Οι διαθέσιμοι προμηθευτές στο σύστημα είναι: ${suppList}
+
+Επίστρεψε ΜΟΝΟ έγκυρο JSON (χωρίς markdown, χωρίς backticks) με αυτά τα πεδία:
+{
+  "supplier": "όνομα προμηθευτή (αντιστοίχισε με τη λίστα αν υπάρχει)",
+  "invoice_number": "αριθμός τιμολογίου",
+  "date": "ημερομηνία σε μορφή YYYY-MM-DD",
+  "amount": αριθμητική τιμή (συνολικό ποσό),
+  "type": "FC ή Λειτουργικά ή Ενέργεια ή Συντήρηση ή Άλλο",
+  "confidence": "high ή medium ή low",
+  "notes": "παρατηρήσεις αν υπάρχουν"
+}`;
+
+  try{
+    const resp=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          contents:[{parts:[
+            {inline_data:{mime_type:_ocrImageType,data:_ocrImageBase64}},
+            {text:prompt}
+          ]}],
+          generationConfig:{temperature:0.1,maxOutputTokens:600}
+        })
+      }
+    );
+
+    clearInterval(ltimer);
+    document.getElementById('ocr-loading').style.display='none';
+
+    if(!resp.ok){
+      const err=await resp.json().catch(()=>({}));
+      const msg=err.error?.message||('HTTP '+resp.status);
+      if(resp.status===400)notify('Gemini: Μη έγκυρο API Key. Ελέγξτε τις Ρυθμίσεις.','danger');
+      else if(resp.status===429)notify('Gemini: Υπέρβαση ορίου. Δοκιμάστε σε λίγο.','danger');
+      else notify('Gemini Error: '+msg,'danger');
+      return;
+    }
+
+    const data=await resp.json();
+    const raw=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    let parsed;
+    try{
+      const clean=raw.replace(/```json|```/g,'').trim();
+      parsed=JSON.parse(clean);
+    }catch{
+      notify('Δεν εντοπίστηκαν στοιχεία. Δοκιμάστε καθαρότερη φωτογραφία.','danger');return;
+    }
+
+    let filled=0;
+
+    if(parsed.date&&/^\d{4}-\d{2}-\d{2}$/.test(parsed.date)){
+      document.getElementById('exp-date').value=parsed.date;
+      document.getElementById('exp-filter-date').value=parsed.date;
+      filled++;
+    }
+    if(parsed.supplier){
+      const supSel=document.getElementById('exp-supplier');
+      const opts=[...supSel.options];
+      const q=parsed.supplier.toLowerCase();
+      const match=opts.find(o=>o.value&&(o.value.toLowerCase()===q||q.includes(o.value.toLowerCase())||o.value.toLowerCase().includes(q)));
+      if(match){supSel.value=match.value;filled++;}
+    }
+    if(parsed.invoice_number){
+      document.getElementById('exp-inv').value=parsed.invoice_number;filled++;
+    }
+    if(parsed.amount&&parsed.amount>0){
+      document.getElementById('exp-amount').value=parseFloat(parsed.amount).toFixed(2);filled++;
+    }
+    if(parsed.type){
+      const typeMap={'FC':'FC','Λειτουργικά':'Λειτουργικά','Ενέργεια':'Ενέργεια','Συντήρηση':'Συντήρηση','Άλλο':'Άλλο'};
+      if(typeMap[parsed.type])document.getElementById('exp-type').value=typeMap[parsed.type];
+    }
+
+    const conf=parsed.confidence==='high'?'✅ Υψηλή':parsed.confidence==='medium'?'⚡ Μέτρια':'⚠️ Χαμηλή';
+    document.getElementById('ocr-result-text').textContent=`${filled} στοιχεία εντοπίστηκαν · Αξιοπιστία: ${conf}${parsed.notes?' · '+parsed.notes:''}`;
+    document.getElementById('ocr-result-banner').style.display='block';
+    document.querySelector('#page-expenses .card').scrollIntoView({behavior:'smooth',block:'start'});
+    if(filled===0)notify('Δεν εντοπίστηκαν στοιχεία. Δοκιμάστε καθαρότερη φωτογραφία.','danger');
+
+  }catch(err){
+    clearInterval(ltimer);
+    document.getElementById('ocr-loading').style.display='none';
+    notify('Σφάλμα σύνδεσης: '+err.message,'danger');
+  }
+}
+
+
 function renderExpenseTable(){
   const d=document.getElementById('exp-filter-date').value;
   const rows=DB.expenses().filter(x=>x.date===d).sort((a,b)=>a.time.localeCompare(b.time));
@@ -7189,13 +7575,11 @@ function showWrongDeviceScreen(){
     if (installBtn) installBtn.style.display = 'none';
   });
   
-  // Register service worker
-  if ('serviceWorker' in navigator) {
+  // Register service worker only when served over http/https
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('/sw.js')
       .then(reg => console.log('PWA: Service worker registered', reg))
       .catch(err => console.log('PWA: Service worker registration failed', err));
-  } else {
-    console.log('PWA: Service workers not supported');
   }
   
   // Debug: Check if PWA criteria met
