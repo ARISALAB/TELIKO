@@ -5647,7 +5647,7 @@ async function activateLicense(){
       // ── Custom key REST-XXXX-XXXX-XXXX ──
       const r=await sbFetch(`/rest/v1/licenses?license_key=eq.${encodeURIComponent(key)}&select=*&limit=1`);
       if(!r.ok||!Array.isArray(r.data)||r.data.length===0){
-        errEl.textContent='Key not found. Contact support: arakrons@gmail.com';
+        errEl.textContent='Key not found. Contact support: info@arakronservices.gr';
         errEl.style.display='block';
         btn.textContent='Activate License';btn.disabled=false;
         return;
@@ -5657,7 +5657,7 @@ async function activateLicense(){
 
     // 3. Check active
     if(record&&!record.is_active){
-      errEl.textContent='This license has been deactivated. Contact: arakrons@gmail.com';
+      errEl.textContent='This license has been deactivated. Contact: info@arakronservices.gr';
       errEl.style.display='block';
       btn.textContent='Activate License';btn.disabled=false;
       return;
