@@ -120,20 +120,65 @@ main{max-width:1400px;margin:0 auto;padding:32px 28px;flex:1;width:100%;position
 
 /* ── GRIDS ── */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.fc-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.fc-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
 .fc-row-active{background:var(--surface2)}
-.fc-form{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,.75fr);gap:12px}
-#fc-menu-list td.fc-num{white-space:nowrap}
-@media(max-width:900px){.fc-layout{grid-template-columns:1fr}}
+.fc-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.fc-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.fc-btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fc-badge-line{font-size:12px;color:var(--warning);margin:-4px 0 12px}
+.fc-form4{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.6fr) minmax(0,.9fr) minmax(0,.7fr);gap:12px;align-items:end}
+.fc-form2{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:10px;align-items:end}
+.fc-form-ing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:12px;align-items:end}
+.fc-form-ing .fc-f-name{grid-column:1/3}
+.fc-hint{font-size:12px;color:var(--ink3);margin:6px 0 14px;min-height:16px}
+.fc-sec{font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+#fc-lines{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.fc-line{display:grid;grid-template-columns:minmax(0,1fr) 78px 72px 86px 26px;grid-template-areas:"ing qty unit cost x" "info info info info info";gap:4px 8px;align-items:center}
+.fc-line .fc-l-ing,.fc-line .fc-l-name{grid-area:ing;font-size:13px}
+.fc-line .fc-l-qty,.fc-line .fc-l-fcost{grid-area:qty;font-size:13px}
+.fc-line .fc-l-unit,.fc-line .fc-l-tag{grid-area:unit;font-size:13px}
+.fc-line .fc-l-fcost{grid-column:2/4}
+.fc-line-fixed .fc-l-tag{display:none}
+.fc-line .fc-l-cost{grid-area:cost;text-align:right;font-family:var(--mono);font-weight:700;font-size:13px;white-space:nowrap}
+.fc-line .fc-x{grid-area:x;background:none;border:none;color:var(--danger);cursor:pointer;font-size:18px;padding:0}
+.fc-line .fc-l-info{grid-area:info;font-size:11px;color:var(--ink3);min-height:0}
+.fc-line .fc-l-info:empty{display:none}
+.fc-extras{border:1px dashed var(--border);border-radius:var(--radius-xl);padding:10px 14px;margin-bottom:16px}
+.fc-extras summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
+.fc-results{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px}
+.fc-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 10px;text-align:center;margin-bottom:14px}
+.fc-k{font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fc-v{font-family:var(--mono);font-size:17px;font-weight:700}
+.fc-target-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--ink3);margin-bottom:8px}
+.fc-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.fc-badge:empty{display:none}
+.fc-b-good{background:rgba(16,185,129,.14);color:var(--accent)}
+.fc-b-warn{background:rgba(245,158,11,.14);color:var(--warning)}
+.fc-b-over{background:rgba(239,68,68,.14);color:var(--danger)}
+.fc-b-none{background:var(--surface2);color:var(--ink3)}
+.fc-sug{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:13px}
+.fc-hist{font-size:12px;color:var(--ink3)}
+.fc-hist table{width:100%;border-collapse:collapse}
+.fc-hist td{padding:5px 4px;border-top:1px solid var(--border);font-family:var(--mono);white-space:nowrap}
+.fc-hist td:first-child{font-family:inherit}
+.fc-hist th{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.4px;text-align:right;padding:0 4px 5px}
+.fc-hist th:first-child{text-align:left}
+#fc-menu-list td.fc-num,#fc-ing-list td.fc-num{white-space:nowrap}
+@media(max-width:1100px){.fc-layout{grid-template-columns:1fr}}
 @media(max-width:640px){
-  .fc-form{grid-template-columns:1fr 1fr}.fc-form .form-group:first-child{grid-column:1/-1}
-  #fc-menu-list thead{display:none}
-  #fc-menu-list tr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:4px 8px;padding:10px 2px}
-  #fc-menu-list td{padding:0!important;text-align:left!important;border:none!important}
-  #fc-menu-list td:first-child{grid-column:1/5;grid-row:1}
-  #fc-menu-list td:last-child{grid-column:5;grid-row:1/3;align-self:center}
-  #fc-menu-list td[data-l]::before{content:attr(data-l);display:block;font-family:inherit;font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px}
+  .fc-form4{grid-template-columns:1fr 1fr}.fc-form4 .fc-f-name,.fc-form-ing .fc-f-name{grid-column:1/-1}
+  .fc-form-ing{grid-template-columns:1fr 1fr}
+  .fc-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fc-line{grid-template-columns:minmax(0,1fr) minmax(0,.8fr) minmax(0,1fr) 26px;grid-template-areas:"ing ing ing x" "qty unit cost cost" "info info info info"}
+  .fc-line .fc-l-fcost{grid-column:1/3}
+  #fc-menu-list thead,#fc-ing-list thead{display:none}
+  #fc-menu-list tr,#fc-ing-list tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:6px 8px;padding:10px 2px}
+  #fc-menu-list td,#fc-ing-list td{padding:0!important;text-align:left!important;border:none!important}
+  #fc-menu-list td:first-child,#fc-ing-list td:first-child{grid-column:1/4;grid-row:1}
+  #fc-menu-list td:last-child,#fc-ing-list td:last-child{grid-column:4;grid-row:1/4;align-self:center}
+  #fc-menu-list td[data-l]::before,#fc-ing-list td[data-l]::before{content:attr(data-l);display:block;font-family:inherit;font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px}
 }
+
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr 1fr}}
@@ -1741,78 +1786,177 @@ footer a{color:var(--accent);text-decoration:none}
 <!-- MENU COSTING PAGE -->
 <div class="page" id="page-menu">
   <div class="page-header">
-    <div><div class="page-title" data-el="fc-page-title">Menu Costing</div><div class="page-sub" data-el="fc-intro">Calculate Food Cost % and profit margin per dish. Save each dish to build your menu with its costs.</div></div>
+    <div><div class="page-title" data-el="fc-page-title">Menu Costing</div><div class="page-sub" data-el="fc-intro">Recipe costing with yield, cost per portion, gross profit and suggested selling price.</div></div>
+    <div class="fc-tabs">
+      <button class="btn btn-sm btn-primary" id="fc-tab-dishes" onclick="fcTab('dishes')" data-el="fc-tab-dishes">🍽 Dishes</button>
+      <button class="btn btn-sm btn-secondary" id="fc-tab-ings" onclick="fcTab('ings')" data-el="fc-tab-ings">🥕 Ingredients</button>
+    </div>
   </div>
-  <div class="fc-layout">
-    <div class="card fc-editor" id="fc-editor">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px">
-        <div class="card-title" style="margin:0" data-el="fc-card-dish">Dish costing</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-secondary btn-sm" onclick="newFCDish()" data-el="fc-new">＋ New dish</button>
-          <button class="btn btn-primary btn-sm" onclick="saveFCDish()" data-el="fc-save">💾 Save dish</button>
+
+  <!-- DISHES -->
+  <div id="fc-pane-dishes">
+    <div class="fc-layout">
+      <div class="card" id="fc-editor">
+        <div class="fc-card-head">
+          <div class="card-title" style="margin:0" data-el="fc-card-dish">Dish costing</div>
+          <div class="fc-btns">
+            <button class="btn btn-secondary btn-sm" onclick="newFCDish()" data-el="fc-new">＋ New dish</button>
+            <button class="btn btn-secondary btn-sm" onclick="fcPDF()" data-el="fc-pdf">📄 PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="saveFCDish()" data-el="fc-save">💾 Save dish</button>
+          </div>
         </div>
+        <div id="fc-edit-badge" class="fc-badge-line" style="display:none"></div>
+        <div class="fc-form4">
+          <div class="form-group fc-f-name">
+            <label data-el="fc-name">Dish name</label>
+            <input id="fc-dish-name" placeholder="e.g. Grilled sea bream" data-placeholder-el="fc-ph-dish" oninput="calcFC()"/>
+          </div>
+          <div class="form-group">
+            <label data-el="fc-portions">Portions</label>
+            <input type="number" id="fc-portions" min="1" step="1" value="1" oninput="calcFC()"/>
+          </div>
+          <div class="form-group">
+            <label data-el="fc-price">Price incl. VAT</label>
+            <input type="number" id="fc-sell-price" step="0.01" min="0" placeholder="0.00" oninput="calcFC()" style="font-weight:700"/>
+          </div>
+          <div class="form-group">
+            <label data-el="fc-vat">VAT %</label>
+            <select id="fc-vat" onchange="calcFC()">
+              <option value="0">0%</option>
+              <option value="13" selected>13%</option>
+              <option value="24">24%</option>
+            </select>
+          </div>
+        </div>
+        <div id="fc-net-hint" class="fc-hint"></div>
+
+        <div class="fc-sec" data-el="fc-ings">Recipe ingredients</div>
+        <div id="fc-lines"></div>
+        <div class="fc-btns" style="margin:4px 0 16px">
+          <button class="btn btn-secondary btn-sm" onclick="fcAddIngLine()" style="gap:6px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-el="fc-add">Add ingredient</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="fcAddFixedLine()" data-el="fc-add-fixed">＋ Fixed cost</button>
+        </div>
+
+        <details class="fc-extras" id="fc-extras">
+          <summary data-el="fc-extras">Extra costs per portion (optional)</summary>
+          <div class="fc-form2">
+            <div class="form-group"><label data-el="fc-packaging">Packaging</label><input type="number" id="fc-packaging" step="0.01" min="0" placeholder="0.00" oninput="calcFC()"/></div>
+            <div class="form-group"><label data-el="fc-extra">Other direct cost</label><input type="number" id="fc-extra" step="0.01" min="0" placeholder="0.00" oninput="calcFC()"/></div>
+          </div>
+        </details>
+
+        <div id="fc-results" class="fc-results" style="display:none">
+          <div class="fc-kpis">
+            <div><div class="fc-k" data-el="fc-r-recipe">Recipe cost</div><div class="fc-v" id="fc-r-recipe">—</div></div>
+            <div><div class="fc-k" data-el="fc-r-cpp">Cost / portion</div><div class="fc-v" id="fc-r-cpp" style="color:var(--danger)">—</div></div>
+            <div><div class="fc-k" data-el="fc-r-net">Net price</div><div class="fc-v" id="fc-r-net">—</div></div>
+            <div><div class="fc-k" data-el="fc-r-pct">Food cost %</div><div class="fc-v" id="fc-r-pct">—</div></div>
+            <div><div class="fc-k" data-el="fc-r-profit">Gross profit / portion</div><div class="fc-v" id="fc-r-profit" style="color:var(--accent)">—</div></div>
+            <div><div class="fc-k" data-el="fc-r-margin">Gross margin</div><div class="fc-v" id="fc-r-margin">—</div></div>
+          </div>
+          <div class="fc-target-row">
+            <span><span data-el="fc-r-target">Target</span>: <b id="fc-target-label">—</b></span>
+            <span><span data-el="fc-r-diff">Difference</span>: <b id="fc-r-diff">—</b></span>
+            <span id="fc-r-status" class="fc-badge"></span>
+          </div>
+          <div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden">
+            <div id="fc-gauge-bar" style="height:100%;width:0%;border-radius:4px;transition:width .4s,background .4s"></div>
+          </div>
+          <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="fc-verdict"></div>
+          <div class="fc-sug">
+            <div><span data-el="fc-r-sug">Suggested price</span>: <b id="fc-r-sug-gross">—</b> <span data-el="fc-r-sug-gross">incl. VAT</span> <span style="color:var(--ink3)">· <span id="fc-r-sug-net">—</span> <span data-el="fc-r-sug-net">net</span></span></div>
+            <button class="btn btn-secondary btn-sm" onclick="fcUseSug()" data-el="fc-use-sug">Use this price</button>
+          </div>
+        </div>
+
+        <div class="fc-sec" style="margin-top:20px" data-el="fc-hist">Costing history</div>
+        <div id="fc-hist-list" class="fc-hist"></div>
       </div>
-      <div id="fc-edit-badge" style="display:none;font-size:12px;color:var(--warning);margin:-6px 0 12px"></div>
-      <div class="fc-form" style="margin-bottom:16px">
-        <div class="form-group">
-          <label data-el="fc-name">Dish Name</label>
-          <input id="fc-dish-name" placeholder="e.g. Grilled Salmon" data-placeholder-el="fc-ph-dish" oninput="calcFC()"/>
+
+      <div class="card">
+        <div class="fc-card-head">
+          <div class="card-title" style="margin:0" data-el="fc-menu">📋 My dishes</div>
+          <div id="fc-menu-summary" style="font-size:12px;color:var(--ink3)"></div>
         </div>
-        <div class="form-group">
-          <label data-el="fc-price">Selling Price (incl. VAT)</label>
-          <input type="number" id="fc-sell-price" step="0.01" min="0" placeholder="0.00" oninput="calcFC()" style="font-size:18px;font-weight:700"/>
-        </div>
-        <div class="form-group">
-          <label data-el="fc-vat">VAT %</label>
-          <select id="fc-vat" onchange="calcFC()">
-            <option value="0">0%</option>
-            <option value="13" selected>13%</option>
-            <option value="24">24%</option>
+        <div class="fc-btns" style="margin-bottom:12px">
+          <input id="fc-search" data-placeholder-el="fc-ph-search" placeholder="Search dish..." oninput="renderFCMenu()" style="flex:1;min-width:140px"/>
+          <select id="fc-filter" onchange="renderFCMenu()" style="width:auto">
+            <option value="" data-el="fc-f-all">All statuses</option>
+            <option value="good" data-el="fc-st-good">Good</option>
+            <option value="warn" data-el="fc-st-warn">Caution</option>
+            <option value="over" data-el="fc-st-over">Over target</option>
+          </select>
+          <select id="fc-sort" onchange="renderFCMenu()" style="width:auto">
+            <option value="name" data-el="fc-sort-name">Name</option>
+            <option value="fc" data-el="fc-sort-fc">Food cost ↓</option>
+            <option value="profit" data-el="fc-sort-profit">Profit ↓</option>
           </select>
         </div>
-      </div>
-      <div style="font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px" data-el="fc-ings">Ingredients / Raw Cost</div>
-      <div id="fc-ingredients-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
-      <button class="btn btn-secondary btn-sm" onclick="addFCIngredient()" style="margin-bottom:20px;gap:6px">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        <span data-el="fc-add">Add ingredient</span>
-      </button>
-      <div id="fc-results" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-xl);padding:18px;display:none">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;margin-bottom:14px">
-          <div>
-            <div style="font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px" data-el="fc-raw">Raw Cost</div>
-            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--danger)" id="fc-res-cost">—</div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Food Cost %</div>
-            <div style="font-family:var(--mono);font-size:18px;font-weight:700" id="fc-res-pct">—</div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px" data-el="fc-profit">Profit / Dish</div>
-            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)" id="fc-res-profit">—</div>
-          </div>
-        </div>
-        <div style="font-size:11px;color:var(--ink3);margin-bottom:5px"><span data-el="fc-target">Food Cost % target:</span> <span style="font-weight:700" id="fc-target-label">—</span></div>
-        <div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden">
-          <div id="fc-gauge-bar" style="height:100%;width:0%;border-radius:4px;transition:width .4s,background .4s"></div>
-        </div>
-        <div style="font-size:11px;color:var(--ink3);margin-top:6px" id="fc-verdict"></div>
+        <div id="fc-menu-list"></div>
       </div>
     </div>
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-        <div class="card-title" style="margin:0" data-el="fc-menu">📋 My Menu</div>
-        <div id="fc-menu-summary" style="font-size:12px;color:var(--ink3)"></div>
+  </div>
+
+  <!-- INGREDIENTS -->
+  <div id="fc-pane-ings" style="display:none">
+    <div class="fc-layout">
+      <div class="card" id="fc-ing-editor">
+        <div class="fc-card-head">
+          <div class="card-title" style="margin:0" data-el="fc-ing-card">Ingredient</div>
+          <div class="fc-btns">
+            <button class="btn btn-secondary btn-sm" onclick="fcIngNew()" data-el="fc-ing-new">＋ New ingredient</button>
+            <button class="btn btn-primary btn-sm" onclick="fcIngSave()" data-el="fc-ing-save">💾 Save ingredient</button>
+          </div>
+        </div>
+        <p class="fc-hint" style="margin:0 0 14px" data-el="fc-ing-intro">Enter each ingredient once with its purchase price and yield.</p>
+        <div id="fc-i-badge" class="fc-badge-line" style="display:none"></div>
+        <div class="fc-form-ing">
+          <div class="form-group fc-f-name"><label data-el="fc-ing-name">Ingredient name</label><input id="fc-i-name" data-placeholder-el="fc-ph-ing-name" placeholder="e.g. Sea bream"/></div>
+          <div class="form-group"><label data-el="fc-ing-unit">Purchase unit</label>
+            <select id="fc-i-unit" onchange="fcIngInput()"><option value="kg">kg</option><option value="L">L</option><option value="pc" data-el="fc-u-pc">pc</option></select></div>
+          <div class="form-group"><label data-el="fc-ing-price">Purchase price excl. VAT</label><input type="number" id="fc-i-price" step="0.01" min="0" placeholder="0.00" oninput="fcIngInput()"/></div>
+          <div class="form-group"><label data-el="fc-ing-yield">Yield %</label><input type="number" id="fc-i-yield" step="0.1" min="1" max="100" value="100" oninput="fcIngInput('yield')"/></div>
+          <div class="form-group"><label data-el="fc-ing-waste">Waste %</label><input type="number" id="fc-i-waste" step="0.1" min="0" max="99" value="0" oninput="fcIngInput('waste')"/></div>
+        </div>
+        <div class="fc-results" style="margin-top:4px">
+          <div class="fc-k" data-el="fc-ing-real">Real cost</div>
+          <div id="fc-i-real" class="fc-v" style="font-size:15px">—</div>
+        </div>
+        <div class="fc-sec" style="margin-top:20px" data-el="fc-ing-hist">Price history</div>
+        <div id="fc-i-hist" class="fc-hist"></div>
       </div>
-      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-        <input id="fc-search" data-placeholder-el="fc-ph-search" placeholder="Search dish..." oninput="renderFCMenu()" style="flex:1;min-width:150px"/>
-        <select id="fc-sort" onchange="renderFCMenu()" style="width:auto">
-          <option value="name" data-el="fc-sort-name">Name</option>
-          <option value="fc" data-el="fc-sort-fc">Food cost ↓</option>
-          <option value="profit" data-el="fc-sort-profit">Profit ↓</option>
-        </select>
+      <div class="card">
+        <div class="fc-card-head">
+          <div class="card-title" style="margin:0" data-el="fc-ing-list">🥕 Ingredient list</div>
+          <div id="fc-i-count" style="font-size:12px;color:var(--ink3)"></div>
+        </div>
+        <input id="fc-i-search" data-placeholder-el="fc-ph-ing-search" placeholder="Search ingredient..." oninput="fcRenderIngs()" style="margin-bottom:12px"/>
+        <div id="fc-ing-list"></div>
       </div>
-      <div id="fc-menu-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: QUICK ADD INGREDIENT -->
+<div class="modal-overlay" id="modal-fc-qa">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-title">
+      <span data-el="fc-qa-title">New ingredient</span>
+      <button class="modal-close" onclick="fcQaClose()"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg></button>
+    </div>
+    <div class="form-group" style="margin-bottom:12px"><label data-el="fc-ing-name">Ingredient name</label><input id="fc-qa-name" data-placeholder-el="fc-ph-ing-name" placeholder="e.g. Sea bream"/></div>
+    <div class="fc-form2">
+      <div class="form-group"><label data-el="fc-ing-unit">Purchase unit</label>
+        <select id="fc-qa-unit"><option value="kg">kg</option><option value="L">L</option><option value="pc" data-el="fc-u-pc">pc</option></select></div>
+      <div class="form-group"><label data-el="fc-ing-price">Purchase price excl. VAT</label><input type="number" id="fc-qa-price" step="0.01" min="0" placeholder="0.00"/></div>
+      <div class="form-group"><label data-el="fc-ing-yield">Yield %</label><input type="number" id="fc-qa-yield" step="0.1" min="1" max="100" value="100"/></div>
+    </div>
+    <div class="fc-btns" style="justify-content:flex-end;margin-top:16px">
+      <button class="btn btn-secondary btn-sm" onclick="fcQaClose()" data-el="fc-cancel">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="fcQaSave()" data-el="fc-add-btn">Add</button>
     </div>
   </div>
 </div>
@@ -3064,9 +3208,7 @@ const T = {
 };
 
 // ── FOOD COST CALCULATOR translations ──
-const FC_T={"en": {"fc-title": "🍽 Food Cost Calculator", "fc-intro": "Calculate Food Cost % and profit margin per dish. Save each dish to build your menu with its costs.", "fc-new": "＋ New dish", "fc-save": "💾 Save dish", "fc-name": "Dish Name", "fc-price": "Selling Price (incl. VAT)", "fc-vat": "VAT %", "fc-ings": "Ingredients / Raw Cost", "fc-add": "Add ingredient", "fc-raw": "Raw Cost", "fc-profit": "Profit / Dish", "fc-target": "Food Cost % target:", "fc-menu": "📋 My Menu", "fc-ph-dish": "e.g. Grilled Salmon", "fc-ph-ing": "Ingredient name", "fc-ph-cost": "Cost", "fc-v-good": "✓ Excellent — well within target", "fc-v-ok": "⚠ OK — close to target, watch costs", "fc-v-over": "✗ Over target by {n} points — consider adjusting price or recipe", "fc-editing": "✎ Editing: ", "fc-need-name": "Enter a dish name first", "fc-need-ing": "Add at least one ingredient", "fc-demo": "Demo limit reached (3 dishes). Please activate your license.", "fc-dup": "A dish named \"{n}\" already exists. Save another one?", "fc-saved": "Dish saved: ", "fc-clear": "Clear the calculator? Unsaved changes will be lost.", "fc-load": "Load this dish? Unsaved changes will be lost.", "fc-del-q": "Delete \"{n}\" from your menu?", "fc-empty": "No saved dishes yet. Fill in a dish above and press <b>Save dish</b>.", "fc-n-ings": "{n} ingredients", "fc-sum-dishes": "{n} dishes", "fc-sum-avg": "avg Food Cost", "fc-sum-over": "{n} over {t}%", "fc-th-dish": "Dish", "fc-th-cost": "Cost", "fc-th-price": "Price", "fc-th-profit": "Profit", "fc-edit": "Edit", "fc-del": "Delete", "fc-remove": "Remove"}, "el": {"fc-title": "🍽 Υπολογισμός Food Cost", "fc-intro": "Υπολογίστε το food cost % και το κέρδος ανά πιάτο. Αποθηκεύστε κάθε πιάτο για να φτιάξετε το μενού σας με τα κόστη του.", "fc-new": "＋ Νέο πιάτο", "fc-save": "💾 Αποθήκευση πιάτου", "fc-name": "Όνομα πιάτου", "fc-price": "Τιμή πώλησης (με ΦΠΑ)", "fc-vat": "ΦΠΑ %", "fc-ings": "Υλικά / Κόστος πρώτων υλών", "fc-add": "Προσθήκη υλικού", "fc-raw": "Κόστος υλών", "fc-profit": "Κέρδος / πιάτο", "fc-target": "Στόχος Food Cost %:", "fc-menu": "📋 Το μενού μου", "fc-ph-dish": "π.χ. Χωριάτικη", "fc-ph-ing": "Όνομα υλικού", "fc-ph-cost": "Κόστος", "fc-v-good": "✓ Εξαιρετικό — άνετα μέσα στον στόχο", "fc-v-ok": "⚠ Εντάξει — κοντά στον στόχο, προσέξτε το κόστος", "fc-v-over": "✗ {n} μονάδες πάνω από τον στόχο — εξετάστε αλλαγή τιμής ή συνταγής", "fc-editing": "✎ Επεξεργασία: ", "fc-need-name": "Γράψτε πρώτα το όνομα του πιάτου", "fc-need-ing": "Προσθέστε τουλάχιστον ένα υλικό", "fc-demo": "Όριο δοκιμαστικής έκδοσης (3 πιάτα). Ενεργοποιήστε την άδειά σας.", "fc-dup": "Υπάρχει ήδη πιάτο με όνομα «{n}». Να αποθηκευτεί και αυτό;", "fc-saved": "Το πιάτο αποθηκεύτηκε: ", "fc-clear": "Καθαρισμός υπολογιστή; Οι αλλαγές που δεν αποθηκεύσατε θα χαθούν.", "fc-load": "Φόρτωση αυτού του πιάτου; Οι αλλαγές που δεν αποθηκεύσατε θα χαθούν.", "fc-del-q": "Διαγραφή του «{n}» από το μενού;", "fc-empty": "Δεν υπάρχουν αποθηκευμένα πιάτα. Συμπληρώστε ένα πιάτο παραπάνω και πατήστε <b>Αποθήκευση πιάτου</b>.", "fc-n-ings": "{n} υλικά", "fc-sum-dishes": "{n} πιάτα", "fc-sum-avg": "μέσο food cost", "fc-sum-over": "{n} πάνω από {t}%", "fc-th-dish": "Πιάτο", "fc-th-cost": "Κόστος", "fc-th-price": "Τιμή", "fc-th-profit": "Κέρδος", "fc-edit": "Επεξεργασία", "fc-del": "Διαγραφή", "fc-remove": "Αφαίρεση"}, "es": {"fc-title": "🍽 Calculadora de Food Cost", "fc-intro": "Calcula el food cost % y el margen por plato. Guarda cada plato para crear tu menú con sus costes.", "fc-new": "＋ Nuevo plato", "fc-save": "💾 Guardar plato", "fc-name": "Nombre del plato", "fc-price": "Precio (IVA incl.)", "fc-vat": "IVA %", "fc-ings": "Ingredientes / Coste de materia prima", "fc-add": "Añadir ingrediente", "fc-raw": "Coste materia prima", "fc-profit": "Beneficio / plato", "fc-target": "Objetivo Food Cost %:", "fc-menu": "📋 Mi menú", "fc-ph-dish": "p. ej. Salmón a la plancha", "fc-ph-ing": "Nombre del ingrediente", "fc-ph-cost": "Coste", "fc-v-good": "✓ Excelente — muy dentro del objetivo", "fc-v-ok": "⚠ Correcto — cerca del objetivo, vigila los costes", "fc-v-over": "✗ {n} puntos por encima del objetivo — revisa el precio o la receta", "fc-editing": "✎ Editando: ", "fc-need-name": "Introduce primero el nombre del plato", "fc-need-ing": "Añade al menos un ingrediente", "fc-demo": "Límite de la demo alcanzado (3 platos). Activa tu licencia.", "fc-dup": "Ya existe un plato llamado \"{n}\". ¿Guardar otro?", "fc-saved": "Plato guardado: ", "fc-clear": "¿Vaciar la calculadora? Se perderán los cambios no guardados.", "fc-load": "¿Cargar este plato? Se perderán los cambios no guardados.", "fc-del-q": "¿Eliminar \"{n}\" del menú?", "fc-empty": "Aún no hay platos guardados. Completa un plato arriba y pulsa <b>Guardar plato</b>.", "fc-n-ings": "{n} ingredientes", "fc-sum-dishes": "{n} platos", "fc-sum-avg": "food cost medio", "fc-sum-over": "{n} por encima del {t}%", "fc-th-dish": "Plato", "fc-th-cost": "Coste", "fc-th-price": "Precio", "fc-th-profit": "Beneficio", "fc-edit": "Editar", "fc-del": "Eliminar", "fc-remove": "Quitar"}, "it": {"fc-title": "🍽 Calcolatore Food Cost", "fc-intro": "Calcola il food cost % e il margine per piatto. Salva ogni piatto per creare il tuo menu con i relativi costi.", "fc-new": "＋ Nuovo piatto", "fc-save": "💾 Salva piatto", "fc-name": "Nome del piatto", "fc-price": "Prezzo (IVA incl.)", "fc-vat": "IVA %", "fc-ings": "Ingredienti / Costo materie prime", "fc-add": "Aggiungi ingrediente", "fc-raw": "Costo materie prime", "fc-profit": "Utile / piatto", "fc-target": "Obiettivo Food Cost %:", "fc-menu": "📋 Il mio menu", "fc-ph-dish": "es. Salmone alla griglia", "fc-ph-ing": "Nome ingrediente", "fc-ph-cost": "Costo", "fc-v-good": "✓ Ottimo — ampiamente nell’obiettivo", "fc-v-ok": "⚠ OK — vicino all’obiettivo, controlla i costi", "fc-v-over": "✗ {n} punti sopra l’obiettivo — valuta prezzo o ricetta", "fc-editing": "✎ In modifica: ", "fc-need-name": "Inserisci prima il nome del piatto", "fc-need-ing": "Aggiungi almeno un ingrediente", "fc-demo": "Limite demo raggiunto (3 piatti). Attiva la tua licenza.", "fc-dup": "Esiste già un piatto chiamato \"{n}\". Salvarne un altro?", "fc-saved": "Piatto salvato: ", "fc-clear": "Svuotare il calcolatore? Le modifiche non salvate andranno perse.", "fc-load": "Caricare questo piatto? Le modifiche non salvate andranno perse.", "fc-del-q": "Eliminare \"{n}\" dal menu?", "fc-empty": "Nessun piatto salvato. Compila un piatto qui sopra e premi <b>Salva piatto</b>.", "fc-n-ings": "{n} ingredienti", "fc-sum-dishes": "{n} piatti", "fc-sum-avg": "food cost medio", "fc-sum-over": "{n} sopra il {t}%", "fc-th-dish": "Piatto", "fc-th-cost": "Costo", "fc-th-price": "Prezzo", "fc-th-profit": "Utile", "fc-edit": "Modifica", "fc-del": "Elimina", "fc-remove": "Rimuovi"}, "fr": {"fc-title": "🍽 Calculateur de Food Cost", "fc-intro": "Calculez le food cost % et la marge par plat. Enregistrez chaque plat pour construire votre carte avec ses coûts.", "fc-new": "＋ Nouveau plat", "fc-save": "💾 Enregistrer le plat", "fc-name": "Nom du plat", "fc-price": "Prix de vente (TTC)", "fc-vat": "TVA %", "fc-ings": "Ingrédients / Coût matière", "fc-add": "Ajouter un ingrédient", "fc-raw": "Coût matière", "fc-profit": "Marge / plat", "fc-target": "Objectif Food Cost % :", "fc-menu": "📋 Ma carte", "fc-ph-dish": "ex. Saumon grillé", "fc-ph-ing": "Nom de l’ingrédient", "fc-ph-cost": "Coût", "fc-v-good": "✓ Excellent — bien dans l’objectif", "fc-v-ok": "⚠ Correct — proche de l’objectif, surveillez les coûts", "fc-v-over": "✗ {n} points au-dessus de l’objectif — revoyez le prix ou la recette", "fc-editing": "✎ Modification : ", "fc-need-name": "Saisissez d’abord le nom du plat", "fc-need-ing": "Ajoutez au moins un ingrédient", "fc-demo": "Limite de la démo atteinte (3 plats). Activez votre licence.", "fc-dup": "Un plat nommé « {n} » existe déjà. En enregistrer un autre ?", "fc-saved": "Plat enregistré : ", "fc-clear": "Vider le calculateur ? Les modifications non enregistrées seront perdues.", "fc-load": "Charger ce plat ? Les modifications non enregistrées seront perdues.", "fc-del-q": "Supprimer « {n} » de la carte ?", "fc-empty": "Aucun plat enregistré. Remplissez un plat ci-dessus et cliquez sur <b>Enregistrer le plat</b>.", "fc-n-ings": "{n} ingrédients", "fc-sum-dishes": "{n} plats", "fc-sum-avg": "food cost moyen", "fc-sum-over": "{n} au-dessus de {t} %", "fc-th-dish": "Plat", "fc-th-cost": "Coût", "fc-th-price": "Prix", "fc-th-profit": "Marge", "fc-edit": "Modifier", "fc-del": "Supprimer", "fc-remove": "Retirer"}, "de": {"fc-title": "🍽 Food-Cost-Rechner", "fc-intro": "Berechnen Sie Food Cost % und Gewinn pro Gericht. Speichern Sie jedes Gericht, um Ihre Speisekarte mit allen Kosten aufzubauen.", "fc-new": "＋ Neues Gericht", "fc-save": "💾 Gericht speichern", "fc-name": "Name des Gerichts", "fc-price": "Preis inkl. MwSt.", "fc-vat": "MwSt. %", "fc-ings": "Zutaten / Wareneinsatz", "fc-add": "Zutat hinzufügen", "fc-raw": "Wareneinsatz", "fc-profit": "Gewinn / Gericht", "fc-target": "Food-Cost-Ziel %:", "fc-menu": "📋 Meine Speisekarte", "fc-ph-dish": "z. B. Gegrillter Lachs", "fc-ph-ing": "Name der Zutat", "fc-ph-cost": "Kosten", "fc-v-good": "✓ Ausgezeichnet — deutlich im Zielbereich", "fc-v-ok": "⚠ OK — nahe am Ziel, Kosten im Blick behalten", "fc-v-over": "✗ {n} Punkte über dem Ziel — Preis oder Rezept anpassen", "fc-editing": "✎ Bearbeiten: ", "fc-need-name": "Bitte zuerst den Namen des Gerichts eingeben", "fc-need-ing": "Mindestens eine Zutat hinzufügen", "fc-demo": "Demo-Limit erreicht (3 Gerichte). Bitte aktivieren Sie Ihre Lizenz.", "fc-dup": "Ein Gericht namens „{n}“ existiert bereits. Trotzdem speichern?", "fc-saved": "Gericht gespeichert: ", "fc-clear": "Rechner leeren? Nicht gespeicherte Änderungen gehen verloren.", "fc-load": "Dieses Gericht laden? Nicht gespeicherte Änderungen gehen verloren.", "fc-del-q": "„{n}“ von der Speisekarte löschen?", "fc-empty": "Noch keine gespeicherten Gerichte. Füllen Sie oben ein Gericht aus und klicken Sie auf <b>Gericht speichern</b>.", "fc-n-ings": "{n} Zutaten", "fc-sum-dishes": "{n} Gerichte", "fc-sum-avg": "Ø Food Cost", "fc-sum-over": "{n} über {t} %", "fc-th-dish": "Gericht", "fc-th-cost": "Kosten", "fc-th-price": "Preis", "fc-th-profit": "Gewinn", "fc-edit": "Bearbeiten", "fc-del": "Löschen", "fc-remove": "Entfernen"}};
-const FC_T2={"en": {"fc-nav": "Menu Costing", "fc-page-title": "Menu Costing", "fc-card-dish": "Dish costing", "fc-ph-search": "Search dish...", "fc-sort-name": "Name", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Profit ↓", "fc-no-match": "No dishes match your search."}, "el": {"fc-nav": "Κοστολόγηση", "fc-page-title": "Κοστολόγηση μενού", "fc-card-dish": "Κοστολόγηση πιάτου", "fc-ph-search": "Αναζήτηση πιάτου...", "fc-sort-name": "Όνομα", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Κέρδος ↓", "fc-no-match": "Κανένα πιάτο δεν ταιριάζει με την αναζήτηση."}, "es": {"fc-nav": "Escandallos", "fc-page-title": "Escandallo del menú", "fc-card-dish": "Escandallo del plato", "fc-ph-search": "Buscar plato...", "fc-sort-name": "Nombre", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Beneficio ↓", "fc-no-match": "Ningún plato coincide con la búsqueda."}, "it": {"fc-nav": "Costi menu", "fc-page-title": "Costi del menu", "fc-card-dish": "Costo del piatto", "fc-ph-search": "Cerca piatto...", "fc-sort-name": "Nome", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Utile ↓", "fc-no-match": "Nessun piatto corrisponde alla ricerca."}, "fr": {"fc-nav": "Coûts menu", "fc-page-title": "Coûts de la carte", "fc-card-dish": "Coût du plat", "fc-ph-search": "Rechercher un plat...", "fc-sort-name": "Nom", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Marge ↓", "fc-no-match": "Aucun plat ne correspond à la recherche."}, "de": {"fc-nav": "Kalkulation", "fc-page-title": "Menükalkulation", "fc-card-dish": "Gerichtskalkulation", "fc-ph-search": "Gericht suchen...", "fc-sort-name": "Name", "fc-sort-fc": "Food Cost ↓", "fc-sort-profit": "Gewinn ↓", "fc-no-match": "Kein Gericht entspricht der Suche."}};
-Object.keys(FC_T2).forEach(l=>{FC_T[l]=Object.assign(FC_T[l]||{},FC_T2[l]);});
+const FC_T={"en": {"fc-v-good": "✓ Excellent — well within target", "fc-v-ok": "⚠ OK — close to target, watch costs", "fc-v-over": "✗ Over target by {n} points — consider adjusting price or recipe", "fc-editing": "✎ Editing: ", "fc-need-name": "Enter a dish name first", "fc-need-ing": "Add at least one ingredient", "fc-demo": "Demo limit reached (3 dishes). Please activate your license.", "fc-dup": "A dish named \"{n}\" already exists. Save another one?", "fc-saved": "Dish saved: ", "fc-clear": "Clear the calculator? Unsaved changes will be lost.", "fc-load": "Load this dish? Unsaved changes will be lost.", "fc-del-q": "Delete \"{n}\" from your menu?", "fc-empty": "No saved dishes yet. Fill in a dish above and press <b>Save dish</b>.", "fc-n-ings": "{n} ingredients", "fc-sum-dishes": "{n} dishes", "fc-sum-avg": "avg Food Cost", "fc-sum-over": "{n} over {t}%", "fc-th-dish": "Dish", "fc-th-price": "Price", "fc-edit": "Edit", "fc-del": "Delete", "fc-remove": "Remove", "fc-ph-search": "Search dish...", "fc-sort-name": "Name", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Profit ↓", "fc-no-match": "No dishes match your search.", "fc-nav": "Menu Costing", "fc-page-title": "Menu Costing", "fc-intro": "Recipe costing with yield, cost per portion, gross profit and suggested selling price.", "fc-tab-dishes": "🍽 Dishes", "fc-tab-ings": "🥕 Ingredients", "fc-card-dish": "Dish costing", "fc-new": "＋ New dish", "fc-save": "💾 Save dish", "fc-pdf": "📄 PDF", "fc-name": "Dish name", "fc-ph-dish": "e.g. Grilled sea bream", "fc-portions": "Portions", "fc-price": "Price incl. VAT", "fc-vat": "VAT %", "fc-net-hint": "Net price excl. VAT:", "fc-ings": "Recipe ingredients", "fc-add": "Add ingredient", "fc-add-fixed": "＋ Fixed cost", "fc-choose-ing": "— Choose ingredient —", "fc-new-ing-opt": "＋ New ingredient…", "fc-qty": "Qty", "fc-fixed-label": "fixed cost", "fc-ph-fixed-name": "Description", "fc-ph-cost": "Cost", "fc-missing-ing": "deleted ingredient", "fc-extras": "Extra costs per portion (optional)", "fc-packaging": "Packaging", "fc-extra": "Other direct cost", "fc-r-recipe": "Recipe cost", "fc-r-cpp": "Cost / portion", "fc-r-net": "Net price", "fc-r-pct": "Food cost %", "fc-r-target": "Target", "fc-r-diff": "Difference", "fc-r-profit": "Gross profit / portion", "fc-r-margin": "Gross margin", "fc-r-sug": "Suggested price", "fc-r-sug-net": "net", "fc-r-sug-gross": "incl. VAT", "fc-use-sug": "Use this price", "fc-st-good": "Good", "fc-st-warn": "Caution", "fc-st-over": "Over target", "fc-hist": "Costing history", "fc-hist-empty": "Appears after the first save.", "fc-menu": "📋 My dishes", "fc-f-all": "All statuses", "fc-th-cost": "Cost/portion", "fc-th-pct": "Cost %", "fc-th-profit": "Gross profit", "fc-th-status": "Status", "fc-n-portions": "{n} portions", "fc-missing-warn": "Missing ingredient", "fc-ing-intro": "Enter each ingredient once with its purchase price and yield. When the price changes, every dish that uses it is updated, and the previous costings stay in each dish’s history.", "fc-ing-card": "Ingredient", "fc-ing-name": "Ingredient name", "fc-ph-ing-name": "e.g. Sea bream", "fc-ing-unit": "Purchase unit", "fc-ing-price": "Purchase price excl. VAT", "fc-ing-yield": "Yield %", "fc-ing-waste": "Waste %", "fc-ing-real": "Real cost", "fc-ing-save": "💾 Save ingredient", "fc-ing-new": "＋ New ingredient", "fc-ing-list": "🥕 Ingredient list", "fc-ph-ing-search": "Search ingredient...", "fc-th-ing": "Ingredient", "fc-th-buy": "Purchase price", "fc-th-yield": "Yield", "fc-th-real": "Real cost", "fc-th-used": "Dishes", "fc-th-qty": "Quantity", "fc-th-unitcost": "Real unit cost", "fc-th-linecost": "Cost", "fc-ing-empty": "No ingredients yet. Add your first ingredient.", "fc-ing-hist": "Price history", "fc-ing-need-name": "Enter an ingredient name", "fc-ing-need-price": "Enter a purchase price", "fc-ing-yield-bad": "Yield must be between 1 and 100%", "fc-ing-saved": "Ingredient saved: ", "fc-ing-dup": "An ingredient named \"{n}\" already exists.", "fc-ing-del-q": "Delete ingredient \"{n}\"?", "fc-ing-in-use": "\"{n}\" is used in {c} dishes. Remove it from those dishes first.", "fc-qa-title": "New ingredient", "fc-cancel": "Cancel", "fc-add-btn": "Add", "fc-u-pc": "pc", "fc-pdf-title": "Costing sheet", "fc-pdf-total": "Total recipe cost", "fc-pdf-popup": "Allow popups", "fc-pdf-hint": "In the print window choose “Save as PDF”", "fc-printed": "Printed", "fc-date": "Date"}, "el": {"fc-v-good": "✓ Εξαιρετικό — άνετα μέσα στον στόχο", "fc-v-ok": "⚠ Εντάξει — κοντά στον στόχο, προσέξτε το κόστος", "fc-v-over": "✗ {n} μονάδες πάνω από τον στόχο — εξετάστε αλλαγή τιμής ή συνταγής", "fc-editing": "✎ Επεξεργασία: ", "fc-need-name": "Γράψτε πρώτα το όνομα του πιάτου", "fc-need-ing": "Προσθέστε τουλάχιστον ένα υλικό", "fc-demo": "Όριο δοκιμαστικής έκδοσης (3 πιάτα). Ενεργοποιήστε την άδειά σας.", "fc-dup": "Υπάρχει ήδη πιάτο με όνομα «{n}». Να αποθηκευτεί και αυτό;", "fc-saved": "Το πιάτο αποθηκεύτηκε: ", "fc-clear": "Καθαρισμός υπολογιστή; Οι αλλαγές που δεν αποθηκεύσατε θα χαθούν.", "fc-load": "Φόρτωση αυτού του πιάτου; Οι αλλαγές που δεν αποθηκεύσατε θα χαθούν.", "fc-del-q": "Διαγραφή του «{n}» από το μενού;", "fc-empty": "Δεν υπάρχουν αποθηκευμένα πιάτα. Συμπληρώστε ένα πιάτο παραπάνω και πατήστε <b>Αποθήκευση πιάτου</b>.", "fc-n-ings": "{n} υλικά", "fc-sum-dishes": "{n} πιάτα", "fc-sum-avg": "μέσο food cost", "fc-sum-over": "{n} πάνω από {t}%", "fc-th-dish": "Πιάτο", "fc-th-price": "Τιμή", "fc-edit": "Επεξεργασία", "fc-del": "Διαγραφή", "fc-remove": "Αφαίρεση", "fc-ph-search": "Αναζήτηση πιάτου...", "fc-sort-name": "Όνομα", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Κέρδος ↓", "fc-no-match": "Κανένα πιάτο δεν ταιριάζει με την αναζήτηση.", "fc-nav": "Κοστολόγηση", "fc-page-title": "Κοστολόγηση μενού", "fc-intro": "Κοστολόγηση συνταγών με απόδοση, κόστος ανά μερίδα, μικτό κέρδος και προτεινόμενη τιμή πώλησης.", "fc-tab-dishes": "🍽 Πιάτα", "fc-tab-ings": "🥕 Υλικά", "fc-card-dish": "Κοστολόγηση πιάτου", "fc-new": "＋ Νέο πιάτο", "fc-save": "💾 Αποθήκευση πιάτου", "fc-pdf": "📄 PDF", "fc-name": "Όνομα πιάτου", "fc-ph-dish": "π.χ. Τσιπούρα σχάρας", "fc-portions": "Μερίδες", "fc-price": "Τιμή με ΦΠΑ", "fc-vat": "ΦΠΑ %", "fc-net-hint": "Καθαρή τιμή χωρίς ΦΠΑ:", "fc-ings": "Υλικά συνταγής", "fc-add": "Προσθήκη υλικού", "fc-add-fixed": "＋ Σταθερό κόστος", "fc-choose-ing": "— Επιλέξτε υλικό —", "fc-new-ing-opt": "＋ Νέο υλικό…", "fc-qty": "Ποσ.", "fc-fixed-label": "σταθερό κόστος", "fc-ph-fixed-name": "Περιγραφή", "fc-ph-cost": "Κόστος", "fc-missing-ing": "υλικό που διαγράφηκε", "fc-extras": "Πρόσθετα κόστη ανά μερίδα (προαιρετικά)", "fc-packaging": "Συσκευασία", "fc-extra": "Άλλο άμεσο κόστος", "fc-r-recipe": "Κόστος συνταγής", "fc-r-cpp": "Κόστος / μερίδα", "fc-r-net": "Καθαρή τιμή", "fc-r-pct": "% κόστους", "fc-r-target": "Στόχος", "fc-r-diff": "Διαφορά", "fc-r-profit": "Μικτό κέρδος / μερίδα", "fc-r-margin": "Περιθώριο μικτού κέρδους", "fc-r-sug": "Προτεινόμενη τιμή", "fc-r-sug-net": "καθαρή", "fc-r-sug-gross": "με ΦΠΑ", "fc-use-sug": "Χρήση αυτής της τιμής", "fc-st-good": "Καλό", "fc-st-warn": "Προσοχή", "fc-st-over": "Εκτός στόχου", "fc-hist": "Ιστορικό κοστολογήσεων", "fc-hist-empty": "Εμφανίζεται μετά την πρώτη αποθήκευση.", "fc-menu": "📋 Τα πιάτα μου", "fc-f-all": "Όλες οι καταστάσεις", "fc-th-cost": "Κόστος/μερίδα", "fc-th-pct": "% κόστους", "fc-th-profit": "Μικτό κέρδος", "fc-th-status": "Κατάσταση", "fc-n-portions": "{n} μερίδες", "fc-missing-warn": "Λείπει υλικό", "fc-ing-intro": "Καταχωρίστε κάθε υλικό μία φορά με τιμή αγοράς και απόδοση. Όταν αλλάζει η τιμή, ενημερώνονται όλα τα πιάτα που το χρησιμοποιούν, και οι προηγούμενες κοστολογήσεις μένουν στο ιστορικό κάθε πιάτου.", "fc-ing-card": "Υλικό", "fc-ing-name": "Όνομα υλικού", "fc-ph-ing-name": "π.χ. Τσιπούρα", "fc-ing-unit": "Μονάδα αγοράς", "fc-ing-price": "Τιμή αγοράς χωρίς ΦΠΑ", "fc-ing-yield": "Απόδοση %", "fc-ing-waste": "Φύρα %", "fc-ing-real": "Πραγματικό κόστος", "fc-ing-save": "💾 Αποθήκευση υλικού", "fc-ing-new": "＋ Νέο υλικό", "fc-ing-list": "🥕 Κατάλογος υλικών", "fc-ph-ing-search": "Αναζήτηση υλικού...", "fc-th-ing": "Υλικό", "fc-th-buy": "Τιμή αγοράς", "fc-th-yield": "Απόδοση", "fc-th-real": "Πραγμ. κόστος", "fc-th-used": "Πιάτα", "fc-th-qty": "Ποσότητα", "fc-th-unitcost": "Πραγμ. κόστος μονάδας", "fc-th-linecost": "Κόστος", "fc-ing-empty": "Δεν υπάρχουν υλικά ακόμα. Προσθέστε το πρώτο σας υλικό.", "fc-ing-hist": "Ιστορικό τιμών", "fc-ing-need-name": "Γράψτε όνομα υλικού", "fc-ing-need-price": "Βάλτε τιμή αγοράς", "fc-ing-yield-bad": "Η απόδοση πρέπει να είναι από 1 έως 100%", "fc-ing-saved": "Το υλικό αποθηκεύτηκε: ", "fc-ing-dup": "Υπάρχει ήδη υλικό με όνομα «{n}».", "fc-ing-del-q": "Διαγραφή του υλικού «{n}»;", "fc-ing-in-use": "Το «{n}» χρησιμοποιείται σε {c} πιάτα. Αφαιρέστε το πρώτα από αυτά.", "fc-qa-title": "Νέο υλικό", "fc-cancel": "Άκυρο", "fc-add-btn": "Προσθήκη", "fc-u-pc": "τεμ.", "fc-pdf-title": "Κάρτα κοστολόγησης", "fc-pdf-total": "Συνολικό κόστος συνταγής", "fc-pdf-popup": "Επιτρέψτε τα αναδυόμενα παράθυρα", "fc-pdf-hint": "Στο παράθυρο εκτύπωσης επιλέξτε «Αποθήκευση ως PDF»", "fc-printed": "Εκτυπώθηκε", "fc-date": "Ημερομηνία"}, "es": {"fc-v-good": "✓ Excelente — muy dentro del objetivo", "fc-v-ok": "⚠ Correcto — cerca del objetivo, vigila los costes", "fc-v-over": "✗ {n} puntos por encima del objetivo — revisa el precio o la receta", "fc-editing": "✎ Editando: ", "fc-need-name": "Introduce primero el nombre del plato", "fc-need-ing": "Añade al menos un ingrediente", "fc-demo": "Límite de la demo alcanzado (3 platos). Activa tu licencia.", "fc-dup": "Ya existe un plato llamado \"{n}\". ¿Guardar otro?", "fc-saved": "Plato guardado: ", "fc-clear": "¿Vaciar la calculadora? Se perderán los cambios no guardados.", "fc-load": "¿Cargar este plato? Se perderán los cambios no guardados.", "fc-del-q": "¿Eliminar \"{n}\" del menú?", "fc-empty": "Aún no hay platos guardados. Completa un plato arriba y pulsa <b>Guardar plato</b>.", "fc-n-ings": "{n} ingredientes", "fc-sum-dishes": "{n} platos", "fc-sum-avg": "food cost medio", "fc-sum-over": "{n} por encima del {t}%", "fc-th-dish": "Plato", "fc-th-price": "Precio", "fc-edit": "Editar", "fc-del": "Eliminar", "fc-remove": "Quitar", "fc-ph-search": "Buscar plato...", "fc-sort-name": "Nombre", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Beneficio ↓", "fc-no-match": "Ningún plato coincide con la búsqueda.", "fc-nav": "Escandallos", "fc-page-title": "Escandallo del menú", "fc-intro": "Escandallo de recetas con rendimiento, coste por ración, beneficio bruto y precio de venta sugerido.", "fc-tab-dishes": "🍽 Platos", "fc-tab-ings": "🥕 Ingredientes", "fc-card-dish": "Escandallo del plato", "fc-new": "＋ Nuevo plato", "fc-save": "💾 Guardar plato", "fc-pdf": "📄 PDF", "fc-name": "Nombre del plato", "fc-ph-dish": "p. ej. Dorada a la plancha", "fc-portions": "Raciones", "fc-price": "Precio con IVA", "fc-vat": "IVA %", "fc-net-hint": "Precio neto sin IVA:", "fc-ings": "Ingredientes de la receta", "fc-add": "Añadir ingrediente", "fc-add-fixed": "＋ Coste fijo", "fc-choose-ing": "— Elige ingrediente —", "fc-new-ing-opt": "＋ Nuevo ingrediente…", "fc-qty": "Cant.", "fc-fixed-label": "coste fijo", "fc-ph-fixed-name": "Descripción", "fc-ph-cost": "Coste", "fc-missing-ing": "ingrediente eliminado", "fc-extras": "Costes adicionales por ración (opcional)", "fc-packaging": "Envase", "fc-extra": "Otro coste directo", "fc-r-recipe": "Coste de la receta", "fc-r-cpp": "Coste / ración", "fc-r-net": "Precio neto", "fc-r-pct": "% de coste", "fc-r-target": "Objetivo", "fc-r-diff": "Diferencia", "fc-r-profit": "Beneficio bruto / ración", "fc-r-margin": "Margen bruto", "fc-r-sug": "Precio sugerido", "fc-r-sug-net": "neto", "fc-r-sug-gross": "con IVA", "fc-use-sug": "Usar este precio", "fc-st-good": "Bueno", "fc-st-warn": "Atención", "fc-st-over": "Fuera de objetivo", "fc-hist": "Historial de escandallos", "fc-hist-empty": "Aparece tras el primer guardado.", "fc-menu": "📋 Mis platos", "fc-f-all": "Todos los estados", "fc-th-cost": "Coste/ración", "fc-th-pct": "% coste", "fc-th-profit": "Beneficio bruto", "fc-th-status": "Estado", "fc-n-portions": "{n} raciones", "fc-missing-warn": "Falta un ingrediente", "fc-ing-intro": "Registra cada ingrediente una vez con su precio de compra y rendimiento. Si cambia el precio, se actualizan todos los platos que lo usan y los escandallos anteriores quedan en el historial de cada plato.", "fc-ing-card": "Ingrediente", "fc-ing-name": "Nombre del ingrediente", "fc-ph-ing-name": "p. ej. Dorada", "fc-ing-unit": "Unidad de compra", "fc-ing-price": "Precio de compra sin IVA", "fc-ing-yield": "Rendimiento %", "fc-ing-waste": "Merma %", "fc-ing-real": "Coste real", "fc-ing-save": "💾 Guardar ingrediente", "fc-ing-new": "＋ Nuevo ingrediente", "fc-ing-list": "🥕 Lista de ingredientes", "fc-ph-ing-search": "Buscar ingrediente...", "fc-th-ing": "Ingrediente", "fc-th-buy": "Precio de compra", "fc-th-yield": "Rendimiento", "fc-th-real": "Coste real", "fc-th-used": "Platos", "fc-th-qty": "Cantidad", "fc-th-unitcost": "Coste real unidad", "fc-th-linecost": "Coste", "fc-ing-empty": "Aún no hay ingredientes. Añade el primero.", "fc-ing-hist": "Historial de precios", "fc-ing-need-name": "Introduce el nombre del ingrediente", "fc-ing-need-price": "Introduce el precio de compra", "fc-ing-yield-bad": "El rendimiento debe estar entre 1 y 100%", "fc-ing-saved": "Ingrediente guardado: ", "fc-ing-dup": "Ya existe un ingrediente llamado \"{n}\".", "fc-ing-del-q": "¿Eliminar el ingrediente \"{n}\"?", "fc-ing-in-use": "\"{n}\" se usa en {c} platos. Quítalo primero de esos platos.", "fc-qa-title": "Nuevo ingrediente", "fc-cancel": "Cancelar", "fc-add-btn": "Añadir", "fc-u-pc": "ud.", "fc-pdf-title": "Ficha de escandallo", "fc-pdf-total": "Coste total de la receta", "fc-pdf-popup": "Permita los popups", "fc-pdf-hint": "En la ventana de impresión elige «Guardar como PDF»", "fc-printed": "Impreso", "fc-date": "Fecha"}, "it": {"fc-v-good": "✓ Ottimo — ampiamente nell’obiettivo", "fc-v-ok": "⚠ OK — vicino all’obiettivo, controlla i costi", "fc-v-over": "✗ {n} punti sopra l’obiettivo — valuta prezzo o ricetta", "fc-editing": "✎ In modifica: ", "fc-need-name": "Inserisci prima il nome del piatto", "fc-need-ing": "Aggiungi almeno un ingrediente", "fc-demo": "Limite demo raggiunto (3 piatti). Attiva la tua licenza.", "fc-dup": "Esiste già un piatto chiamato \"{n}\". Salvarne un altro?", "fc-saved": "Piatto salvato: ", "fc-clear": "Svuotare il calcolatore? Le modifiche non salvate andranno perse.", "fc-load": "Caricare questo piatto? Le modifiche non salvate andranno perse.", "fc-del-q": "Eliminare \"{n}\" dal menu?", "fc-empty": "Nessun piatto salvato. Compila un piatto qui sopra e premi <b>Salva piatto</b>.", "fc-n-ings": "{n} ingredienti", "fc-sum-dishes": "{n} piatti", "fc-sum-avg": "food cost medio", "fc-sum-over": "{n} sopra il {t}%", "fc-th-dish": "Piatto", "fc-th-price": "Prezzo", "fc-edit": "Modifica", "fc-del": "Elimina", "fc-remove": "Rimuovi", "fc-ph-search": "Cerca piatto...", "fc-sort-name": "Nome", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Utile ↓", "fc-no-match": "Nessun piatto corrisponde alla ricerca.", "fc-nav": "Costi menu", "fc-page-title": "Costi del menu", "fc-intro": "Costo delle ricette con resa, costo per porzione, utile lordo e prezzo di vendita consigliato.", "fc-tab-dishes": "🍽 Piatti", "fc-tab-ings": "🥕 Ingredienti", "fc-card-dish": "Costo del piatto", "fc-new": "＋ Nuovo piatto", "fc-save": "💾 Salva piatto", "fc-pdf": "📄 PDF", "fc-name": "Nome del piatto", "fc-ph-dish": "es. Orata alla griglia", "fc-portions": "Porzioni", "fc-price": "Prezzo IVA incl.", "fc-vat": "IVA %", "fc-net-hint": "Prezzo netto senza IVA:", "fc-ings": "Ingredienti della ricetta", "fc-add": "Aggiungi ingrediente", "fc-add-fixed": "＋ Costo fisso", "fc-choose-ing": "— Scegli ingrediente —", "fc-new-ing-opt": "＋ Nuovo ingrediente…", "fc-qty": "Q.tà", "fc-fixed-label": "costo fisso", "fc-ph-fixed-name": "Descrizione", "fc-ph-cost": "Costo", "fc-missing-ing": "ingrediente eliminato", "fc-extras": "Costi aggiuntivi per porzione (facoltativi)", "fc-packaging": "Confezione", "fc-extra": "Altro costo diretto", "fc-r-recipe": "Costo ricetta", "fc-r-cpp": "Costo / porzione", "fc-r-net": "Prezzo netto", "fc-r-pct": "% di costo", "fc-r-target": "Obiettivo", "fc-r-diff": "Differenza", "fc-r-profit": "Utile lordo / porzione", "fc-r-margin": "Margine lordo", "fc-r-sug": "Prezzo consigliato", "fc-r-sug-net": "netto", "fc-r-sug-gross": "IVA incl.", "fc-use-sug": "Usa questo prezzo", "fc-st-good": "Buono", "fc-st-warn": "Attenzione", "fc-st-over": "Fuori obiettivo", "fc-hist": "Storico dei costi", "fc-hist-empty": "Compare dopo il primo salvataggio.", "fc-menu": "📋 I miei piatti", "fc-f-all": "Tutti gli stati", "fc-th-cost": "Costo/porz.", "fc-th-pct": "% costo", "fc-th-profit": "Utile lordo", "fc-th-status": "Stato", "fc-n-portions": "{n} porzioni", "fc-missing-warn": "Ingrediente mancante", "fc-ing-intro": "Inserisci ogni ingrediente una volta con prezzo d’acquisto e resa. Quando il prezzo cambia, tutti i piatti che lo usano si aggiornano e i costi precedenti restano nello storico di ogni piatto.", "fc-ing-card": "Ingrediente", "fc-ing-name": "Nome ingrediente", "fc-ph-ing-name": "es. Orata", "fc-ing-unit": "Unità di acquisto", "fc-ing-price": "Prezzo d’acquisto senza IVA", "fc-ing-yield": "Resa %", "fc-ing-waste": "Scarto %", "fc-ing-real": "Costo reale", "fc-ing-save": "💾 Salva ingrediente", "fc-ing-new": "＋ Nuovo ingrediente", "fc-ing-list": "🥕 Elenco ingredienti", "fc-ph-ing-search": "Cerca ingrediente...", "fc-th-ing": "Ingrediente", "fc-th-buy": "Prezzo d’acquisto", "fc-th-yield": "Resa", "fc-th-real": "Costo reale", "fc-th-used": "Piatti", "fc-th-qty": "Quantità", "fc-th-unitcost": "Costo reale unità", "fc-th-linecost": "Costo", "fc-ing-empty": "Nessun ingrediente. Aggiungi il primo.", "fc-ing-hist": "Storico prezzi", "fc-ing-need-name": "Inserisci il nome dell’ingrediente", "fc-ing-need-price": "Inserisci il prezzo d’acquisto", "fc-ing-yield-bad": "La resa deve essere tra 1 e 100%", "fc-ing-saved": "Ingrediente salvato: ", "fc-ing-dup": "Esiste già un ingrediente chiamato \"{n}\".", "fc-ing-del-q": "Eliminare l’ingrediente \"{n}\"?", "fc-ing-in-use": "\"{n}\" è usato in {c} piatti. Rimuovilo prima da quei piatti.", "fc-qa-title": "Nuovo ingrediente", "fc-cancel": "Annulla", "fc-add-btn": "Aggiungi", "fc-u-pc": "pz", "fc-pdf-title": "Scheda di costo", "fc-pdf-total": "Costo totale ricetta", "fc-pdf-popup": "Consenti i popup", "fc-pdf-hint": "Nella finestra di stampa scegli «Salva come PDF»", "fc-printed": "Stampato", "fc-date": "Data"}, "fr": {"fc-v-good": "✓ Excellent — bien dans l’objectif", "fc-v-ok": "⚠ Correct — proche de l’objectif, surveillez les coûts", "fc-v-over": "✗ {n} points au-dessus de l’objectif — revoyez le prix ou la recette", "fc-editing": "✎ Modification : ", "fc-need-name": "Saisissez d’abord le nom du plat", "fc-need-ing": "Ajoutez au moins un ingrédient", "fc-demo": "Limite de la démo atteinte (3 plats). Activez votre licence.", "fc-dup": "Un plat nommé « {n} » existe déjà. En enregistrer un autre ?", "fc-saved": "Plat enregistré : ", "fc-clear": "Vider le calculateur ? Les modifications non enregistrées seront perdues.", "fc-load": "Charger ce plat ? Les modifications non enregistrées seront perdues.", "fc-del-q": "Supprimer « {n} » de la carte ?", "fc-empty": "Aucun plat enregistré. Remplissez un plat ci-dessus et cliquez sur <b>Enregistrer le plat</b>.", "fc-n-ings": "{n} ingrédients", "fc-sum-dishes": "{n} plats", "fc-sum-avg": "food cost moyen", "fc-sum-over": "{n} au-dessus de {t} %", "fc-th-dish": "Plat", "fc-th-price": "Prix", "fc-edit": "Modifier", "fc-del": "Supprimer", "fc-remove": "Retirer", "fc-ph-search": "Rechercher un plat...", "fc-sort-name": "Nom", "fc-sort-fc": "Food cost ↓", "fc-sort-profit": "Marge ↓", "fc-no-match": "Aucun plat ne correspond à la recherche.", "fc-nav": "Coûts menu", "fc-page-title": "Coûts de la carte", "fc-intro": "Coût des recettes avec rendement, coût par portion, marge brute et prix de vente conseillé.", "fc-tab-dishes": "🍽 Plats", "fc-tab-ings": "🥕 Ingrédients", "fc-card-dish": "Coût du plat", "fc-new": "＋ Nouveau plat", "fc-save": "💾 Enregistrer le plat", "fc-pdf": "📄 PDF", "fc-name": "Nom du plat", "fc-ph-dish": "ex. Daurade grillée", "fc-portions": "Portions", "fc-price": "Prix TTC", "fc-vat": "TVA %", "fc-net-hint": "Prix net HT :", "fc-ings": "Ingrédients de la recette", "fc-add": "Ajouter un ingrédient", "fc-add-fixed": "＋ Coût fixe", "fc-choose-ing": "— Choisir un ingrédient —", "fc-new-ing-opt": "＋ Nouvel ingrédient…", "fc-qty": "Qté", "fc-fixed-label": "coût fixe", "fc-ph-fixed-name": "Description", "fc-ph-cost": "Coût", "fc-missing-ing": "ingrédient supprimé", "fc-extras": "Coûts supplémentaires par portion (facultatif)", "fc-packaging": "Emballage", "fc-extra": "Autre coût direct", "fc-r-recipe": "Coût de la recette", "fc-r-cpp": "Coût / portion", "fc-r-net": "Prix net", "fc-r-pct": "% de coût", "fc-r-target": "Objectif", "fc-r-diff": "Écart", "fc-r-profit": "Marge brute / portion", "fc-r-margin": "Taux de marge", "fc-r-sug": "Prix conseillé", "fc-r-sug-net": "HT", "fc-r-sug-gross": "TTC", "fc-use-sug": "Utiliser ce prix", "fc-st-good": "Bon", "fc-st-warn": "Attention", "fc-st-over": "Hors objectif", "fc-hist": "Historique des coûts", "fc-hist-empty": "Apparaît après le premier enregistrement.", "fc-menu": "📋 Mes plats", "fc-f-all": "Tous les statuts", "fc-th-cost": "Coût/portion", "fc-th-pct": "% coût", "fc-th-profit": "Marge brute", "fc-th-status": "Statut", "fc-n-portions": "{n} portions", "fc-missing-warn": "Ingrédient manquant", "fc-ing-intro": "Saisissez chaque ingrédient une fois avec son prix d’achat et son rendement. Quand le prix change, tous les plats qui l’utilisent sont mis à jour et les coûts précédents restent dans l’historique de chaque plat.", "fc-ing-card": "Ingrédient", "fc-ing-name": "Nom de l’ingrédient", "fc-ph-ing-name": "ex. Daurade", "fc-ing-unit": "Unité d’achat", "fc-ing-price": "Prix d’achat HT", "fc-ing-yield": "Rendement %", "fc-ing-waste": "Perte %", "fc-ing-real": "Coût réel", "fc-ing-save": "💾 Enregistrer l’ingrédient", "fc-ing-new": "＋ Nouvel ingrédient", "fc-ing-list": "🥕 Liste des ingrédients", "fc-ph-ing-search": "Rechercher un ingrédient...", "fc-th-ing": "Ingrédient", "fc-th-buy": "Prix d’achat", "fc-th-yield": "Rendement", "fc-th-real": "Coût réel", "fc-th-used": "Plats", "fc-th-qty": "Quantité", "fc-th-unitcost": "Coût réel unitaire", "fc-th-linecost": "Coût", "fc-ing-empty": "Aucun ingrédient pour l’instant. Ajoutez le premier.", "fc-ing-hist": "Historique des prix", "fc-ing-need-name": "Saisissez le nom de l’ingrédient", "fc-ing-need-price": "Saisissez le prix d’achat", "fc-ing-yield-bad": "Le rendement doit être entre 1 et 100 %", "fc-ing-saved": "Ingrédient enregistré : ", "fc-ing-dup": "Un ingrédient nommé « {n} » existe déjà.", "fc-ing-del-q": "Supprimer l’ingrédient « {n} » ?", "fc-ing-in-use": "« {n} » est utilisé dans {c} plats. Retirez-le d’abord de ces plats.", "fc-qa-title": "Nouvel ingrédient", "fc-cancel": "Annuler", "fc-add-btn": "Ajouter", "fc-u-pc": "pce", "fc-pdf-title": "Fiche de coût", "fc-pdf-total": "Coût total de la recette", "fc-pdf-popup": "Autorisez les popups", "fc-pdf-hint": "Dans la fenêtre d’impression, choisissez « Enregistrer au format PDF »", "fc-printed": "Imprimé", "fc-date": "Date"}, "de": {"fc-v-good": "✓ Ausgezeichnet — deutlich im Zielbereich", "fc-v-ok": "⚠ OK — nahe am Ziel, Kosten im Blick behalten", "fc-v-over": "✗ {n} Punkte über dem Ziel — Preis oder Rezept anpassen", "fc-editing": "✎ Bearbeiten: ", "fc-need-name": "Bitte zuerst den Namen des Gerichts eingeben", "fc-need-ing": "Mindestens eine Zutat hinzufügen", "fc-demo": "Demo-Limit erreicht (3 Gerichte). Bitte aktivieren Sie Ihre Lizenz.", "fc-dup": "Ein Gericht namens „{n}“ existiert bereits. Trotzdem speichern?", "fc-saved": "Gericht gespeichert: ", "fc-clear": "Rechner leeren? Nicht gespeicherte Änderungen gehen verloren.", "fc-load": "Dieses Gericht laden? Nicht gespeicherte Änderungen gehen verloren.", "fc-del-q": "„{n}“ von der Speisekarte löschen?", "fc-empty": "Noch keine gespeicherten Gerichte. Füllen Sie oben ein Gericht aus und klicken Sie auf <b>Gericht speichern</b>.", "fc-n-ings": "{n} Zutaten", "fc-sum-dishes": "{n} Gerichte", "fc-sum-avg": "Ø Food Cost", "fc-sum-over": "{n} über {t} %", "fc-th-dish": "Gericht", "fc-th-price": "Preis", "fc-edit": "Bearbeiten", "fc-del": "Löschen", "fc-remove": "Entfernen", "fc-ph-search": "Gericht suchen...", "fc-sort-name": "Name", "fc-sort-fc": "Food Cost ↓", "fc-sort-profit": "Gewinn ↓", "fc-no-match": "Kein Gericht entspricht der Suche.", "fc-nav": "Kalkulation", "fc-page-title": "Menükalkulation", "fc-intro": "Rezeptkalkulation mit Ausbeute, Kosten pro Portion, Rohertrag und empfohlenem Verkaufspreis.", "fc-tab-dishes": "🍽 Gerichte", "fc-tab-ings": "🥕 Zutaten", "fc-card-dish": "Gerichtskalkulation", "fc-new": "＋ Neues Gericht", "fc-save": "💾 Gericht speichern", "fc-pdf": "📄 PDF", "fc-name": "Name des Gerichts", "fc-ph-dish": "z. B. Gegrillte Dorade", "fc-portions": "Portionen", "fc-price": "Preis inkl. MwSt.", "fc-vat": "MwSt. %", "fc-net-hint": "Nettopreis ohne MwSt.:", "fc-ings": "Rezeptzutaten", "fc-add": "Zutat hinzufügen", "fc-add-fixed": "＋ Fixkosten", "fc-choose-ing": "— Zutat wählen —", "fc-new-ing-opt": "＋ Neue Zutat…", "fc-qty": "Menge", "fc-fixed-label": "Fixkosten", "fc-ph-fixed-name": "Beschreibung", "fc-ph-cost": "Kosten", "fc-missing-ing": "gelöschte Zutat", "fc-extras": "Zusatzkosten pro Portion (optional)", "fc-packaging": "Verpackung", "fc-extra": "Sonstige direkte Kosten", "fc-r-recipe": "Rezeptkosten", "fc-r-cpp": "Kosten / Portion", "fc-r-net": "Nettopreis", "fc-r-pct": "Kosten %", "fc-r-target": "Ziel", "fc-r-diff": "Abweichung", "fc-r-profit": "Rohertrag / Portion", "fc-r-margin": "Rohertragsmarge", "fc-r-sug": "Empfohlener Preis", "fc-r-sug-net": "netto", "fc-r-sug-gross": "inkl. MwSt.", "fc-use-sug": "Diesen Preis verwenden", "fc-st-good": "Gut", "fc-st-warn": "Achtung", "fc-st-over": "Über Ziel", "fc-hist": "Kalkulationsverlauf", "fc-hist-empty": "Erscheint nach dem ersten Speichern.", "fc-menu": "📋 Meine Gerichte", "fc-f-all": "Alle Status", "fc-th-cost": "Kosten/Portion", "fc-th-pct": "Kosten %", "fc-th-profit": "Rohertrag", "fc-th-status": "Status", "fc-n-portions": "{n} Portionen", "fc-missing-warn": "Zutat fehlt", "fc-ing-intro": "Erfassen Sie jede Zutat einmal mit Einkaufspreis und Ausbeute. Ändert sich der Preis, werden alle Gerichte aktualisiert; frühere Kalkulationen bleiben im Verlauf jedes Gerichts erhalten.", "fc-ing-card": "Zutat", "fc-ing-name": "Name der Zutat", "fc-ph-ing-name": "z. B. Dorade", "fc-ing-unit": "Einkaufseinheit", "fc-ing-price": "Einkaufspreis netto", "fc-ing-yield": "Ausbeute %", "fc-ing-waste": "Verlust %", "fc-ing-real": "Tatsächliche Kosten", "fc-ing-save": "💾 Zutat speichern", "fc-ing-new": "＋ Neue Zutat", "fc-ing-list": "🥕 Zutatenliste", "fc-ph-ing-search": "Zutat suchen...", "fc-th-ing": "Zutat", "fc-th-buy": "Einkaufspreis", "fc-th-yield": "Ausbeute", "fc-th-real": "Tats. Kosten", "fc-th-used": "Gerichte", "fc-th-qty": "Menge", "fc-th-unitcost": "Tats. Einheitskosten", "fc-th-linecost": "Kosten", "fc-ing-empty": "Noch keine Zutaten. Fügen Sie die erste hinzu.", "fc-ing-hist": "Preisverlauf", "fc-ing-need-name": "Bitte Namen der Zutat eingeben", "fc-ing-need-price": "Bitte Einkaufspreis eingeben", "fc-ing-yield-bad": "Die Ausbeute muss zwischen 1 und 100 % liegen", "fc-ing-saved": "Zutat gespeichert: ", "fc-ing-dup": "Eine Zutat namens „{n}“ existiert bereits.", "fc-ing-del-q": "Zutat „{n}“ löschen?", "fc-ing-in-use": "„{n}“ wird in {c} Gerichten verwendet. Entfernen Sie es zuerst dort.", "fc-qa-title": "Neue Zutat", "fc-cancel": "Abbrechen", "fc-add-btn": "Hinzufügen", "fc-u-pc": "Stk.", "fc-pdf-title": "Kalkulationsblatt", "fc-pdf-total": "Gesamtkosten Rezept", "fc-pdf-popup": "Popups erlauben", "fc-pdf-hint": "Im Druckfenster „Als PDF speichern“ wählen", "fc-printed": "Gedruckt", "fc-date": "Datum"}};
 Object.keys(FC_T).forEach(l=>{T[l]=Object.assign(T[l]||{},FC_T[l]);});
 function ft(k,v){let s=t('fc-'+k);if(v)Object.keys(v).forEach(x=>{s=s.split('{'+x+'}').join(v[x]);});return s;}
 
@@ -3113,7 +3255,7 @@ function populatePaymentSelects(){
 
 function applyTranslations(){
   populatePaymentSelects();
-  if(typeof renderFCMenu==='function'){try{renderFCMenu();const dd=FC_DIRTY;calcFC();FC_DIRTY=dd;const b=document.getElementById('fc-edit-badge');const cur=FC_EDIT_ID&&DB.dishes().find(x=>x.id===FC_EDIT_ID);if(b&&cur)b.textContent=ft('editing')+cur.name;}catch(e){}}
+  if(typeof fcOnLang==='function'){try{fcOnLang();}catch(e){}}
   document.querySelectorAll('[data-el]').forEach(el=>{
     const key=el.getAttribute('data-el');const val=t(key);
     if(val&&val!==key)el.innerHTML=val;
@@ -3146,6 +3288,7 @@ const DB={
   creditPayments(){return this.get('fos_credit_payments')||[]},
   saveCreditPayments(d){this.set('fos_credit_payments',d)},
   dishes(){return this.get('fos_dishes')||[]},saveDishes(d){this.set('fos_dishes',d)},
+  ingredients(){return this.get('fos_ingredients')||[]},saveIngredients(d){this.set('fos_ingredients',d)},
 };
 
 // ── CURRENCY ──
@@ -3255,7 +3398,7 @@ function onPageEnter(page){
     populatePaymentSelects();populateSupplierSelect();renderExpenseTable();renderExpenseSummary();
   }
   if(page==='suppliers'){renderSuppliers();populateSupTypeDrop();}
-  if(page==='menu'){if(!document.querySelector('#fc-ingredients-list .fc-ingredient-row'))addFCIngredient();renderFCMenu();}
+  if(page==='menu')fcEnter();
   if(page==='credit')renderCreditPage();
   if(page==='compare')setCmpMode(cmpMode);
   if(page==='wallet'){
@@ -4849,6 +4992,7 @@ function backupData(){
     payroll:DB.payroll(),
     creditPayments:DB.creditPayments(),
     dishes:DB.dishes(),
+    ingredients:DB.ingredients(),
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -4875,6 +5019,7 @@ function restoreData(event){
       if(data.payroll)DB.savePayroll(data.payroll);
       if(data.creditPayments)DB.saveCreditPayments(data.creditPayments);
       if(data.dishes)DB.saveDishes(data.dishes);
+      if(data.ingredients)DB.saveIngredients(data.ingredients);
       if(data.currency){CURRENCY=data.currency;updateCurrencyUI();}
       notify('Backup restored successfully!');
       nav(currentPage);updateHomeStats();
@@ -6520,41 +6665,212 @@ function renderWallet(){
 }
 
 // ── FOOD COST CALCULATOR ──
-let FC_EDIT_ID=null, FC_DIRTY=false;
+let FC_EDIT_ID=null, FC_DIRTY=false, FC_ING_EDIT=null, FC_QA_ROW=null, FC_TAB='dishes';
+const FC_UNITS={kg:{g:'m',f:1},g:{g:'m',f:.001},L:{g:'v',f:1},ml:{g:'v',f:.001},pc:{g:'p',f:1}};
+const FC_SUB={kg:['g','kg'],L:['ml','L'],pc:['pc']};
+const FC_COL={good:'var(--accent)',warn:'var(--warning)',over:'var(--danger)',none:'var(--ink3)'};
 function fcEsc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function addFCIngredient(name,cost){
-  const list=document.getElementById('fc-ingredients-list');
-  const row=document.createElement('div');
-  row.className='fc-ingredient-row';
-  row.style.cssText='display:grid;grid-template-columns:1fr auto auto;gap:8px';
-  row.innerHTML=`
-    <input placeholder="${fcEsc(ft('ph-ing'))}" data-placeholder-el="fc-ph-ing" class="fc-ing-name" oninput="calcFC()" style="font-size:13px" value="${fcEsc(name)}"/>
-    <input type="number" step="0.01" min="0" placeholder="${fcEsc(ft('ph-cost'))}" data-placeholder-el="fc-ph-cost" class="fc-ing-cost" oninput="calcFC()" style="width:90px;font-size:13px" value="${cost!=null&&cost!==''?fcEsc(cost):''}"/>
-    <button onclick="this.parentElement.remove();calcFC()" title="${fcEsc(ft('remove'))}" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:18px;padding:0 4px">×</button>`;
-  list.appendChild(row);
+function fcN(v){const n=parseFloat(String(v==null?'':v).replace(',','.'));return isFinite(n)?n:0;}
+function fcU(u){return u==='pc'?ft('u-pc'):(u||'');}
+function fcQ(n){return (Math.round(n*1000)/1000).toLocaleString(CURRENCY.locale||undefined,{maximumFractionDigits:3});}
+function fcP(n){return n.toFixed(1)+'%';}
+function fcDate(iso){try{return new Date(iso).toLocaleDateString(CURRENCY.locale||undefined);}catch(e){return iso;}}
+function fcIngById(id){return DB.ingredients().find(i=>i.id===id);}
+function fcRU(ing){const y=fcN(ing.yield)||100;return fcN(ing.price)/(y/100);}
+function fcLinesOf(d){return d.lines?d.lines:(d.ingredients||[]).map(i=>({name:i.name,cost:fcN(i.cost)}));}
+function fcIsIngLine(l){return Object.prototype.hasOwnProperty.call(l,'ingId');}
+function fcLine(l,cat){
+  if(fcIsIngLine(l)){
+    const ing=l.ingId&&cat.find(i=>i.id===l.ingId);
+    if(!ing)return {type:'ing',label:l.nameCache||'?',missing:!!l.ingId,qty:fcN(l.qty),unit:l.unit,cost:0};
+    const bu=FC_UNITS[ing.unit]||FC_UNITS.kg;
+    const okU=FC_UNITS[l.unit]&&FC_UNITS[l.unit].g===bu.g;
+    const lu=okU?FC_UNITS[l.unit]:bu, ru=fcRU(ing);
+    return {type:'ing',label:ing.name,qty:fcN(l.qty),unit:okU?l.unit:ing.unit,buyUnit:ing.unit,price:fcN(ing.price),yld:fcN(ing.yield)||100,ru,cost:fcN(l.qty)*lu.f/bu.f*ru};
+  }
+  return {type:'fixed',label:l.name||'',cost:fcN(l.cost)};
 }
-function fcDishCost(d){return (d.ingredients||[]).reduce((s,i)=>s+(parseFloat(i.cost)||0),0);}
-function fcDishStats(d){
-  const net=(parseFloat(d.price)||0)/(1+(parseFloat(d.vat)||0)/100);
-  const cost=fcDishCost(d);
-  return {cost,net,pct:net>0?cost/net*100:0,profit:net-cost};
+function fcCalc(d){
+  const cat=DB.ingredients();
+  const lines=fcLinesOf(d).map(l=>fcLine(l,cat));
+  const recipe=lines.reduce((s,l)=>s+l.cost,0);
+  const portions=Math.max(1,Math.round(fcN(d.portions))||1);
+  const extras=fcN(d.packaging)+fcN(d.extra);
+  const cpp=recipe/portions+extras;
+  const vat=fcN(d.vat), gross=fcN(d.price), net=gross/(1+vat/100);
+  const pct=net>0?cpp/net*100:0, profit=net-cpp, margin=net>0?profit/net*100:0;
+  const target=fcN(GOALS.fc)||30, diff=pct-target;
+  const status=(net<=0||cpp<=0)?'none':pct<=target*0.8?'good':pct<=target?'warn':'over';
+  const sugNet=cpp>0?cpp/(target/100):0, sugGross=sugNet*(1+vat/100);
+  return {lines,recipe,portions,extras,cpp,vat,gross,net,pct,profit,margin,target,diff,status,sugNet,sugGross,missing:lines.some(l=>l.missing)};
 }
+function fcStatusLabel(s){return s==='none'?'—':ft('st-'+s);}
+function fcSnap(d){
+  const c=fcCalc(d), h=d.history||[], last=h[h.length-1];
+  const s={date:new Date().toISOString(),cpp:+c.cpp.toFixed(4),price:c.gross,pct:+c.pct.toFixed(2)};
+  if(!last||Math.abs(fcN(last.cpp)-s.cpp)>0.00005||fcN(last.price)!==s.price){h.push(s);if(h.length>30)h.splice(0,h.length-30);}
+  d.history=h;return d;
+}
+
+// ── recipe rows ──
+function fcIngOptions(sel){
+  const cat=DB.ingredients().slice().sort((a,b)=>a.name.localeCompare(b.name));
+  let o=`<option value="">${fcEsc(ft('choose-ing'))}</option>`;
+  o+=cat.map(i=>`<option value="${fcEsc(i.id)}"${i.id===sel?' selected':''}>${fcEsc(i.name)} (${fcEsc(fcU(i.unit))})</option>`).join('');
+  return o+`<option value="__new">${fcEsc(ft('new-ing-opt'))}</option>`;
+}
+function fcUnitOptions(ingId,unit){
+  const ing=ingId&&fcIngById(ingId);
+  const subs=ing?(FC_SUB[ing.unit]||[ing.unit]):['g','kg','ml','L','pc'];
+  const u=subs.includes(unit)?unit:subs[0];
+  return subs.map(s=>`<option value="${s}"${s===u?' selected':''}>${fcEsc(fcU(s))}</option>`).join('');
+}
+function fcFillIngSelect(sel,val,nameCache){
+  sel.innerHTML=fcIngOptions(val);
+  if(val&&!fcIngById(val)){const o=document.createElement('option');o.value=val;o.textContent='⚠ '+(nameCache||'?')+' ('+ft('missing-ing')+')';o.selected=true;sel.insertBefore(o,sel.children[1]);}
+  sel.dataset.prev=sel.value;
+}
+function fcAddIngLine(l){
+  l=l||{};
+  const row=document.createElement('div');row.className='fc-line';row.dataset.type='ing';
+  if(l.nameCache)row.dataset.nameCache=l.nameCache;
+  row.innerHTML=`<select class="fc-l-ing" onchange="fcOnIngSel(this)"></select>
+    <input type="number" class="fc-l-qty" step="any" min="0" placeholder="${fcEsc(ft('qty'))}" data-placeholder-el="fc-qty" oninput="calcFC()" value="${l.qty!=null&&l.qty!==''?fcEsc(l.qty):''}"/>
+    <select class="fc-l-unit" onchange="calcFC()">${fcUnitOptions(l.ingId,l.unit)}</select>
+    <div class="fc-l-cost">—</div>
+    <button type="button" class="fc-x" onclick="this.parentElement.remove();calcFC()" title="${fcEsc(ft('remove'))}">×</button>
+    <div class="fc-l-info"></div>`;
+  fcFillIngSelect(row.querySelector('.fc-l-ing'),l.ingId||'',l.nameCache);
+  document.getElementById('fc-lines').appendChild(row);
+  return row;
+}
+function fcAddFixedLine(l){
+  l=l||{};
+  const row=document.createElement('div');row.className='fc-line fc-line-fixed';row.dataset.type='fixed';
+  row.innerHTML=`<input class="fc-l-name" placeholder="${fcEsc(ft('ph-fixed-name'))}" data-placeholder-el="fc-ph-fixed-name" oninput="calcFC()" value="${fcEsc(l.name)}"/>
+    <input type="number" class="fc-l-fcost" step="0.01" min="0" placeholder="${fcEsc(ft('ph-cost'))}" data-placeholder-el="fc-ph-cost" oninput="calcFC()" value="${l.cost!=null&&l.cost!==''?fcEsc(l.cost):''}"/>
+    <div class="fc-l-tag"></div>
+    <div class="fc-l-cost">—</div>
+    <button type="button" class="fc-x" onclick="this.parentElement.remove();calcFC()" title="${fcEsc(ft('remove'))}">×</button>
+    <div class="fc-l-info"></div>`;
+  document.getElementById('fc-lines').appendChild(row);
+  return row;
+}
+function fcOnIngSel(sel){
+  const row=sel.closest('.fc-line');
+  if(sel.value==='__new'){sel.value=sel.dataset.prev||'';fcQaOpen(row);return;}
+  sel.dataset.prev=sel.value;
+  const us=row.querySelector('.fc-l-unit');us.innerHTML=fcUnitOptions(sel.value,us.value);
+  calcFC();
+}
+function fcRefreshIngSelects(){
+  document.querySelectorAll('#fc-lines .fc-line[data-type="ing"]').forEach(row=>{
+    const sel=row.querySelector('.fc-l-ing'), us=row.querySelector('.fc-l-unit');
+    const v=sel.value, u=us.value;
+    fcFillIngSelect(sel,v,row.dataset.nameCache);
+    us.innerHTML=fcUnitOptions(v,u);
+  });
+}
+function fcReadForm(){
+  const lines=[...document.querySelectorAll('#fc-lines .fc-line')].map(r=>{
+    if(r.dataset.type==='fixed')return {name:r.querySelector('.fc-l-name').value.trim(),cost:fcN(r.querySelector('.fc-l-fcost').value),_row:r};
+    const id=r.querySelector('.fc-l-ing').value, ing=id&&fcIngById(id);
+    return {ingId:id||'',qty:fcN(r.querySelector('.fc-l-qty').value),unit:r.querySelector('.fc-l-unit').value,nameCache:ing?ing.name:(r.dataset.nameCache||''),_row:r};
+  });
+  return {
+    name:document.getElementById('fc-dish-name').value.trim(),
+    portions:Math.max(1,Math.round(fcN(document.getElementById('fc-portions').value))||1),
+    price:fcN(document.getElementById('fc-sell-price').value),
+    vat:fcN(document.getElementById('fc-vat').value),
+    packaging:fcN(document.getElementById('fc-packaging').value),
+    extra:fcN(document.getElementById('fc-extra').value),
+    lines
+  };
+}
+function fcCleanLines(lines){
+  return lines.filter(l=>fcIsIngLine(l)?!!l.ingId:(l.name||l.cost)).map(l=>{const o=Object.assign({},l);delete o._row;return o;});
+}
+function calcFC(){
+  FC_DIRTY=true;
+  if(!document.getElementById('fc-lines'))return;
+  const f=fcReadForm(), cat=DB.ingredients();
+  f.lines.forEach(l=>{
+    const r=l._row, info=r.querySelector('.fc-l-info'), costEl=r.querySelector('.fc-l-cost');
+    if(fcIsIngLine(l)&&!l.ingId){info.textContent='';costEl.textContent='—';return;}
+    const c=fcLine(l,cat);
+    if(c.type==='fixed'){info.textContent='';costEl.textContent=(l.name||l.cost)?fmtE(c.cost):'—';return;}
+    if(c.missing){info.innerHTML='<span style="color:var(--danger)">⚠ '+fcEsc(ft('missing-ing'))+'</span>';costEl.textContent='—';return;}
+    const u=fcU(c.buyUnit);
+    info.textContent=c.yld<100?`${fmtE(c.price)}/${u} ÷ ${c.yld}% = ${fmtE(c.ru)}/${u}`:`${fmtE(c.ru)}/${u}`;
+    costEl.textContent=c.qty>0?fmtE(c.cost):'—';
+  });
+  const c=fcCalc(Object.assign({},f,{lines:fcCleanLines(f.lines)}));
+  const hint=document.getElementById('fc-net-hint');
+  hint.innerHTML=c.gross>0?`${fcEsc(ft('net-hint'))} <b style="color:var(--ink)">${fmtE(c.net)}</b> (${fmtE(c.gross)} ÷ ${fcQ(1+c.vat/100)})`:'';
+  const res=document.getElementById('fc-results');
+  if(c.recipe<=0&&c.extras<=0){res.style.display='none';return;}
+  res.style.display='block';
+  const hasP=c.net>0, col=FC_COL[c.status];
+  document.getElementById('fc-r-recipe').textContent=fmtE(c.recipe);
+  document.getElementById('fc-r-cpp').textContent=fmtE(c.cpp);
+  document.getElementById('fc-r-net').textContent=hasP?fmtE(c.net):'—';
+  const pe=document.getElementById('fc-r-pct');pe.textContent=hasP?fcP(c.pct):'—';pe.style.color=col;
+  document.getElementById('fc-r-profit').textContent=hasP?fmtE(c.profit):'—';
+  document.getElementById('fc-r-margin').textContent=hasP?fcP(c.margin):'—';
+  document.getElementById('fc-target-label').textContent=c.target+'%';
+  const de=document.getElementById('fc-r-diff');de.textContent=hasP?((c.diff>0?'+':'')+c.diff.toFixed(1)):'—';de.style.color=col;
+  const st=document.getElementById('fc-r-status');st.className='fc-badge fc-b-'+c.status;st.textContent=hasP?fcStatusLabel(c.status):'';
+  const bar=document.getElementById('fc-gauge-bar');
+  bar.style.width=hasP?Math.min(100,c.pct/c.target*100).toFixed(0)+'%':'0%';bar.style.background=col;
+  const v=document.getElementById('fc-verdict');
+  v.textContent=!hasP?'':c.status==='good'?ft('v-good'):c.status==='warn'?ft('v-ok'):ft('v-over',{n:c.diff.toFixed(1)});
+  v.style.color=col;
+  document.getElementById('fc-r-sug-gross').textContent=c.sugGross>0?fmtE(c.sugGross):'—';
+  document.getElementById('fc-r-sug-net').textContent=c.sugNet>0?fmtE(c.sugNet):'—';
+}
+function fcUseSug(){
+  const f=fcReadForm(), c=fcCalc(Object.assign({},f,{lines:fcCleanLines(f.lines)}));
+  if(c.sugGross<=0)return;
+  document.getElementById('fc-sell-price').value=(Math.ceil(c.sugGross*10-1e-9)/10).toFixed(2);
+  calcFC();
+}
+
+// ── dishes ──
 function fcHasContent(){
-  if(document.getElementById('fc-dish-name').value.trim())return true;
-  if(document.getElementById('fc-sell-price').value)return true;
-  return [...document.querySelectorAll('.fc-ing-name,.fc-ing-cost')].some(el=>el.value.trim()!=='');
+  const f=fcReadForm();
+  return !!(f.name||f.price||fcCleanLines(f.lines).length||f.packaging||f.extra);
+}
+function fcSetBadge(name){
+  const b=document.getElementById('fc-edit-badge');
+  if(name){b.style.display='block';b.textContent=ft('editing')+name;}else{b.style.display='none';b.textContent='';}
 }
 function fcFillForm(d){
   document.getElementById('fc-dish-name').value=d?d.name:'';
+  document.getElementById('fc-portions').value=d&&d.portions?d.portions:1;
   document.getElementById('fc-sell-price').value=d&&d.price?d.price:'';
-  document.getElementById('fc-vat').value=d?String(d.vat):'13';
-  const list=document.getElementById('fc-ingredients-list'); list.innerHTML='';
-  const ings=d&&d.ingredients&&d.ingredients.length?d.ingredients:[{name:'',cost:''}];
-  ings.forEach(i=>addFCIngredient(i.name,i.cost));
+  const vs=document.getElementById('fc-vat'), vv=String(d&&d.vat!=null?d.vat:13);
+  if(![...vs.options].some(o=>o.value===vv)){const o=document.createElement('option');o.value=vv;o.textContent=vv+'%';vs.appendChild(o);}
+  vs.value=vv;
+  document.getElementById('fc-packaging').value=d&&d.packaging?d.packaging:'';
+  document.getElementById('fc-extra').value=d&&d.extra?d.extra:'';
+  document.getElementById('fc-extras').open=!!(d&&(fcN(d.packaging)||fcN(d.extra)));
+  document.getElementById('fc-lines').innerHTML='';
+  const ls=d?fcLinesOf(d):[];
+  ls.forEach(l=>fcIsIngLine(l)?fcAddIngLine(l):fcAddFixedLine(l));
+  if(!ls.length)fcAddIngLine();
   FC_EDIT_ID=d?d.id:null;
-  const badge=document.getElementById('fc-edit-badge');
-  if(d){badge.style.display='inline';badge.textContent=ft('editing')+d.name;}else{badge.style.display='none';}
-  calcFC(); FC_DIRTY=false;
+  fcSetBadge(d?d.name:'');
+  calcFC();FC_DIRTY=false;
+  fcRenderHist();
+}
+function fcRenderHist(){
+  const box=document.getElementById('fc-hist-list');if(!box)return;
+  const d=FC_EDIT_ID&&DB.dishes().find(x=>x.id===FC_EDIT_ID);
+  const h=d&&d.history?d.history.slice(-8).reverse():[];
+  if(!h.length){box.innerHTML=fcEsc(ft('hist-empty'));return;}
+  const tgt=fcN(GOALS.fc)||30;
+  box.innerHTML='<table><tr><th>'+fcEsc(ft('date'))+'</th><th>'+fcEsc(ft('th-cost'))+'</th><th>'+fcEsc(ft('th-price'))+'</th><th>'+fcEsc(ft('th-pct'))+'</th></tr>'+h.map(x=>{const p=fcN(x.pct);const col=x.price>0?FC_COL[p<=tgt*0.8?'good':p<=tgt?'warn':'over']:'var(--ink3)';
+    return `<tr><td>${fcEsc(fcDate(x.date))}</td><td style="text-align:right">${fmtE(fcN(x.cpp))}</td><td style="text-align:right">${fmtE(fcN(x.price))}</td><td style="color:${col};text-align:right">${x.price>0?fcP(p):'—'}</td></tr>`;}).join('')+'</table>';
 }
 function newFCDish(){
   if(FC_DIRTY&&fcHasContent()&&!confirm(ft('clear')))return;
@@ -6562,117 +6878,305 @@ function newFCDish(){
   document.getElementById('fc-dish-name').focus();
 }
 function saveFCDish(){
-  const name=document.getElementById('fc-dish-name').value.trim();
-  const price=parseFloat(document.getElementById('fc-sell-price').value)||0;
-  const vat=parseFloat(document.getElementById('fc-vat').value)||0;
-  const ingredients=[...document.querySelectorAll('.fc-ingredient-row')].map(r=>({
-    name:r.querySelector('.fc-ing-name').value.trim(),
-    cost:parseFloat(r.querySelector('.fc-ing-cost').value)||0
-  })).filter(i=>i.name||i.cost);
-  if(!name){notify(ft('need-name'),'danger');document.getElementById('fc-dish-name').focus();return;}
-  if(!ingredients.length){notify(ft('need-ing'),'danger');return;}
+  const f=fcReadForm();
+  if(!f.name){notify(ft('need-name'),'danger');document.getElementById('fc-dish-name').focus();return;}
+  const lines=fcCleanLines(f.lines);
+  if(!lines.length){notify(ft('need-ing'),'danger');return;}
   const dishes=DB.dishes();
-  if(!FC_EDIT_ID && BIZ.mode!=='active' && dishes.length>=3){
-    notify(ft('demo'),'danger');return;
-  }
+  if(!FC_EDIT_ID&&BIZ.mode!=='active'&&dishes.length>=3){notify(ft('demo'),'danger');return;}
+  const data={name:f.name,portions:f.portions,price:f.price,vat:f.vat,packaging:f.packaging,extra:f.extra,lines};
   const now=new Date().toISOString();
-  if(FC_EDIT_ID){
-    const k=dishes.findIndex(d=>d.id===FC_EDIT_ID);
-    if(k>-1){dishes[k]={...dishes[k],name,price,vat,ingredients,updatedAt:now};}
-    else{FC_EDIT_ID=null;}
-  }
-  if(!FC_EDIT_ID){
-    const dup=dishes.find(d=>d.name.toLowerCase()===name.toLowerCase());
-    if(dup&&!confirm(ft('dup',{n:name})))return;
+  let k=FC_EDIT_ID?dishes.findIndex(d=>d.id===FC_EDIT_ID):-1;
+  if(k>-1){
+    const d=Object.assign({},dishes[k],data,{updatedAt:now});delete d.ingredients;
+    dishes[k]=fcSnap(d);
+  }else{
+    const dup=dishes.find(d=>d.name.toLowerCase()===f.name.toLowerCase());
+    if(dup&&!confirm(ft('dup',{n:f.name})))return;
     FC_EDIT_ID='d'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-    dishes.push({id:FC_EDIT_ID,name,price,vat,ingredients,createdAt:now,updatedAt:now});
+    dishes.push(fcSnap(Object.assign({id:FC_EDIT_ID,createdAt:now,updatedAt:now,history:[]},data)));
   }
   DB.saveDishes(dishes);
-  FC_DIRTY=false;
-  const badge=document.getElementById('fc-edit-badge');badge.style.display='inline';badge.textContent=ft('editing')+name;
-  renderFCMenu();
-  notify(ft('saved')+name);
+  FC_DIRTY=false;fcSetBadge(f.name);
+  renderFCMenu();fcRenderHist();
+  notify(ft('saved')+f.name);
 }
 function editFCDish(id){
   if(FC_DIRTY&&fcHasContent()&&!confirm(ft('load')))return;
-  const d=DB.dishes().find(x=>x.id===id); if(!d)return;
+  const d=DB.dishes().find(x=>x.id===id);if(!d)return;
   fcFillForm(d);renderFCMenu();
-  {const ed=document.getElementById('fc-editor');if(ed.getBoundingClientRect().top<70)window.scrollTo({top:ed.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});}
+  const ed=document.getElementById('fc-editor');
+  if(ed.getBoundingClientRect().top<70)window.scrollTo({top:ed.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});
 }
 function deleteFCDish(id){
-  const dishes=DB.dishes(); const d=dishes.find(x=>x.id===id); if(!d)return;
+  const dishes=DB.dishes(), d=dishes.find(x=>x.id===id);if(!d)return;
   if(!confirm(ft('del-q',{n:d.name})))return;
   DB.saveDishes(dishes.filter(x=>x.id!==id));
-  if(FC_EDIT_ID===id){FC_EDIT_ID=null;document.getElementById('fc-edit-badge').style.display='none';}
+  if(FC_EDIT_ID===id){FC_EDIT_ID=null;fcSetBadge('');fcRenderHist();}
   renderFCMenu();
 }
 function renderFCMenu(){
   const box=document.getElementById('fc-menu-list'), sum=document.getElementById('fc-menu-summary');
   if(!box)return;
-  const all=DB.dishes();
+  const all=DB.dishes().map(d=>({d,c:fcCalc(d)}));
   const q=((document.getElementById('fc-search')||{}).value||'').trim().toLowerCase();
+  const filt=(document.getElementById('fc-filter')||{}).value||'';
   const sortBy=(document.getElementById('fc-sort')||{}).value||'name';
-  const dishes=all.filter(d=>!q||d.name.toLowerCase().includes(q)).sort((a,b)=>{
-    if(sortBy==='fc')return fcDishStats(b).pct-fcDishStats(a).pct;
-    if(sortBy==='profit')return fcDishStats(b).profit-fcDishStats(a).profit;
-    return a.name.localeCompare(b.name);});
-  const target=GOALS.fc||30;
-  if(all.length&&!dishes.length){box.innerHTML='<div style="font-size:13px;color:var(--ink3);padding:14px;text-align:center">'+ft('no-match')+'</div>';sum.textContent='';return;}
-  if(!dishes.length){
+  if(!all.length){
     box.innerHTML='<div style="font-size:13px;color:var(--ink3);padding:14px;border:1px dashed var(--border);border-radius:var(--radius-xl);text-align:center">'+ft('empty')+'</div>';
     sum.textContent='';return;
   }
-  let tc=0,tn=0;
-  const rows=dishes.map(d=>{
-    const s=fcDishStats(d); tc+=s.cost; tn+=s.net;
-    const col=s.pct<=target*0.8?'var(--accent)':s.pct<=target?'var(--warning)':'var(--danger)';
+  const priced=all.filter(x=>x.c.net>0);
+  const tc=priced.reduce((s,x)=>s+x.c.cpp,0), tn=priced.reduce((s,x)=>s+x.c.net,0);
+  const avg=tn>0?tc/tn*100:0, target=fcN(GOALS.fc)||30, over=all.filter(x=>x.c.status==='over').length;
+  sum.innerHTML=`${ft('sum-dishes',{n:all.length})}${tn>0?` · ${ft('sum-avg')} <b style="color:${avg<=target?'var(--accent)':'var(--danger)'}">${fcP(avg)}</b>`:''}${over?` · <span style="color:var(--danger)">${ft('sum-over',{n:over,t:target})}</span>`:''}`;
+  const list=all.filter(x=>(!q||x.d.name.toLowerCase().includes(q))&&(!filt||x.c.status===filt)).sort((a,b)=>{
+    if(sortBy==='fc')return b.c.pct-a.c.pct;
+    if(sortBy==='profit')return b.c.profit-a.c.profit;
+    return a.d.name.localeCompare(b.d.name);});
+  if(!list.length){box.innerHTML='<div style="font-size:13px;color:var(--ink3);padding:14px;text-align:center">'+ft('no-match')+'</div>';return;}
+  const rows=list.map(({d,c})=>{
+    const col=FC_COL[c.status], hasP=c.net>0;
+    const sub=ft('n-ings',{n:fcLinesOf(d).length})+(c.portions>1?' · '+ft('n-portions',{n:c.portions}):'');
     return `<tr class="${d.id===FC_EDIT_ID?'fc-row-active':''}" style="border-top:1px solid var(--border)">
-      <td style="padding:9px 6px;cursor:pointer" onclick="editFCDish('${d.id}')" title="${fcEsc(ft('edit'))}"><b>${fcEsc(d.name)}</b><div style="font-size:11px;color:var(--ink3)">${ft('n-ings',{n:(d.ingredients||[]).length})}</div></td>
-      <td class="fc-num" data-l="${fcEsc(ft('th-cost'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${fmtE(s.cost)}</td>
-      <td class="fc-num" data-l="${fcEsc(ft('th-price'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${fmtE(parseFloat(d.price)||0)}</td>
-      <td class="fc-num" data-l="FC %" style="padding:9px 6px;text-align:right;font-family:var(--mono);font-weight:700;color:${col}">${s.net>0?s.pct.toFixed(1)+'%':'—'}</td>
-      <td class="fc-num" data-l="${fcEsc(ft('th-profit'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${fmtE(s.profit)}</td>
+      <td style="padding:9px 6px;cursor:pointer" onclick="editFCDish('${d.id}')" title="${fcEsc(ft('edit'))}"><b>${fcEsc(d.name)}</b>${c.missing?` <span title="${fcEsc(ft('missing-warn'))}" style="color:var(--danger)">⚠</span>`:''}<div style="font-size:11px;color:var(--ink3)">${fcEsc(sub)}</div></td>
+      <td class="fc-num" data-l="${fcEsc(ft('th-cost'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${fmtE(c.cpp)}</td>
+      <td class="fc-num" data-l="${fcEsc(ft('th-price'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${hasP?fmtE(c.gross):'—'}</td>
+      <td class="fc-num" data-l="${fcEsc(ft('th-pct'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono);font-weight:700;color:${col}">${hasP?fcP(c.pct):'—'}</td>
+      <td class="fc-num" data-l="${fcEsc(ft('th-profit'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${hasP?fmtE(c.profit):'—'}</td>
+      <td data-l="${fcEsc(ft('th-status'))}" style="padding:9px 6px;text-align:right"><span class="fc-badge fc-b-${c.status}">${fcEsc(fcStatusLabel(c.status))}</span></td>
       <td style="padding:9px 2px;text-align:right;white-space:nowrap">
         <button onclick="editFCDish('${d.id}')" title="${fcEsc(ft('edit'))}" style="background:none;border:none;color:var(--ink2);cursor:pointer;font-size:15px;padding:2px 5px">✎</button>
         <button onclick="deleteFCDish('${d.id}')" title="${fcEsc(ft('del'))}" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:18px;padding:2px 5px">×</button>
       </td></tr>`;
   }).join('');
-  const avg=tn>0?tc/tn*100:0;
-  const over=dishes.filter(d=>fcDishStats(d).pct>target).length;
-  sum.innerHTML=`${ft('sum-dishes',{n:dishes.length})} · ${ft('sum-avg')} <b style="color:${avg<=target?'var(--accent)':'var(--danger)'}">${avg.toFixed(1)}%</b>${over?` · <span style="color:var(--danger)">${ft('sum-over',{n:over,t:target})}</span>`:''}`;
   box.innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
     <thead><tr style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px">
-      <th style="text-align:left;padding:6px">${ft('th-dish')}</th><th style="text-align:right;padding:6px">${ft('th-cost')}</th><th style="text-align:right;padding:6px">${ft('th-price')}</th><th style="text-align:right;padding:6px">FC %</th><th style="text-align:right;padding:6px">${ft('th-profit')}</th><th></th>
+      <th style="text-align:left;padding:6px">${ft('th-dish')}</th><th style="text-align:right;padding:6px">${ft('th-cost')}</th><th style="text-align:right;padding:6px">${ft('th-price')}</th><th style="text-align:right;padding:6px">${ft('th-pct')}</th><th style="text-align:right;padding:6px">${ft('th-profit')}</th><th style="text-align:right;padding:6px">${ft('th-status')}</th><th></th>
     </tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
-function calcFC(){
-  FC_DIRTY=true;
-  const sellPriceVAT=parseFloat(document.getElementById('fc-sell-price').value)||0;
-  const vat=parseFloat(document.getElementById('fc-vat').value)||0;
-  const sellPrice=sellPriceVAT/(1+vat/100); // net price ex-VAT
-  const costs=[...document.querySelectorAll('.fc-ing-cost')].map(el=>parseFloat(el.value)||0);
-  const totalCost=costs.reduce((s,c)=>s+c,0);
-  const res=document.getElementById('fc-results');
-  if(sellPrice<=0||totalCost<=0){res.style.display='none';return;}
-  res.style.display='block';
-  const fcPct=(totalCost/sellPrice*100);
-  const profit=sellPrice-totalCost;
-  const target=GOALS.fc||30;
-  const isGood=fcPct<=target;
-  document.getElementById('fc-res-cost').textContent=fmtE(totalCost);
-  document.getElementById('fc-res-pct').textContent=fcPct.toFixed(1)+'%';
-  document.getElementById('fc-res-pct').style.color=isGood?'var(--accent)':'var(--danger)';
-  document.getElementById('fc-res-profit').textContent=fmtE(profit);
-  document.getElementById('fc-target-label').textContent=target+'%';
-  const bar=document.getElementById('fc-gauge-bar');
-  bar.style.width=Math.min(100,fcPct/target*100).toFixed(0)+'%';
-  bar.style.background=fcPct<=target*0.8?'var(--accent)':fcPct<=target?'var(--warning)':'var(--danger)';
-  const verdict=document.getElementById('fc-verdict');
-  if(fcPct<=target*0.8)verdict.textContent=ft('v-good');
-  else if(fcPct<=target)verdict.textContent=ft('v-ok');
-  else verdict.textContent=ft('v-over',{n:(fcPct-target).toFixed(1)});
-  verdict.style.color=fcPct<=target*0.8?'var(--accent)':fcPct<=target?'var(--warning)':'var(--danger)';
+// ── ingredients catalogue ──
+function fcIngUsage(id){return DB.dishes().filter(d=>fcLinesOf(d).some(l=>l.ingId===id));}
+function fcIngInput(which){
+  const y=document.getElementById('fc-i-yield'), w=document.getElementById('fc-i-waste');
+  if(which==='yield')w.value=y.value===''?'':+(100-fcN(y.value)).toFixed(1);
+  if(which==='waste')y.value=w.value===''?'':+(100-fcN(w.value)).toFixed(1);
+  const p=fcN(document.getElementById('fc-i-price').value), yl=fcN(y.value)||100, u=fcU(document.getElementById('fc-i-unit').value);
+  const out=document.getElementById('fc-i-real');
+  out.innerHTML=p>0?(yl<100?`${fmtE(p)}/${fcEsc(u)} ÷ ${yl}% = <span style="color:var(--danger)">${fmtE(p/(yl/100))}/${fcEsc(u)}</span>`:`<span style="color:var(--danger)">${fmtE(p)}/${fcEsc(u)}</span>`):'—';
+}
+function fcIngFill(ing){
+  document.getElementById('fc-i-name').value=ing?ing.name:'';
+  document.getElementById('fc-i-unit').value=ing?ing.unit:'kg';
+  document.getElementById('fc-i-price').value=ing?ing.price:'';
+  document.getElementById('fc-i-yield').value=ing?(fcN(ing.yield)||100):100;
+  document.getElementById('fc-i-waste').value=ing?+(100-(fcN(ing.yield)||100)).toFixed(1):0;
+  FC_ING_EDIT=ing?ing.id:null;
+  const b=document.getElementById('fc-i-badge');
+  if(ing){b.style.display='block';b.textContent=ft('editing')+ing.name;}else{b.style.display='none';}
+  fcIngInput();fcIngHist();
+}
+function fcIngHist(){
+  const box=document.getElementById('fc-i-hist');if(!box)return;
+  const ing=FC_ING_EDIT&&fcIngById(FC_ING_EDIT);
+  if(!ing){box.innerHTML='';return;}
+  const rows=[{date:ing.updatedAt||ing.createdAt,price:ing.price,now:true}].concat((ing.history||[]).slice().reverse()).slice(0,10);
+  box.innerHTML='<table><tr><th>'+fcEsc(ft('date'))+'</th><th>'+fcEsc(ft('th-buy'))+'</th></tr>'+rows.map(r=>`<tr><td>${fcEsc(fcDate(r.date))}${r.now?' ●':''}</td><td style="text-align:right">${fmtE(fcN(r.price))}/${fcEsc(fcU(ing.unit))}</td></tr>`).join('')+'</table>';
+}
+function fcIngNew(){fcIngFill(null);document.getElementById('fc-i-name').focus();}
+function fcIngValidate(name,price,yl,exceptId){
+  if(!name){notify(ft('ing-need-name'),'danger');return false;}
+  if(!(price>0)){notify(ft('ing-need-price'),'danger');return false;}
+  if(!(yl>=1&&yl<=100)){notify(ft('ing-yield-bad'),'danger');return false;}
+  if(DB.ingredients().some(i=>i.id!==exceptId&&i.name.toLowerCase()===name.toLowerCase())){notify(ft('ing-dup',{n:name}),'danger');return false;}
+  return true;
+}
+function fcIngCreate(name,unit,price,yl){
+  const now=new Date().toISOString();
+  const ing={id:'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name,unit,price,yield:yl,history:[],createdAt:now,updatedAt:now};
+  const cat=DB.ingredients();cat.push(ing);DB.saveIngredients(cat);return ing;
+}
+function fcIngSave(){
+  const name=document.getElementById('fc-i-name').value.trim();
+  const unit=document.getElementById('fc-i-unit').value;
+  const price=fcN(document.getElementById('fc-i-price').value);
+  const yl=fcN(document.getElementById('fc-i-yield').value);
+  if(!fcIngValidate(name,price,yl,FC_ING_EDIT))return;
+  const cat=DB.ingredients(), k=FC_ING_EDIT?cat.findIndex(i=>i.id===FC_ING_EDIT):-1;
+  if(k>-1){
+    const old=cat[k], now=new Date().toISOString();
+    const costChanged=fcN(old.price)!==price||(fcN(old.yield)||100)!==yl||old.unit!==unit;
+    let dishes=DB.dishes();
+    const used=dishes.filter(d=>fcLinesOf(d).some(l=>l.ingId===old.id));
+    if(costChanged&&used.length){used.forEach(fcSnap);DB.saveDishes(dishes);} // keep costing before the change
+    const hist=(old.history||[]).slice();
+    if(fcN(old.price)!==price){hist.push({date:old.updatedAt||old.createdAt||now,price:fcN(old.price)});if(hist.length>50)hist.splice(0,hist.length-50);}
+    cat[k]=Object.assign({},old,{name,unit,price,yield:yl,history:hist,updatedAt:now});
+    DB.saveIngredients(cat);
+    dishes=DB.dishes();
+    dishes.forEach(d=>{if(d.lines)d.lines.forEach(l=>{if(l.ingId===old.id)l.nameCache=name;});});
+    if(costChanged)dishes.filter(d=>fcLinesOf(d).some(l=>l.ingId===old.id)).forEach(fcSnap); // record costing after the change
+    DB.saveDishes(dishes);
+  }else{
+    fcIngCreate(name,unit,price,yl);
+  }
+  notify(ft('ing-saved')+name);
+  fcIngFill(null);fcRenderIngs();
+}
+function fcIngEdit(id){const ing=fcIngById(id);if(!ing)return;fcIngFill(ing);
+  const ed=document.getElementById('fc-ing-editor');if(ed.getBoundingClientRect().top<70)window.scrollTo({top:ed.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});}
+function fcIngDelete(id){
+  const ing=fcIngById(id);if(!ing)return;
+  const used=fcIngUsage(id).length;
+  if(used){notify(ft('ing-in-use',{n:ing.name,c:used}),'danger');return;}
+  if(!confirm(ft('ing-del-q',{n:ing.name})))return;
+  DB.saveIngredients(DB.ingredients().filter(i=>i.id!==id));
+  if(FC_ING_EDIT===id)fcIngFill(null);
+  fcRenderIngs();
+}
+function fcRenderIngs(){
+  const box=document.getElementById('fc-ing-list');if(!box)return;
+  const cat=DB.ingredients(), dishes=DB.dishes();
+  const q=((document.getElementById('fc-i-search')||{}).value||'').trim().toLowerCase();
+  document.getElementById('fc-i-count').textContent=cat.length?String(cat.length):'';
+  if(!cat.length){box.innerHTML='<div style="font-size:13px;color:var(--ink3);padding:14px;border:1px dashed var(--border);border-radius:var(--radius-xl);text-align:center">'+fcEsc(ft('ing-empty'))+'</div>';return;}
+  const list=cat.filter(i=>!q||i.name.toLowerCase().includes(q)).sort((a,b)=>a.name.localeCompare(b.name));
+  if(!list.length){box.innerHTML='<div style="font-size:13px;color:var(--ink3);padding:14px;text-align:center">'+fcEsc(ft('no-match'))+'</div>';return;}
+  box.innerHTML=`<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px">
+      <th style="text-align:left;padding:6px">${ft('th-ing')}</th><th style="text-align:right;padding:6px">${ft('th-buy')}</th><th style="text-align:right;padding:6px">${ft('th-yield')}</th><th style="text-align:right;padding:6px">${ft('th-real')}</th><th style="text-align:right;padding:6px">${ft('th-used')}</th><th></th>
+    </tr></thead><tbody>${list.map(i=>{
+      const u=fcU(i.unit), used=dishes.filter(d=>fcLinesOf(d).some(l=>l.ingId===i.id)).length, yl=fcN(i.yield)||100;
+      return `<tr class="${i.id===FC_ING_EDIT?'fc-row-active':''}" style="border-top:1px solid var(--border)">
+        <td style="padding:9px 6px;cursor:pointer" onclick="fcIngEdit('${i.id}')"><b>${fcEsc(i.name)}</b>${(i.history||[]).length?`<div style="font-size:11px;color:var(--ink3)">${fcEsc(ft('ing-hist'))}: ${(i.history||[]).length}</div>`:''}</td>
+        <td class="fc-num" data-l="${fcEsc(ft('th-buy'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${fmtE(fcN(i.price))}/${fcEsc(u)}</td>
+        <td class="fc-num" data-l="${fcEsc(ft('th-yield'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${yl}%</td>
+        <td class="fc-num" data-l="${fcEsc(ft('th-real'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--danger)">${fmtE(fcRU(i))}/${fcEsc(u)}</td>
+        <td class="fc-num" data-l="${fcEsc(ft('th-used'))}" style="padding:9px 6px;text-align:right;font-family:var(--mono)">${used}</td>
+        <td style="padding:9px 2px;text-align:right;white-space:nowrap">
+          <button onclick="fcIngEdit('${i.id}')" title="${fcEsc(ft('edit'))}" style="background:none;border:none;color:var(--ink2);cursor:pointer;font-size:15px;padding:2px 5px">✎</button>
+          <button onclick="fcIngDelete('${i.id}')" title="${fcEsc(ft('del'))}" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:18px;padding:2px 5px">×</button>
+        </td></tr>`;}).join('')}</tbody></table></div>`;
+}
+
+// ── quick add ingredient (from a recipe row) ──
+function fcQaOpen(row){
+  FC_QA_ROW=row;
+  document.getElementById('fc-qa-name').value='';
+  document.getElementById('fc-qa-unit').value='kg';
+  document.getElementById('fc-qa-price').value='';
+  document.getElementById('fc-qa-yield').value=100;
+  openModal('modal-fc-qa');
+  setTimeout(()=>document.getElementById('fc-qa-name').focus(),50);
+}
+function fcQaClose(){closeModal('modal-fc-qa');FC_QA_ROW=null;}
+function fcQaSave(){
+  const name=document.getElementById('fc-qa-name').value.trim();
+  const unit=document.getElementById('fc-qa-unit').value;
+  const price=fcN(document.getElementById('fc-qa-price').value);
+  const yl=fcN(document.getElementById('fc-qa-yield').value);
+  if(!fcIngValidate(name,price,yl,null))return;
+  const ing=fcIngCreate(name,unit,price,yl);
+  const row=FC_QA_ROW;
+  closeModal('modal-fc-qa');FC_QA_ROW=null;
+  fcRefreshIngSelects();
+  if(row&&row.isConnected){
+    const sel=row.querySelector('.fc-l-ing');sel.value=ing.id;sel.dataset.prev=ing.id;
+    const us=row.querySelector('.fc-l-unit');us.innerHTML=fcUnitOptions(ing.id,'');
+    row.querySelector('.fc-l-qty').focus();
+  }
+  calcFC();fcRenderIngs();
+  notify(ft('ing-saved')+name);
+}
+
+// ── tabs, language, page enter ──
+function fcTab(t){
+  FC_TAB=t;
+  document.getElementById('fc-pane-dishes').style.display=t==='dishes'?'':'none';
+  document.getElementById('fc-pane-ings').style.display=t==='ings'?'':'none';
+  document.getElementById('fc-tab-dishes').className='btn btn-sm '+(t==='dishes'?'btn-primary':'btn-secondary');
+  document.getElementById('fc-tab-ings').className='btn btn-sm '+(t==='ings'?'btn-primary':'btn-secondary');
+  if(t==='ings'){fcRenderIngs();fcIngInput();fcIngHist();}
+  else{const dd=FC_DIRTY;fcRefreshIngSelects();calcFC();FC_DIRTY=dd;renderFCMenu();fcRenderHist();}
+}
+function fcEnter(){
+  if(!document.querySelector('#fc-lines .fc-line'))fcAddIngLine();
+  fcTab(FC_TAB);
+}
+function fcOnLang(){
+  if(!document.getElementById('fc-lines'))return;
+  const dd=FC_DIRTY;
+  fcRefreshIngSelects();calcFC();FC_DIRTY=dd;
+  const d=FC_EDIT_ID&&DB.dishes().find(x=>x.id===FC_EDIT_ID);fcSetBadge(d?d.name:'');
+  const ing=FC_ING_EDIT&&fcIngById(FC_ING_EDIT);const b=document.getElementById('fc-i-badge');if(ing)b.textContent=ft('editing')+ing.name;
+  renderFCMenu();fcRenderHist();fcRenderIngs();fcIngInput();fcIngHist();
+}
+
+// ── PDF costing sheet ──
+function fcPDF(){
+  const f=fcReadForm();
+  if(!f.name){notify(ft('need-name'),'danger');return;}
+  const lines=fcCleanLines(f.lines);
+  if(!lines.length){notify(ft('need-ing'),'danger');return;}
+  const c=fcCalc(Object.assign({},f,{lines}));
+  const E=s=>fcEsc(s), hasP=c.net>0;
+  const loc=lang==='el'?'el-GR':lang==='de'?'de-DE':lang==='fr'?'fr-FR':lang==='es'?'es-ES':lang==='it'?'it-IT':'en-GB';
+  const scol={good:'#059669',warn:'#d97706',over:'#dc2626',none:'#6b7280'}[c.status];
+  const rows=c.lines.map(l=>l.type==='fixed'
+    ?`<tr><td>${E(l.label)} <span style="color:#888">(${E(ft('fixed-label'))})</span></td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">${fmtE(l.cost)}</td></tr>`
+    :l.missing?`<tr><td>⚠ ${E(l.label)} <span style="color:#dc2626">(${E(ft('missing-ing'))})</span></td><td class="r">${fcQ(l.qty)} ${E(fcU(l.unit))}</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>`
+    :`<tr><td>${E(l.label)}</td><td class="r">${fcQ(l.qty)} ${E(fcU(l.unit))}</td><td class="r">${fmtE(l.price)}/${E(fcU(l.buyUnit))}</td><td class="r">${l.yld}%</td><td class="r">${fmtE(l.ru)}/${E(fcU(l.buyUnit))}</td><td class="r">${fmtE(l.cost)}</td></tr>`).join('');
+  const foot=`<tr class="tot"><td colspan="5">${E(ft('pdf-total'))}</td><td class="r">${fmtE(c.recipe)}</td></tr>
+    <tr><td colspan="5">${E(ft('portions'))}</td><td class="r">${c.portions}</td></tr>
+    ${f.packaging?`<tr><td colspan="5">${E(ft('packaging'))}</td><td class="r">${fmtE(f.packaging)}</td></tr>`:''}
+    ${f.extra?`<tr><td colspan="5">${E(ft('extra'))}</td><td class="r">${fmtE(f.extra)}</td></tr>`:''}
+    <tr class="tot"><td colspan="5">${E(ft('r-cpp'))}</td><td class="r">${fmtE(c.cpp)}</td></tr>`;
+  const kpi=(l,v,s,col)=>`<div class="kpi"><div class="kl">${E(l)}</div><div class="kv" style="color:${col||'#111'}">${v}</div>${s?`<div class="ks">${s}</div>`:''}</div>`;
+  const html=`<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8"/><title>${E(ft('pdf-title'))} — ${E(f.name)}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    body{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:10pt;color:#111;margin:0}
+    .page{padding:14mm 12mm}
+    .header{background:#0d1117;color:#fff;padding:10px 14px;border-radius:6px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-size:16pt;font-weight:800}.hs{font-size:8pt;color:#8899bb;margin-top:2px}
+    .right{text-align:right;font-size:8.5pt;color:#aabbcc}.biz{font-weight:700;color:#fff;font-size:10pt}
+    .accent{height:3px;background:linear-gradient(90deg,#10b981,#06b6d4);border-radius:2px;margin-bottom:14px}
+    .title{font-size:16pt;font-weight:800;margin-bottom:2px}.sub{font-size:9pt;color:#666;margin-bottom:14px}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .kpi{border:1px solid #e5e7eb;border-radius:6px;padding:9px 12px}
+    .kl{font-size:7.5pt;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+    .kv{font-size:13pt;font-weight:800}.ks{font-size:8pt;color:#666;margin-top:2px}
+    table{width:100%;border-collapse:collapse;font-size:8.5pt}
+    th{background:#0d1117;color:#fff;padding:7px 8px;text-align:left;border:1px solid #333;font-size:7.5pt;text-transform:uppercase}
+    td{padding:6px 8px;border:1px solid #ddd}.r{text-align:right;font-family:monospace;white-space:nowrap}
+    tr.tot td{background:#eef2f6;font-weight:700}
+    .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;color:#fff;background:${scol}}
+    .footer{margin-top:20px;padding-top:8px;border-top:1px solid #e5e7eb;font-size:7.5pt;color:#aaa;display:flex;justify-content:space-between}
+    @page{margin:10mm;size:A4}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style></head><body><div class="page">
+    <div class="header"><div><div class="logo">FinanceOS</div><div class="hs">Business Management</div></div>
+      <div class="right"><div class="biz">${E(BIZ.name||'FinanceOS')}</div><div>${new Date().toLocaleDateString(loc)}</div></div></div>
+    <div class="accent"></div>
+    <div class="title">${E(f.name)}</div>
+    <div class="sub">${E(ft('pdf-title'))} · ${E(ft('portions'))}: ${c.portions}${hasP?` · <span class="badge">${E(fcStatusLabel(c.status))}</span>`:''}</div>
+    <div class="kpis">
+      ${kpi(ft('r-cpp'),fmtE(c.cpp),E(ft('r-recipe'))+': '+fmtE(c.recipe),'#dc2626')}
+      ${kpi(ft('price'),hasP?fmtE(c.gross):'—',hasP?E(ft('r-net'))+': '+fmtE(c.net)+' · '+E(ft('vat'))+': '+c.vat:'')}
+      ${kpi(ft('r-pct'),hasP?fcP(c.pct):'—',E(ft('r-target'))+': '+c.target+'%'+(hasP?' · '+E(ft('r-diff'))+': '+(c.diff>0?'+':'')+c.diff.toFixed(1):''),scol)}
+      ${kpi(ft('r-profit'),hasP?fmtE(c.profit):'—',hasP?E(ft('r-margin'))+': '+fcP(c.margin):'','#059669')}
+      ${kpi(ft('r-sug'),c.sugGross>0?fmtE(c.sugGross):'—',c.sugNet>0?E(ft('r-sug-net'))+': '+fmtE(c.sugNet):'')}
+      ${kpi(ft('th-status'),hasP?E(fcStatusLabel(c.status)):'—','',scol)}
+    </div>
+    <table><thead><tr><th>${E(ft('th-ing'))}</th><th class="r">${E(ft('th-qty'))}</th><th class="r">${E(ft('th-buy'))}</th><th class="r">${E(ft('th-yield'))}</th><th class="r">${E(ft('th-unitcost'))}</th><th class="r">${E(ft('th-linecost'))}</th></tr></thead>
+      <tbody>${rows}</tbody><tfoot>${foot}</tfoot></table>
+    <div class="footer"><span>FinanceOS — Business Management</span><span>${E(ft('printed'))}: ${new Date().toLocaleString(loc)}</span></div>
+  </div></body></html>`;
+  const win=window.open('','_blank','width=850,height=1100');
+  if(!win){notify(ft('pdf-popup'),'danger');return;}
+  win.document.write(html);win.document.close();
+  win.onload=()=>setTimeout(()=>{win.focus();win.print();},300);
+  notify(ft('pdf-hint'));
 }
 
 // ── PAYROLL PDF ──
