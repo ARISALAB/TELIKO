@@ -1,5 +1,5 @@
 // FinanceOS Service Worker
-const CACHE_NAME = 'financeos-v3.1';
+const CACHE_NAME = 'financeos-v3.3';
 const urlsToCache = [
   '/',
   '/app/',
