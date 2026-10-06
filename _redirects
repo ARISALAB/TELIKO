@@ -1,0 +1,9 @@
+# Δυναμικά QR (Premium)
+/q/*          /q.html            200
+# Μόνιμος σύνδεσμος προφίλ (αυτός μπαίνει στα QR)
+/p/*          /profile.html      200
+# Περιοχή ιδιοκτήτη και διαχειριστή
+/admin        /admin.html        200
+/superadmin   /superadmin.html   200
+# Όμορφη διεύθυνση προφίλ, π.χ. /plaki-meze (πρέπει να είναι τελευταίο)
+/:slug        /profile.html      200
